@@ -1,0 +1,5 @@
+{"type":"welcome"}
+
+{"identifier":"{\"channel\":\"DeviceChannel\",\"hardware_id\":\"SIM-WTM\"}","type":"message","message":{"topic":"error","payload":"Device not found"}}
+
+{"identifier":"{\"channel\":\"DeviceChannel\",\"hardware_id\":\"SIM-WTM\"}","type":"reject_subscription"}

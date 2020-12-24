@@ -1,0 +1,4 @@
+[#5] 2020-12-17T13:32:57Z [INFO] Started uploading blueprint[id=42cc8af1-cc60-4eeb-972f-0c0bfa6e3df5] on device[hardware_id=SIM-WTM]
+[#5] 2020-12-17T13:32:57Z [INFO] Generating configuration for uploading
+[#5] 2020-12-17T13:32:57Z [INFO] Updating configuration on the platform
+[#5] 2020-12-17T13:32:57Z [INFO] Uploading blueprint finished successfully

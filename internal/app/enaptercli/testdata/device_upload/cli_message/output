@@ -1,0 +1,7 @@
+VERSION IS OUTDATED
+upload started with operation id 25
+[#25] 2020-12-09T14:02:07Z [INFO] Started uploading blueprint[id=d428e77c-3081-4873-b343-2f8f96d9cadc] on device[hardware_id=SIM-WTM]
+[#25] 2020-12-09T14:02:07Z [INFO] Generating configuration for uploading
+[#25] 2020-12-09T14:02:07Z [INFO] Updating configuration on the platform
+[#25] 2020-12-09T14:02:07Z [INFO] Uploading blueprint finished successfully
+Done!

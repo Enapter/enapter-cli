@@ -1,0 +1,34 @@
+---
+project_name: enapter-cli
+
+release:
+  github:
+    owner: enapter
+    name: enapter-cli
+
+builds:
+  - binary: enapter-cli
+    goos:
+      - darwin
+      - windows
+      - linux
+    goarch:
+      - amd64
+    env:
+      - CGO_ENABLED=0
+    main: ./cmd/enapter/
+    ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
+
+checksum:
+  name_template: '{{ .ProjectName }}-{{ .Version }}-checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+    - '^dev:'
+    - 'README'
+    - Merge pull request
+    - Merge branch

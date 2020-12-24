@@ -1,0 +1,1 @@
+app exit with error: failed to zip blueprint dir "testdata/device_upload/testdir": lstat testdata/device_upload/testdir: no such file or directory
