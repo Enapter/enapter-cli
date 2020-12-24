@@ -1,4 +1,7 @@
 # Enapter CLI
+![Build Status](https://github.com/enapter/enapter-cli/workflows/CI/badge.svg)
+[![License](https://img.shields.io/github/license/enapter/enapter-cli)](/LICENSE)
+
 
 This tool helps Enapter customers to work with devices. It useful in the following cases:
 1. Develop devices via blueprints.
@@ -8,7 +11,7 @@ This tool helps Enapter customers to work with devices. It useful in the followi
 
 ### Get prebuilt binaries
 
-Choose your platform and required release on the [Releases page](https://github.com/golangci/golangci-lint/releases).
+Choose your platform and required release on the [Releases page](https://github.com/Enapter/enapter-cli/releases).
 
 ### Build from source
 
@@ -26,6 +29,6 @@ Or you can pass custom output path:
 
 ### API token
 
-First of all you need an API token. Please contact with customer support to get one.
+Enapter CLI requires access token for authentication. At the moment we provide it only to selected partners. Contact us at support@enapter.com to get your token.
 
 Store token into environment variable `ENAPTER_API_TOKEN` to use it with enapter cli tool.

@@ -1,0 +1,15 @@
+NAME:
+   enaptercli.test devices upload-logs - Show blueprint uploading logs
+
+USAGE:
+   enaptercli.test devices upload-logs [command options] [arguments...]
+
+OPTIONS:
+   --hardware-id value   Hardware ID of the device; can be obtained in cloud.enapter.com
+   --timeout value       Time to wait for blueprint uploading (default: 30s)
+   --operation-id value  Uploading operation ID (optional)
+   --help, -h            show help (default: false)
+   
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+

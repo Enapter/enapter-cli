@@ -1,0 +1,18 @@
+NAME:
+   enaptercli.test devices upload - Upload blueprint to a device
+
+USAGE:
+   enaptercli.test devices upload [command options] [arguments...]
+
+DESCRIPTION:
+   Blueprint combines device capabilities declaration and Lua firmware for Enapter UCM. The command updates device blueprint and uploads the firmware to the UCM. Learn more about Enapter Blueprints at https://handbook.enapter.com/blueprints.
+
+OPTIONS:
+   --hardware-id value    Hardware ID of the device; can be obtained in cloud.enapter.com
+   --timeout value        Time to wait for blueprint uploading (default: 30s)
+   --blueprint-dir value  Directory which contains blueprint file
+   --help, -h             show help (default: false)
+   
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+

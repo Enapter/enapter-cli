@@ -1,0 +1,94 @@
+run:
+  timeout: 5m
+
+linters:
+  disable-all: true
+  enable:
+    - asciicheck
+    - bodyclose
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - errcheck
+    - errorlint
+    - exhaustive
+    # - exhaustivestruct
+    - exportloopref
+    - funlen
+    - gci
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    # - godox
+    - goerr113
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - golint
+    - gomnd
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    # - interfacer # is prone to bad suggestions (officialy deprecated)
+    - lll
+    - maligned
+    - misspell
+    - nakedret
+    - nestif
+    # - nlreturn
+    - noctx
+    - nolintlint
+    - prealloc
+    - rowserrcheck
+    - scopelint
+    - sqlclosecheck
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - testpackage
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+    - whitespace
+    # - wrapcheck
+    # - wsl
+
+linters-settings:
+  lll:
+    line-length: 110
+  gci:
+    local-prefixes: github.com/enapter/enapter-cli
+
+issues:
+  exclude-rules:
+    # Exclude gosec from running on tests files because this makes no sense.
+    - path: _test\.go
+      linters:
+        - gosec
+
+    # Exclude lll issues for long lines with go:generate.
+    - linters:
+        - lll
+      source: "^//go:generate "
+
+    # Import paths can be long.
+    - linters:
+        - lll
+      source: "^import "
+
+    # Links to articles can be long.
+    - linters:
+        - lll
+      source: "//.*(http|https)://"

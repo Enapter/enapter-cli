@@ -1,0 +1,6 @@
+[connection] welcome
+[connection] confirm_subscription
+[register] {"timestamp":1606485742,"fw_ver":"1.0.0","efuse":"0x1C04","product_revision":"WTM21 REV1","vendor":"Enapter","model":"WTM"}
+[read_error] skip message with unknown identifier {Channel:DeviceChannel HardwareID:SIM-FRANK}
+[read_error] skip message with unknown identifier {Channel:OtherChannel HardwareID:SIM-WTM}
+[telemetry] {"timestamp":1606486092,"status":"ok","PUMP_out_power":false,"SV01_out_open":false,"LSH_in":false,"LSL_in":false,"WPS01_in":false,"BUTTON_in":false,"TT01_in_c":1.0,"TT02_in_c":2.0,"CS01_in_v":3.0,"CS01_in_a":4.0,"CT01_in_v":5.0,"CT01_in_uscm":6.0,"CT01_in_uscm_comp":10.0,"LT01_in_v":7.0,"LT01_in_l":8.0,"last_calibration":1611756492}
