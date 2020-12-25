@@ -15,12 +15,12 @@ Choose your platform and required release on the [Releases page](https://github.
 
 ### Build from source
 
-The following command builds enapter binary:
+You should have [installed Go tools](https://golang.org/doc/install). Then you can build CLI via the following command:
 ```
 ./build.sh
 ```
 
-Or you can pass custom output path:
+Also you can pass custom output path:
 ```
 ./build.sh /usr/local/bin/enapter
 ```
