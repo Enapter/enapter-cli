@@ -1,6 +1,7 @@
 # Enapter CLI
 ![Build Status](https://github.com/enapter/enapter-cli/workflows/CI/badge.svg)
 [![License](https://img.shields.io/github/license/enapter/enapter-cli)](/LICENSE)
+[![Release](https://img.shields.io/github/release/enapter/enapter-cli.svg)](https://github.com/enapter/enapter-cli/releases/latest)
 
 
 This tool helps Enapter customers to work with devices. It useful in the following cases:
