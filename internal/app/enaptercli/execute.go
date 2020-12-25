@@ -18,7 +18,7 @@ func NewApp() *cli.App {
 	app.Usage = "Command line interface for Enapter services."
 	app.Description = "Enapter CLI requires access token for authentication. At the moment we " +
 		"provide it only to selected partners. Contact us at support@enapter.com to get your token.\n\n" +
-		"   Configure API token using ENAPTER_API_TOKEN environment variable or using --token global option."
+		"Configure API token using ENAPTER_API_TOKEN environment variable or using --token global option."
 
 	app.Commands = []*cli.Command{
 		buildCmdDevices(),
