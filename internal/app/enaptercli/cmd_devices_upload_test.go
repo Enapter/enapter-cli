@@ -22,13 +22,6 @@ func TestDeviceUpload(t *testing.T) {
 		testDeviceUpload(t, uploadRespFileName, blueprintDir, expectedFileName, "")
 	})
 
-	t.Run("wrong directory", func(t *testing.T) {
-		uploadRespFileName := "testdata/device_upload/with_wrong_directory/upload_resp"
-		blueprintDir := "testdata/device_upload/testdir"
-		expectedFileName := "testdata/device_upload/with_wrong_directory/output"
-		testDeviceUpload(t, uploadRespFileName, blueprintDir, expectedFileName, "")
-	})
-
 	t.Run("with dot in the paths", func(t *testing.T) {
 		uploadRespFileName := "./testdata/device_upload/simple/upload_resp"
 		expectedFileName := "./testdata/device_upload/simple/output"
@@ -52,6 +45,16 @@ func TestDeviceUpload(t *testing.T) {
 		expectedFileName := "./testdata/device_upload/cli_message/output"
 		testDeviceUpload(t, uploadRespFileName, simpleBlueprintDir, expectedFileName, "VERSION IS OUTDATED\n")
 	})
+}
+
+func TestDeviceUploadWrongBlueprintDir(t *testing.T) {
+	args := strings.Split("enapter devices upload --token token --hardware-id hardwareID "+
+		"--api-url apiURL --blueprint-dir wrong", " ")
+	app := startTestApp(args...)
+	defer app.Stop()
+
+	appErr := app.Wait()
+	require.EqualError(t, appErr, `failed to zip blueprint dir "wrong": lstat wrong: no such file or directory`)
 }
 
 func testDeviceUpload(t *testing.T, uploadRespFilename, blueprintDir, expectedFileName, cliMessage string) {
