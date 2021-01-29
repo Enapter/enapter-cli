@@ -2,9 +2,13 @@ package enaptercli_test
 
 import (
 	"bytes"
+	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -12,39 +16,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const blueprintDir = "testdata/device_upload/simple/blueprint"
+
 func TestDeviceUpload(t *testing.T) {
-	const simpleBlueprintDir = "./testdata/device_upload/simple/blueprint"
+	testdataDir := "testdata/device_upload"
+	dirs, err := ioutil.ReadDir(testdataDir)
+	require.NoError(t, err)
 
-	t.Run("simple", func(t *testing.T) {
-		uploadRespFileName := "testdata/device_upload/simple/upload_resp"
-		blueprintDir := "testdata/device_upload/simple/blueprint"
-		expectedFileName := "testdata/device_upload/simple/output"
-		testDeviceUpload(t, uploadRespFileName, blueprintDir, expectedFileName, "")
-	})
+	for _, dir := range dirs {
+		if !dir.IsDir() {
+			continue
+		}
 
-	t.Run("with dot in the paths", func(t *testing.T) {
-		uploadRespFileName := "./testdata/device_upload/simple/upload_resp"
-		expectedFileName := "./testdata/device_upload/simple/output"
-		testDeviceUpload(t, uploadRespFileName, simpleBlueprintDir, expectedFileName, "")
-	})
+		dir := dir
+		t.Run(dir.Name(), func(t *testing.T) {
+			testDeviceUpload(t, filepath.Join(testdataDir, dir.Name()), blueprintDir)
+		})
+	}
+}
 
-	t.Run("invalid hardware id", func(t *testing.T) {
-		uploadRespFileName := "./testdata/device_upload/invalid_hardware_id/upload_resp"
-		expectedFileName := "./testdata/device_upload/invalid_hardware_id/output"
-		testDeviceUpload(t, uploadRespFileName, simpleBlueprintDir, expectedFileName, "")
-	})
-
-	t.Run("with errors in upload response", func(t *testing.T) {
-		uploadRespFileName := "./testdata/device_upload/upload_errors/upload_resp"
-		expectedFileName := "./testdata/device_upload/upload_errors/output"
-		testDeviceUpload(t, uploadRespFileName, simpleBlueprintDir, expectedFileName, "")
-	})
-
-	t.Run("cli message", func(t *testing.T) {
-		uploadRespFileName := "./testdata/device_upload/cli_message/upload_resp"
-		expectedFileName := "./testdata/device_upload/cli_message/output"
-		testDeviceUpload(t, uploadRespFileName, simpleBlueprintDir, expectedFileName, "VERSION IS OUTDATED\n")
-	})
+func TestDeviceUploadBlueprintDirWithDot(t *testing.T) {
+	testDeviceUpload(t, "testdata/device_upload/simple", "./"+blueprintDir)
 }
 
 func TestDeviceUploadWrongBlueprintDir(t *testing.T) {
@@ -57,18 +49,22 @@ func TestDeviceUploadWrongBlueprintDir(t *testing.T) {
 	require.EqualError(t, appErr, `failed to zip blueprint dir "wrong": lstat wrong: no such file or directory`)
 }
 
-func testDeviceUpload(t *testing.T, uploadRespFilename, blueprintDir, expectedFileName, cliMessage string) {
+func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 	token := faker.Word()
 	hardwareID := "SIM-WTM"
 
+	var opts deviceUploadTestSettings
+	opts.Fill(t, filepath.Join(dir, "settings.json"))
+
+	uploadRespFilename := filepath.Join(dir, "upload_resp")
 	uploadResp, err := ioutil.ReadFile(uploadRespFilename)
 	require.NoError(t, err)
 
 	resps := bytes.Split(uploadResp, []byte{'\n'})
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for _, resp := range resps {
-			if cliMessage != "" {
-				w.Header().Set("X-ENAPTER-CLI-MESSAGE", cliMessage)
+			if opts.CliMessage != "" {
+				w.Header().Set("X-ENAPTER-CLI-MESSAGE", opts.CliMessage)
 			}
 			if len(resp) == 0 {
 				continue
@@ -99,6 +95,7 @@ func testDeviceUpload(t *testing.T, uploadRespFilename, blueprintDir, expectedFi
 		actual = append(actual, []byte("app exit with error: "+appErr.Error()+"\n")...)
 	}
 
+	expectedFileName := filepath.Join(dir, "output")
 	if update {
 		err := ioutil.WriteFile(expectedFileName, actual, 0600)
 		require.NoError(t, err)
@@ -108,4 +105,19 @@ func testDeviceUpload(t *testing.T, uploadRespFilename, blueprintDir, expectedFi
 	require.NoError(t, err)
 
 	require.Equal(t, string(expected), string(actual))
+}
+
+type deviceUploadTestSettings struct {
+	CliMessage string `json:"cli_message"`
+}
+
+func (s *deviceUploadTestSettings) Fill(t *testing.T, filename string) {
+	t.Helper()
+
+	data, err := ioutil.ReadFile(filename)
+	if errors.Is(err, os.ErrNotExist) {
+		return
+	}
+
+	require.NoError(t, json.Unmarshal(data, s))
 }
