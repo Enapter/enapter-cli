@@ -83,7 +83,8 @@ func buildCmdDevicesUpload() *cli.Command {
 	}
 }
 
-type uploadBlueprintInput struct {
+// UploadBlueprintInput contains mutation input variables.
+type UploadBlueprintInput struct {
 	Blueprint  graphql.String `json:"blueprint"`
 	HardwareID graphql.ID     `json:"hardwareId"`
 }
@@ -193,7 +194,7 @@ func (c *cmdDevicesUpload) sendRequest(
 
 	var m mutation
 	variables := map[string]interface{}{
-		"input": uploadBlueprintInput{
+		"input": UploadBlueprintInput{
 			Blueprint:  graphql.String(blueprintBuf.String()),
 			HardwareID: graphql.String(c.hardwareID),
 		},
