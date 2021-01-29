@@ -26,9 +26,10 @@ changelog:
   sort: asc
   filters:
     exclude:
+    - '^chore:'
     - '^docs:'
+    - '^refactor:'
     - '^test:'
-    - '^dev:'
     - 'README'
     - Merge pull request
     - Merge branch
