@@ -64,50 +64,12 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 	uploadResp, err := ioutil.ReadFile(uploadRespFilename)
 	require.NoError(t, err)
 
-	resps := bytes.Split(uploadResp, []byte{'\n'})
-	reqs := bytes.Split(uploadReq, []byte{'\n'})
+	reqs := &sliceSliceBytes{bytes.Split(uploadReq, []byte{'\n'})}
 	if update {
-		reqs = nil
+		reqs.buf = nil
 	}
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		for _, resp := range resps {
-			if opts.CliMessage != "" {
-				w.Header().Set("X-ENAPTER-CLI-MESSAGE", opts.CliMessage)
-			}
-			if len(resp) == 0 {
-				continue
-			}
-
-			reqBody, err := ioutil.ReadAll(r.Body)
-			if err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				_, _ = w.Write([]byte("failed to read request"))
-				continue
-			}
-
-			if update {
-				reqs = append(reqs, reqBody)
-			} else {
-				if len(reqs) == 0 {
-					break
-				}
-
-				if !bytes.Equal(reqBody, reqs[0]) {
-					w.WriteHeader(http.StatusBadRequest)
-					_, _ = w.Write([]byte("unexpected request"))
-					return
-				}
-				reqs = reqs[1:]
-			}
-
-			_, _ = w.Write(resp)
-			resps = resps[1:]
-			return
-		}
-
-		w.WriteHeader(http.StatusBadRequest)
-		_, _ = w.Write([]byte("to much requests for test"))
-	}))
+	resps := &sliceSliceBytes{bytes.Split(uploadResp, []byte{'\n'})}
+	srv := startDeviceUploadTestServer(opts, reqs, resps)
 	defer srv.Close()
 
 	args := strings.Split("enapter devices upload --token", " ")
@@ -130,7 +92,7 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 		err := ioutil.WriteFile(expectedFileName, actual, 0600)
 		require.NoError(t, err)
 
-		err = ioutil.WriteFile(uploadReqFilename, bytes.Join(reqs, []byte{'\n'}), 0600)
+		err = ioutil.WriteFile(uploadReqFilename, bytes.Join(reqs.buf, []byte{'\n'}), 0600)
 		require.NoError(t, err)
 	}
 
@@ -153,4 +115,72 @@ func (s *deviceUploadTestSettings) Fill(t *testing.T, filename string) {
 	}
 
 	require.NoError(t, json.Unmarshal(data, s))
+}
+
+func startDeviceUploadTestServer(
+	opts deviceUploadTestSettings, reqs, resps *sliceSliceBytes,
+) *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		resp := resps.Next()
+		if len(resp) == 0 {
+			w.WriteHeader(http.StatusBadRequest)
+			_, _ = w.Write([]byte("to much requests for test (not enough responses)"))
+			return
+		}
+
+		var req []byte
+		if !update {
+			req = reqs.Next()
+			if len(req) == 0 {
+				w.WriteHeader(http.StatusBadRequest)
+				_, _ = w.Write([]byte("to much requests for test (not enough requests)"))
+				return
+			}
+		}
+
+		if opts.CliMessage != "" {
+			w.Header().Set("X-ENAPTER-CLI-MESSAGE", opts.CliMessage)
+		}
+
+		reqBody, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			_, _ = w.Write([]byte("failed to read request"))
+			return
+		}
+
+		if update {
+			reqs.Append(reqBody)
+		} else {
+			reqBody := bytes.TrimRight(reqBody, "\n")
+			if !bytes.Equal(reqBody, req) {
+				w.WriteHeader(http.StatusBadRequest)
+				_, _ = w.Write([]byte("unexpected request\nActual\n"))
+				_, _ = w.Write(reqBody)
+				_, _ = w.Write([]byte("\nExpected\n"))
+				_, _ = w.Write(req)
+				return
+			}
+		}
+
+		_, _ = w.Write(resp)
+	}))
+}
+
+type sliceSliceBytes struct {
+	buf [][]byte
+}
+
+func (b *sliceSliceBytes) Next() []byte {
+	for i, s := range b.buf {
+		if len(s) != 0 {
+			b.buf = b.buf[i+1:]
+			return s
+		}
+	}
+	return nil
+}
+
+func (b *sliceSliceBytes) Append(d []byte) {
+	b.buf = append(b.buf, d)
 }
