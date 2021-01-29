@@ -56,11 +56,19 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 	var opts deviceUploadTestSettings
 	opts.Fill(t, filepath.Join(dir, "settings.json"))
 
+	uploadReqFilename := filepath.Join(dir, "upload_req")
+	uploadReq, err := ioutil.ReadFile(uploadReqFilename)
+	require.NoError(t, err)
+
 	uploadRespFilename := filepath.Join(dir, "upload_resp")
 	uploadResp, err := ioutil.ReadFile(uploadRespFilename)
 	require.NoError(t, err)
 
 	resps := bytes.Split(uploadResp, []byte{'\n'})
+	reqs := bytes.Split(uploadReq, []byte{'\n'})
+	if update {
+		reqs = nil
+	}
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for _, resp := range resps {
 			if opts.CliMessage != "" {
@@ -68,6 +76,28 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 			}
 			if len(resp) == 0 {
 				continue
+			}
+
+			reqBody, err := ioutil.ReadAll(r.Body)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				_, _ = w.Write([]byte("failed to read request"))
+				continue
+			}
+
+			if update {
+				reqs = append(reqs, reqBody)
+			} else {
+				if len(reqs) == 0 {
+					break
+				}
+
+				if !bytes.Equal(reqBody, reqs[0]) {
+					w.WriteHeader(http.StatusBadRequest)
+					_, _ = w.Write([]byte("unexpected request"))
+					return
+				}
+				reqs = reqs[1:]
 			}
 
 			_, _ = w.Write(resp)
@@ -98,6 +128,9 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 	expectedFileName := filepath.Join(dir, "output")
 	if update {
 		err := ioutil.WriteFile(expectedFileName, actual, 0600)
+		require.NoError(t, err)
+
+		err = ioutil.WriteFile(uploadReqFilename, bytes.Join(reqs, []byte{'\n'}), 0600)
 		require.NoError(t, err)
 	}
 
