@@ -10,7 +10,7 @@ This tool helps Enapter customers to work with devices. It useful in the followi
 
 ## How to install
 
-### macOS - recomended
+### macOS - recommended
 
 ```bash
 brew tap enapter/tap && brew install enapter
