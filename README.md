@@ -10,6 +10,12 @@ This tool helps Enapter customers to work with devices. It useful in the followi
 
 ## How to install
 
+### macOS - recomended
+
+```bash
+brew tap enapter/tap && brew install enapter`
+```
+
 ### Get prebuilt binaries
 
 Choose your platform and required release on the [Releases page](https://github.com/Enapter/enapter-cli/releases).
