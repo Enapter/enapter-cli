@@ -13,7 +13,7 @@ This tool helps Enapter customers to work with devices. It useful in the followi
 ### macOS - recomended
 
 ```bash
-brew tap enapter/tap && brew install enapter`
+brew tap enapter/tap && brew install enapter
 ```
 
 ### Get prebuilt binaries
