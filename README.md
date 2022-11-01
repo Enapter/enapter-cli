@@ -36,6 +36,12 @@ Also you can pass custom output path:
 
 ### API token
 
-Enapter CLI requires access token for authentication. At the moment we provide it only to selected partners. Contact us at support@enapter.com to get your token.
+Enapter CLI requires access token for authentication. Obtaining of the token is easy and can be done by following few steps.
 
-Store token into environment variable `ENAPTER_API_TOKEN` to use it with enapter cli tool.
+1. Ensure you have registed [Enapter Cloud](https://cloud.enapter.com) account. If not, sign up [here](https://sso.enapter.com/users/new).
+2. Log in to your Enapter Cloud account, click on your profile name in top right corner and choose `Account Settings`
+3. Select `API Tokens` menu and click `New Token` button
+4. Follow the instructions on the screen
+<img src=./.assets/token.pn>
+
+Please note that if you don't save your token, it is not possible to reveal it anymore. You need generate new token.
