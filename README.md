@@ -42,6 +42,6 @@ Enapter CLI requires access token for authentication. Obtaining of the token is 
 2. Log in to your Enapter Cloud account, click on your profile name in top right corner and choose `Account Settings`
 3. Select `API Tokens` menu and click `New Token` button
 4. Follow the instructions on the screen
-<img src=./.assets/token.pn>
+<img src="./.assets/token.png">
 
 Please note that if you don't save your token, it is not possible to reveal it anymore. You need generate new token.
