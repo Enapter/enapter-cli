@@ -22,3 +22,17 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update install links
+        run: |
+            wget -q https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O jq
+            chmod +x ./jq
+            tag=$(echo '${{steps.goreleaser.outputs.metadata}}' | ./jq --raw-output '.tag')
+            linux_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="linux") and (.type=="Archive")) | .name')
+            mac_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="darwin") and (.type=="Archive")) | .name')
+            win_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="windows") and (.type=="Archive")) | .name')
+            download_url_prefix="https://github.com/${{github.repository}}/releases/download/${tag}"
+            short_url_api_prefix="https://go.enapter.com/rest/v3/short-urls"
+            curl -q -H "X-Api-Key: ${{secrets.ENAPTER_SHLINK_API_KEY}}" -H "Content-Type: application/json" -X PATCH ${short_url_api_prefix}/enaptercli-linux-install -d "{\"longUrl\":\"${download_url_prefix}/${linux_name}\"}"
+            curl -q -H "X-Api-Key: ${{secrets.ENAPTER_SHLINK_API_KEY}}" -H "Content-Type: application/json" -X PATCH ${short_url_api_prefix}/enaptercli-macos-install -d "{\"longUrl\":\"${download_url_prefix}/${mac_name}\"}"
+            curl -q -H "X-Api-Key: ${{secrets.ENAPTER_SHLINK_API_KEY}}" -H "Content-Type: application/json" -X PATCH ${short_url_api_prefix}/enaptercli-windows-install -d "{\"longUrl\":\"${download_url_prefix}/${win_name}\"}"
