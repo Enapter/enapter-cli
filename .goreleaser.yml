@@ -7,7 +7,7 @@ release:
     name: enapter-cli
 
 builds:
-  - binary: enapter-cli
+  - binary: enapter
     goos:
       - darwin
       - windows
