@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -55,11 +56,11 @@ func testDeviceLogs(t *testing.T, inputFileName, untilLinePrefix, expectedFileNa
 
 	actual := readOutputUntilLineOrError(t, app.Stdout(), untilLinePrefix, handleErrCh)
 	if update {
-		err := ioutil.WriteFile(expectedFileName, []byte(actual), 0600)
+		err := os.WriteFile(expectedFileName, []byte(actual), 0o600)
 		require.NoError(t, err)
 	}
 
-	expected, err := ioutil.ReadFile(expectedFileName)
+	expected, err := os.ReadFile(expectedFileName)
 	require.NoError(t, err)
 	require.Equal(t, string(expected), actual)
 
@@ -67,7 +68,7 @@ func testDeviceLogs(t *testing.T, inputFileName, untilLinePrefix, expectedFileNa
 	appErr := app.Wait()
 	require.NoError(t, appErr)
 
-	restOutput, err := ioutil.ReadAll(app.Stdout())
+	restOutput, err := io.ReadAll(app.Stdout())
 	require.NoError(t, err)
 	require.Empty(t, string(restOutput))
 }
@@ -129,7 +130,7 @@ func startWsServer(
 ) (string, closer) {
 	t.Helper()
 
-	msgsBytes, err := ioutil.ReadFile(inputFileName)
+	msgsBytes, err := os.ReadFile(inputFileName)
 	require.NoError(t, err)
 
 	srv := httptest.NewServer(deviceLogsHandler(token, hardwareID, msgsBytes, handleErrCh))

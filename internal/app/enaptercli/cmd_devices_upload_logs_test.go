@@ -3,9 +3,10 @@ package enaptercli_test
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -16,7 +17,7 @@ import (
 
 func TestDeviceUploadLogs(t *testing.T) {
 	errorsDir := "testdata/device_upload_logs"
-	dirs, err := ioutil.ReadDir(errorsDir)
+	dirs, err := os.ReadDir(errorsDir)
 	require.NoError(t, err)
 
 	for _, dir := range dirs {
@@ -49,7 +50,7 @@ func testDeviceUploadLogs(t *testing.T, dir string) {
 
 	appErr := app.Wait()
 
-	actual, err := ioutil.ReadAll(app.Stdout())
+	actual, err := io.ReadAll(app.Stdout())
 	require.NoError(t, err)
 
 	if appErr != nil {
@@ -58,11 +59,11 @@ func testDeviceUploadLogs(t *testing.T, dir string) {
 
 	expectedFileName := filepath.Join(dir, "output")
 	if update {
-		err := ioutil.WriteFile(expectedFileName, actual, 0600)
+		err := os.WriteFile(expectedFileName, actual, 0o600)
 		require.NoError(t, err)
 	}
 
-	expected, err := ioutil.ReadFile(expectedFileName)
+	expected, err := os.ReadFile(expectedFileName)
 	require.NoError(t, err)
 
 	require.Equal(t, string(expected), string(actual))
@@ -78,11 +79,11 @@ type testSettings struct {
 
 func parseTestSettings(t *testing.T, dir string) testSettings {
 	var testSettings testSettings
-	settingsBytes, err := ioutil.ReadFile(filepath.Join(dir, "settings.json"))
+	settingsBytes, err := os.ReadFile(filepath.Join(dir, "settings.json"))
 	require.NoError(t, err)
 	require.NoError(t, json.Unmarshal(settingsBytes, &testSettings))
 
-	uploadResp, err := ioutil.ReadFile(filepath.Join(dir, "upload_logs_resp"))
+	uploadResp, err := os.ReadFile(filepath.Join(dir, "upload_logs_resp"))
 	require.NoError(t, err)
 
 	testSettings.Responses = bytes.Split(uploadResp, []byte{'\n'})

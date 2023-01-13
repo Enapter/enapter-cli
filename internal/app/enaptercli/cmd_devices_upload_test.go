@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -20,7 +20,7 @@ const blueprintDir = "testdata/device_upload/simple/blueprint"
 
 func TestDeviceUpload(t *testing.T) {
 	testdataDir := "testdata/device_upload"
-	dirs, err := ioutil.ReadDir(testdataDir)
+	dirs, err := os.ReadDir(testdataDir)
 	require.NoError(t, err)
 
 	for _, dir := range dirs {
@@ -57,11 +57,11 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 	opts.Fill(t, filepath.Join(dir, "settings.json"))
 
 	uploadReqFilename := filepath.Join(dir, "upload_req")
-	uploadReq, err := ioutil.ReadFile(uploadReqFilename)
+	uploadReq, err := os.ReadFile(uploadReqFilename)
 	require.NoError(t, err)
 
 	uploadRespFilename := filepath.Join(dir, "upload_resp")
-	uploadResp, err := ioutil.ReadFile(uploadRespFilename)
+	uploadResp, err := os.ReadFile(uploadRespFilename)
 	require.NoError(t, err)
 
 	reqs := &sliceSliceBytes{bytes.Split(uploadReq, []byte{'\n'})}
@@ -80,7 +80,7 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 
 	appErr := app.Wait()
 
-	actual, err := ioutil.ReadAll(app.Stdout())
+	actual, err := io.ReadAll(app.Stdout())
 	require.NoError(t, err)
 
 	if appErr != nil {
@@ -89,14 +89,14 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 
 	expectedFileName := filepath.Join(dir, "output")
 	if update {
-		err := ioutil.WriteFile(expectedFileName, actual, 0600)
+		err := os.WriteFile(expectedFileName, actual, 0o600)
 		require.NoError(t, err)
 
-		err = ioutil.WriteFile(uploadReqFilename, bytes.Join(reqs.buf, []byte{'\n'}), 0600)
+		err = os.WriteFile(uploadReqFilename, bytes.Join(reqs.buf, []byte{'\n'}), 0o600)
 		require.NoError(t, err)
 	}
 
-	expected, err := ioutil.ReadFile(expectedFileName)
+	expected, err := os.ReadFile(expectedFileName)
 	require.NoError(t, err)
 
 	require.Equal(t, string(expected), string(actual))
@@ -109,7 +109,7 @@ type deviceUploadTestSettings struct {
 func (s *deviceUploadTestSettings) Fill(t *testing.T, filename string) {
 	t.Helper()
 
-	data, err := ioutil.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if errors.Is(err, os.ErrNotExist) {
 		return
 	}
@@ -142,7 +142,7 @@ func startDeviceUploadTestServer(
 			w.Header().Set("X-ENAPTER-CLI-MESSAGE", opts.CliMessage)
 		}
 
-		reqBody, err := ioutil.ReadAll(r.Body)
+		reqBody, err := io.ReadAll(r.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			_, _ = w.Write([]byte("failed to read request"))
