@@ -1,7 +1,8 @@
 package enaptercli_test
 
 import (
-	"io/ioutil"
+	"io"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -10,7 +11,7 @@ import (
 )
 
 func TestHelpMessages(t *testing.T) {
-	files, err := ioutil.ReadDir("testdata/helps")
+	files, err := os.ReadDir("testdata/helps")
 	require.NoError(t, err)
 
 	for _, fi := range files {
@@ -21,7 +22,7 @@ func TestHelpMessages(t *testing.T) {
 			app := startTestApp(args...)
 			appErr := app.Wait()
 
-			actual, err := ioutil.ReadAll(app.Stdout())
+			actual, err := io.ReadAll(app.Stdout())
 			require.NoError(t, err)
 
 			if appErr != nil {
@@ -30,11 +31,11 @@ func TestHelpMessages(t *testing.T) {
 
 			exepctedFileName := filepath.Join("testdata/helps", fi.Name())
 			if update {
-				err := ioutil.WriteFile(exepctedFileName, actual, 0600)
+				err := os.WriteFile(exepctedFileName, actual, 0o600)
 				require.NoError(t, err)
 			}
 
-			expected, err := ioutil.ReadFile(exepctedFileName)
+			expected, err := os.ReadFile(exepctedFileName)
 			require.NoError(t, err)
 
 			require.Equal(t, string(expected), string(actual))
