@@ -45,7 +45,7 @@ Enapter CLI requires access token for authentication. Obtaining of the token is 
 <img src="./.assets/token.png">
 5. Set environment variable `ENAPTER_API_TOKEN` with new token. To make it permanent don't forget to add it to configuration files of your shell.
 
-  ```
+  ```bash
   export ENAPTER_API_TOKEN="your token"
   ```
 
