@@ -52,7 +52,7 @@ func (c *cmdDevicesUploadCommon) Before(cliCtx *cli.Context) error {
 	}
 
 	if c.apiURL == "" {
-		c.apiURL = "https://" + c.apiHost + "/graphql"
+		c.apiURL = "https://" + c.cloudAPIHost + "/graphql"
 	}
 	return nil
 }
