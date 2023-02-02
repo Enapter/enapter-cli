@@ -51,7 +51,7 @@ func buildCmdDevicesLogs() *cli.Command {
 					return fmt.Errorf("failed to parse url path %q: %w", wsAPIURL, err)
 				}
 			} else {
-				u.Host = cmd.apiHost
+				u.Host = cmd.cloudAPIHost
 				u.Scheme = "wss"
 				u.Path = "/cable"
 			}

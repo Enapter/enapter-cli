@@ -19,10 +19,11 @@ func buildCmdDevices() *cli.Command {
 }
 
 type cmdDevices struct {
-	token      string
-	apiHost    string
-	hardwareID string
-	writer     io.Writer
+	token        string
+	apiHost      string
+	cloudAPIHost string
+	hardwareID   string
+	writer       io.Writer
 }
 
 func (c *cmdDevices) Flags() []cli.Flag {
@@ -39,8 +40,16 @@ func (c *cmdDevices) Flags() []cli.Flag {
 			Usage:       "Override API endpoint",
 			EnvVars:     []string{"ENAPTER_API_HOST"},
 			Hidden:      true,
-			Value:       "cli.enapter.com",
+			Value:       "https://api.enapter.com",
 			Destination: &c.apiHost,
+		},
+		&cli.StringFlag{
+			Name:        "cloud-api-host",
+			Usage:       "Override Cloud API endpoint",
+			EnvVars:     []string{"ENAPTER_CLOUD_API_HOST"},
+			Hidden:      true,
+			Value:       "cli.enapter.com",
+			Destination: &c.cloudAPIHost,
 		},
 		&cli.StringFlag{
 			Name:        "hardware-id",
