@@ -14,7 +14,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-const deviceUplaodDefaultTimout = 30 * time.Second
+const deviceUplaodDefaultTimeout = 30 * time.Second
 
 type cmdDevicesUpload struct {
 	cmdDevicesUploadCommon
@@ -40,7 +40,7 @@ func (c *cmdDevicesUploadCommon) Flags() []cli.Flag {
 			Name:        "timeout",
 			Usage:       "Time to wait for blueprint uploading",
 			Destination: &c.timeout,
-			Value:       deviceUplaodDefaultTimout,
+			Value:       deviceUplaodDefaultTimeout,
 		},
 	)
 	return flags
