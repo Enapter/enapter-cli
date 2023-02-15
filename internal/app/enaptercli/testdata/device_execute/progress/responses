@@ -1,0 +1,3 @@
+{"state":"started"}
+{"state":"device_in_progress","payload":{"progress":50}}
+{"state":"succeeded"}

@@ -8,6 +8,7 @@ COMMANDS:
    upload       Upload blueprint to a device
    logs         Stream logs from a device
    upload-logs  Show blueprint uploading logs
+   execute      Execute command on device
    help, h      Shows a list of commands or help for one command
 
 OPTIONS:
