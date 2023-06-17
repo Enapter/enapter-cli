@@ -74,7 +74,7 @@ func buildCmdDevicesUpload() *cli.Command {
 		Description: "Blueprint combines device capabilities declaration and Lua firmware for Enapter UCM. " +
 			"The command updates device blueprint and uploads the firmware to the UCM. Learn more " +
 			"about Enapter Blueprints at https://handbook.enapter.com/blueprints.",
-		CustomHelpTemplate: cmd.DevicesCmdHelpTemplate(),
+		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              flags,
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {
