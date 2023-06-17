@@ -41,7 +41,7 @@ func testDeviceUploadLogs(t *testing.T, dir string) {
 	args = append(args,
 		"--token", testSettings.Token,
 		"--hardware-id", testSettings.HardwareID,
-		"--api-url", srv.URL)
+		"--gql-api-url", srv.URL)
 	if testSettings.OperationID != "" {
 		args = append(args, "--operation-id", testSettings.OperationID)
 	}

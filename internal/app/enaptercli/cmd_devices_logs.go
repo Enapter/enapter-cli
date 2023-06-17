@@ -24,36 +24,19 @@ type cmdDevicesLogs struct {
 func buildCmdDevicesLogs() *cli.Command {
 	cmd := &cmdDevicesLogs{}
 
-	var wsAPIURL string
-	flags := cmd.Flags()
-	flags = append(flags, &cli.StringFlag{
-		Name:        "ws-api-url",
-		EnvVars:     []string{"ENAPTER_WS_API_URL"},
-		Hidden:      true,
-		Destination: &wsAPIURL,
-	})
-
 	return &cli.Command{
 		Name:               "logs",
 		Usage:              "Stream logs from a device",
 		CustomHelpTemplate: cmd.HelpTemplate(),
-		Flags:              flags,
+		Flags:              cmd.Flags(),
 		Before: func(cliCtx *cli.Context) error {
 			if err := cmd.Before(cliCtx); err != nil {
 				return err
 			}
 
-			u := &url.URL{}
-			if wsAPIURL != "" {
-				var err error
-				u, err = url.Parse(wsAPIURL)
-				if err != nil {
-					return fmt.Errorf("failed to parse url path %q: %w", wsAPIURL, err)
-				}
-			} else {
-				u.Host = cmd.cloudAPIHost
-				u.Scheme = "wss"
-				u.Path = "/cable"
+			u, err := url.Parse(cmd.websocketsURL)
+			if err != nil {
+				return fmt.Errorf("failed to parse url path %q: %w", cmd.websocketsURL, err)
 			}
 
 			q := url.Values{

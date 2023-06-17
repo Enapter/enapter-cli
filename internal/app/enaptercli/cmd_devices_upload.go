@@ -23,19 +23,12 @@ type cmdDevicesUpload struct {
 
 type cmdDevicesUploadCommon struct {
 	cmdDevices
-	apiURL  string
 	timeout time.Duration
 }
 
 func (c *cmdDevicesUploadCommon) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
 	flags = append(flags,
-		&cli.StringFlag{
-			Name:        "api-url",
-			EnvVars:     []string{"ENAPTER_API_URL"},
-			Hidden:      true,
-			Destination: &c.apiURL,
-		},
 		&cli.DurationFlag{
 			Name:        "timeout",
 			Usage:       "Time to wait for blueprint uploading",
@@ -44,17 +37,6 @@ func (c *cmdDevicesUploadCommon) Flags() []cli.Flag {
 		},
 	)
 	return flags
-}
-
-func (c *cmdDevicesUploadCommon) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDevices.Before(cliCtx); err != nil {
-		return err
-	}
-
-	if c.apiURL == "" {
-		c.apiURL = "https://" + c.cloudAPIHost + "/graphql"
-	}
-	return nil
 }
 
 func buildCmdDevicesUpload() *cli.Command {
@@ -190,7 +172,7 @@ func (c *cmdDevicesUpload) sendRequest(
 		},
 	}
 
-	client := graphql.NewClient(c.apiURL, httpClient)
+	client := graphql.NewClient(c.graphqlURL, httpClient)
 
 	var m mutation
 	variables := map[string]interface{}{

@@ -63,7 +63,7 @@ func (c *cmdDevicesUploadLogs) logs(
 		},
 	}
 
-	client := graphql.NewClient(c.apiURL, httpClient)
+	client := graphql.NewClient(c.graphqlURL, httpClient)
 
 	if operationID != "" {
 		return c.logsOperationID(ctx, client, operationID)

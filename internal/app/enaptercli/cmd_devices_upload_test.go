@@ -41,7 +41,7 @@ func TestDeviceUploadBlueprintDirWithDot(t *testing.T) {
 
 func TestDeviceUploadWrongBlueprintDir(t *testing.T) {
 	args := strings.Split("enapter devices upload --token token --hardware-id hardwareID "+
-		"--api-url apiURL --blueprint-dir wrong", " ")
+		"--gql-api-url apiURL --blueprint-dir wrong", " ")
 	app := startTestApp(args...)
 	defer app.Stop()
 
@@ -73,7 +73,7 @@ func testDeviceUpload(t *testing.T, dir, blueprintDir string) {
 	defer srv.Close()
 
 	args := strings.Split("enapter devices upload --token", " ")
-	args = append(args, token, "--hardware-id", hardwareID, "--api-url", srv.URL,
+	args = append(args, token, "--hardware-id", hardwareID, "--gql-api-url", srv.URL,
 		"--blueprint-dir", blueprintDir)
 	app := startTestApp(args...)
 	defer app.Stop()
