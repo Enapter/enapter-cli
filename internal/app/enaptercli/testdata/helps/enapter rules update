@@ -1,0 +1,17 @@
+NAME:
+   enaptercli.test rules update - Update rule.
+
+USAGE:
+   enaptercli.test rules update [command options] [arguments...]
+
+OPTIONS:
+   --rule-id value             Rule ID; can be obtained in cloud.enapter.com
+   --rule-path value           Path to file with rule Lua code
+   --execution-interval value  Rule execution interval in milliseconds (default: chosen by the server)
+   --stdlib-version value      Version of standard library used by the rule (default: chosen by the server)
+   --timeout value             Time to wait for rule update (default: 30s)
+   --help, -h                  show help (default: false)
+   
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+

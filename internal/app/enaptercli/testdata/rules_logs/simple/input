@@ -1,0 +1,14 @@
+{"type":"welcome"}
+{"identifier":"{\"channel\":\"RuleChannel\",\"rule_id\":\"SIM-RULE\"}","type":"confirm_subscription"}
+
+{"type":"ping","message":"1606485743"}
+
+{"type":"message","identifier":"{\"channel\":\"RuleChannel\",\"rule_id\":\"SIM-OTHER\"}","message":{"topic":"info","payload":"{\"timestamp\":1606485747,\"status\":\"ok\"}"}}
+
+{"type":"ping","message":"1606485746"}
+
+{"type":"message","identifier":"{\"channel\":\"OtherChannel\",\"rule_id\":\"SIM-RULE\"}","message":{"topic":"info","payload":"{\"timestamp\":1606485747,\"status\":\"ok\"}"}}
+
+{"type":"ping","message":"1606485749"}
+
+{"type":"message","identifier":"{\"rule_id\":\"SIM-RULE\",\"channel\":\"RuleChannel\"}","message":{"topic":"info","payload":"{\"timestamp\":1606486092,\"status\":\"ok\"}"}}
