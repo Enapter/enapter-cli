@@ -1,3 +1,4 @@
+//nolint:dupl // not a duplicate of `rules logs` command tests
 package enaptercli_test
 
 import (
