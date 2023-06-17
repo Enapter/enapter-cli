@@ -7,10 +7,11 @@ import (
 )
 
 type cmdBase struct {
-	token        string
-	apiHost      string
-	cloudAPIHost string
-	writer       io.Writer
+	token         string
+	apiHost       string
+	graphqlURL    string
+	websocketsURL string
+	writer        io.Writer
 }
 
 func (c *cmdBase) Flags() []cli.Flag {
@@ -31,12 +32,20 @@ func (c *cmdBase) Flags() []cli.Flag {
 			Destination: &c.apiHost,
 		},
 		&cli.StringFlag{
-			Name:        "cloud-api-host",
+			Name:        "gql-api-url",
 			Usage:       "Override Cloud API endpoint",
-			EnvVars:     []string{"ENAPTER_CLOUD_API_HOST"},
+			EnvVars:     []string{"ENAPTER_GQL_API_URL"},
 			Hidden:      true,
-			Value:       "cli.enapter.com",
-			Destination: &c.cloudAPIHost,
+			Value:       "https://cli.enapter.com/graphql",
+			Destination: &c.graphqlURL,
+		},
+		&cli.StringFlag{
+			Name:        "ws-api-url",
+			Usage:       "Override Cloud API endpoint",
+			EnvVars:     []string{"ENAPTER_WS_API_URL"},
+			Hidden:      true,
+			Value:       "wss://cli.enapter.com/cable",
+			Destination: &c.websocketsURL,
 		},
 	}
 }
