@@ -30,7 +30,7 @@ func buildCmdDevicesUploadLogs() *cli.Command {
 	return &cli.Command{
 		Name:               "upload-logs",
 		Usage:              "Show blueprint uploading logs",
-		CustomHelpTemplate: cmd.DevicesCmdHelpTemplate(),
+		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              flags,
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

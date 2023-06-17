@@ -36,7 +36,7 @@ func buildCmdDevicesLogs() *cli.Command {
 	return &cli.Command{
 		Name:               "logs",
 		Usage:              "Stream logs from a device",
-		CustomHelpTemplate: cmd.DevicesCmdHelpTemplate(),
+		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              flags,
 		Before: func(cliCtx *cli.Context) error {
 			if err := cmd.Before(cliCtx); err != nil {
