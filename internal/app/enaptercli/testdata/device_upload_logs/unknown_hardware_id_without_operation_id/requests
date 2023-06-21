@@ -1,0 +1,1 @@
+{"query":"query($hardware_id:ID!$last_int:Int!){device(hardwareId: $hardware_id){blueprintUpdateOperations(last: $last_int){nodes{id}}}}","variables":{"hardware_id":"SIM-WTM","last_int":2}}
