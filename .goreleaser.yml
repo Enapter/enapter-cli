@@ -23,13 +23,4 @@ checksum:
   name_template: '{{ .ProjectName }}-{{ .Version }}-checksums.txt'
 
 changelog:
-  sort: asc
-  filters:
-    exclude:
-    - '^chore:'
-    - '^docs:'
-    - '^refactor:'
-    - '^test:'
-    - 'README'
-    - Merge pull request
-    - Merge branch
+  skip: true
