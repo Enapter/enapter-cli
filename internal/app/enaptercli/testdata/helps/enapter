@@ -5,7 +5,7 @@ USAGE:
    enaptercli.test [global options] command [command options] [arguments...]
 
 DESCRIPTION:
-   Enapter CLI requires access token for authentication. At the moment we provide it only to selected partners. Contact us at support@enapter.com to get your token.
+   Enapter CLI requires access token for authentication. The token can be obtained in your Enapter Cloud account settings.
    
    Configure API token using ENAPTER_API_TOKEN environment variable or using --token global option.
 
