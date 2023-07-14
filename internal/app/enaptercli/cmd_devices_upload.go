@@ -6,6 +6,8 @@ import (
 	"encoding/base64"
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/urfave/cli/v2"
@@ -65,6 +67,16 @@ func (c *cmdDevicesUpload) upload(ctx context.Context, version string) error {
 		defer cancel()
 	}
 
+	files, err := c.blueprintFilesList()
+	if err != nil {
+		return err
+	}
+
+	fmt.Fprintln(c.writer, "Blueprint files to be uploaded:")
+	for _, name := range files {
+		fmt.Fprintln(c.writer, "*", name)
+	}
+
 	zipBytes, err := c.blueprintZip()
 	if err != nil {
 		return err
@@ -96,6 +108,26 @@ func (c *cmdDevicesUpload) upload(ctx context.Context, version string) error {
 
 	fmt.Fprintln(c.writer, "Done!")
 	return nil
+}
+
+func (c *cmdDevicesUpload) blueprintFilesList() ([]string, error) {
+	var files []string
+
+	err := filepath.Walk(c.blueprintDir,
+		func(name string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if !info.IsDir() {
+				files = append(files, name)
+			}
+			return nil
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	return files, nil
 }
 
 func (c *cmdDevicesUpload) blueprintZip() ([]byte, error) {

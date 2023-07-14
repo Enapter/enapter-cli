@@ -1,3 +1,5 @@
+Blueprint files to be uploaded:
+* testdata/device_upload/simple/blueprint/manifest.yml
 [ERROR] hmm... wait a minute
 [ERROR] oops!
 app exit with error: request execution failed
