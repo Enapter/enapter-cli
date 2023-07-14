@@ -31,8 +31,6 @@ type UpdateRuleError struct {
 func (c *Client) UpdateRule(
 	ctx context.Context, input UpdateRuleInput,
 ) (UpdateRuleData, []UpdateRuleError, error) {
-	client := graphql.NewClient(c.host, c.httpClient)
-
 	var mutation struct {
 		Rule struct {
 			Update struct {
@@ -58,7 +56,7 @@ func (c *Client) UpdateRule(
 		},
 	}
 
-	if err := client.Mutate(ctx, &mutation, variables); err != nil {
+	if err := c.client.Mutate(ctx, &mutation, variables); err != nil {
 		if errors.Is(err, context.DeadlineExceeded) {
 			err = ErrRequestTimedOut
 		}

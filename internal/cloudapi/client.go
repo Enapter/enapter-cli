@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/shurcooL/graphql"
 )
 
 type Client struct {
-	host       string
-	httpClient *http.Client
+	client *graphql.Client
 }
 
 func NewClientWithURL(httpClient *http.Client, host string) *Client {
@@ -16,8 +17,7 @@ func NewClientWithURL(httpClient *http.Client, host string) *Client {
 		httpClient = http.DefaultClient
 	}
 	return &Client{
-		host:       host,
-		httpClient: httpClient,
+		client: graphql.NewClient(host, httpClient),
 	}
 }
 
