@@ -41,7 +41,7 @@ func TestDeviceUploadWrongBlueprintDir(t *testing.T) {
 	defer app.Stop()
 
 	appErr := app.Wait()
-	require.EqualError(t, appErr, `failed to zip blueprint dir "wrong": lstat wrong: no such file or directory`)
+	require.EqualError(t, appErr, `lstat wrong: no such file or directory`)
 }
 
 type devicesUploadTestSettings struct {
