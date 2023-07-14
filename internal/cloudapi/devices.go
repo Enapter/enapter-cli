@@ -9,6 +9,56 @@ import (
 	"github.com/shurcooL/graphql"
 )
 
+type UploadBlueprintData struct {
+	Code        string
+	Message     string
+	Title       string
+	OperationID string
+}
+
+type UploadBlueprintError struct {
+	Code    string
+	Message string
+	Path    []string
+	Title   string
+}
+
+type uploadBlueprintMutation struct {
+	Device struct {
+		UploadBlueprint struct {
+			Data   UploadBlueprintData
+			Errors []UploadBlueprintError
+		} `graphql:"uploadBlueprint(input: $input)"`
+	}
+}
+
+func (c *Client) UploadBlueprint(
+	ctx context.Context, hardwareID string, blueprint []byte,
+) (UploadBlueprintData, []UploadBlueprintError, error) {
+	type UploadBlueprintInput struct {
+		Blueprint  graphql.String `json:"blueprint"`
+		HardwareID graphql.ID     `json:"hardwareId"`
+	}
+
+	variables := map[string]interface{}{
+		"input": UploadBlueprintInput{
+			Blueprint:  graphql.String(blueprint),
+			HardwareID: graphql.String(hardwareID),
+		},
+	}
+
+	var mutation uploadBlueprintMutation
+	if err := c.client.Mutate(ctx, &mutation, variables); err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			err = ErrRequestTimedOut
+		}
+		return UploadBlueprintData{}, nil, fmt.Errorf("mutate: %w", err)
+	}
+
+	uploadInfo := mutation.Device.UploadBlueprint
+	return uploadInfo.Data, uploadInfo.Errors, nil
+}
+
 type OperationLog struct {
 	Payload   string
 	CreatedAt string
