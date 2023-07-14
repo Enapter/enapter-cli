@@ -3,6 +3,8 @@ package cloudapi
 import "errors"
 
 var (
-	ErrRequestTimedOut = errors.New("request timed out")
-	ErrFinished        = errors.New("finished")
+	ErrFinishedWithError = errors.New("request execution failed")
+	ErrLogStatusError    = errors.New("error during request execution")
+	ErrRequestTimedOut   = errors.New("request timed out")
+	ErrFinished          = errors.New("finished")
 )
