@@ -16,6 +16,7 @@ func buildCmdDevices() *cli.Command {
 			buildCmdDevicesLogs(),
 			buildCmdDevicesUploadLogs(),
 			buildCmdDevicesExecute(),
+			buildCmdDevicesTelemetry(),
 		},
 	}
 }
