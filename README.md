@@ -51,3 +51,9 @@ Enapter CLI requires access token for authentication. Obtaining of the token is 
   ```
 
 Please note that if you don't save your token, it is not possible to reveal it anymore. You need generate new token.
+
+### Autocompletion in your favourite terminal app
+
+In order to make life easier with command line interface, we recommend to install [Fig - the next-generation command line](https://fig.io/). This autocompletion tool has native support for the Enapter CLI for Mac OS X and Linux.
+
+<img src="./.assets/enapter-cli-fig-intergration.gif">
