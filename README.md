@@ -56,4 +56,4 @@ Please note that if you don't save your token, it is not possible to reveal it a
 
 In order to make life easier with command line interface, we recommend to install [Fig - the next-generation command line](https://fig.io/). This autocompletion tool has native support for the Enapter CLI for Mac OS X and Linux.
 
-<img src="./.assets/enapter-cli-fig-intergration.gif">
+<img src="./.assets/enapter-cli-fig-integration.gif">
