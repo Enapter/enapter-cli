@@ -1,3 +1,4 @@
 .vscode
 ^enapter$
 dist
+.DS_Store
