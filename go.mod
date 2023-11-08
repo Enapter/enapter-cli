@@ -1,6 +1,6 @@
 module github.com/enapter/enapter-cli
 
-go 1.17
+go 1.19
 
 require (
 	github.com/bxcodec/faker/v3 v3.5.0
