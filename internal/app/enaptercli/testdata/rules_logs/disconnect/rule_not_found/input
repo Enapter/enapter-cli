@@ -1,5 +1,0 @@
-{"type":"welcome"}
-
-{"identifier":"{\"channel\":\"RuleChannel\",\"rule_id\":\"SIM-RULE\"}","type":"message","message":{"topic":"error","payload":"Rule not found"}}
-
-{"identifier":"{\"channel\":\"RuleChannel\",\"rule_id\":\"SIM-RULE\"}","type":"reject_subscription"}

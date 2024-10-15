@@ -1,0 +1,13 @@
+NAME:
+   enaptercli.test blueprints inspect - Get blueprint metainfo
+
+USAGE:
+   enaptercli.test blueprints inspect [command options] <blueprint id or name>
+
+OPTIONS:
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

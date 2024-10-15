@@ -3,6 +3,7 @@ package enaptercli
 import (
 	"archive/zip"
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -17,12 +18,12 @@ func NewApp() *cli.App {
 
 	app.Usage = "Command line interface for Enapter services."
 	app.Description = "Enapter CLI requires access token for authentication. " +
-		"The token can be obtained in your Enapter Cloud account settings.\n\n" +
-		"Configure API token using ENAPTER_API_TOKEN environment variable or using --token global option."
+		"The token can be obtained in your Enapter Cloud account settings."
 
 	app.Commands = []*cli.Command{
 		buildCmdDevices(),
-		buildCmdRules(),
+		buildCmdBlueprints(),
+		buildCmdProvisioning(),
 	}
 
 	return app
@@ -30,27 +31,29 @@ func NewApp() *cli.App {
 
 func zipDir(path string) ([]byte, error) {
 	buf := &bytes.Buffer{}
-	myZip := zip.NewWriter(buf)
+	zw := zip.NewWriter(buf)
 
-	path = strings.TrimPrefix(path, "./")
-
-	err := filepath.Walk(path, func(filePath string, info os.FileInfo, err error) error {
+	err := filepath.WalkDir(path, func(filePath string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if info.IsDir() {
+		if entry.IsDir() {
 			return nil
 		}
+
 		relPath := strings.TrimPrefix(filePath, path)
 		relPath = strings.TrimPrefix(relPath, "/")
-		zipFile, err := myZip.Create(relPath)
+		zipFile, err := zw.Create(relPath)
 		if err != nil {
 			return err
 		}
+
 		fsFile, err := os.Open(filePath)
 		if err != nil {
 			return err
 		}
+		defer fsFile.Close()
+
 		_, err = io.Copy(zipFile, fsFile)
 		if err != nil {
 			return err
@@ -58,12 +61,12 @@ func zipDir(path string) ([]byte, error) {
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("walk dir: %w", err)
 	}
 
-	if err := myZip.Close(); err != nil {
-		return nil, err
+	if err := zw.Close(); err != nil {
+		return nil, fmt.Errorf("close zip: %w", err)
 	}
 
-	return buf.Bytes(), err
+	return buf.Bytes(), nil
 }

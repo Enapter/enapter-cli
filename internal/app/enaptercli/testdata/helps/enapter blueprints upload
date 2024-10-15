@@ -1,0 +1,13 @@
+NAME:
+   enaptercli.test blueprints upload - Upload blueprint directory into Platform
+
+USAGE:
+   enaptercli.test blueprints upload [command options] <blueprint path (zip file or directory)>
+
+OPTIONS:
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

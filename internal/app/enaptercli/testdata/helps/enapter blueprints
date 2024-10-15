@@ -1,0 +1,14 @@
+NAME:
+   enaptercli.test blueprints - Manage blueprints
+
+USAGE:
+   enaptercli.test blueprints command [command options]
+
+COMMANDS:
+   upload    Upload blueprint directory into Platform
+   download  Download blueprint zip from Platform
+   inspect   Get blueprint metainfo
+   help, h   Shows a list of commands or help for one command
+
+OPTIONS:
+   --help, -h  show help

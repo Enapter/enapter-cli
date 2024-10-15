@@ -13,8 +13,10 @@ This tool helps Enapter customers to work with devices. It useful in the followi
 ###  macOS - recommended
 
 ```bash
-brew tap enapter/tap && brew install enapter
+brew tap enapter/tap && brew install enapter@3
 ```
+
+If you already have installed previous version you probably need to update symblink as brew suggested you after install new version.
 
 ### Get prebuilt binaries
 

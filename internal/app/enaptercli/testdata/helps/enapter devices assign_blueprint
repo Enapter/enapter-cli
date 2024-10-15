@@ -1,0 +1,15 @@
+NAME:
+   enaptercli.test devices assign_blueprint - Assign blueprint to device
+
+USAGE:
+   enaptercli.test devices assign_blueprint [command options]
+
+OPTIONS:
+   --device_id value, -d value     device ID
+   --blueprint_id value, -b value  blueprint ID to assign
+   --help, -h                      show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

@@ -1,32 +1,61 @@
 package enaptercli
 
-import "github.com/urfave/cli/v2"
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+
+	"github.com/urfave/cli/v2"
+)
 
 type cmdDevices struct {
 	cmdBase
-	hardwareID string
+	deviceID string
 }
 
 func buildCmdDevices() *cli.Command {
 	return &cli.Command{
 		Name:  "devices",
-		Usage: "Device information and management commands.",
+		Usage: "Manage devices",
 		Subcommands: []*cli.Command{
-			buildCmdDevicesUpload(),
+			buildCmdDevicesAssignBlueprint(),
 			buildCmdDevicesLogs(),
-			buildCmdDevicesUploadLogs(),
-			buildCmdDevicesExecute(),
+			buildCmdDevicesLogsf(),
 		},
 	}
 }
 
 func (c *cmdDevices) Flags() []cli.Flag {
 	flags := c.cmdBase.Flags()
-	flags = append(flags, &cli.StringFlag{
-		Name:        "hardware-id",
-		Usage:       "Hardware ID of the device; can be obtained in cloud.enapter.com",
+	return append(flags, &cli.StringFlag{
+		Name:        "device_id",
+		Aliases:     []string{"d"},
+		Usage:       "device ID",
+		Destination: &c.deviceID,
 		Required:    true,
-		Destination: &c.hardwareID,
 	})
-	return flags
+}
+
+func (c *cmdDevices) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
+	p.Path = "/devices/" + c.deviceID
+	return c.cmdBase.doHTTPRequest(ctx, p)
+}
+
+func (c *cmdDevices) parseAndDumpDeviceLogs(body io.Reader) (int, error) {
+	var resp struct {
+		Logs []struct {
+			ReceivedAt string `json:"received_at"`
+			Timestamp  string `json:"timestamp"`
+			Severity   string `json:"severity"`
+			Message    string `json:"message"`
+		} `json:"logs"`
+	}
+	if err := json.NewDecoder(body).Decode(&resp); err != nil {
+		return 0, fmt.Errorf("parse response body: %w", err)
+	}
+	for _, l := range resp.Logs {
+		fmt.Fprintf(c.writer, "%s [%s] %s\n", l.ReceivedAt, l.Severity, l.Message)
+	}
+	return len(resp.Logs), nil
 }

@@ -6,8 +6,8 @@ linters:
   enable:
     - asciicheck
     - bodyclose
-    - deadcode
-    - depguard
+    # - deadcode
+    # - depguard
     - dogsled
     - dupl
     - errcheck
@@ -30,7 +30,7 @@ linters:
     - gofumpt
     - goheader
     - goimports
-    - golint
+    # - golint
     - gomnd
     - gomodguard
     - goprintffuncname
@@ -40,7 +40,7 @@ linters:
     - ineffassign
     # - interfacer # is prone to bad suggestions (officialy deprecated)
     - lll
-    - maligned
+    # - maligned
     - misspell
     - nakedret
     - nestif
@@ -48,11 +48,12 @@ linters:
     - noctx
     - nolintlint
     - prealloc
+    - revive
     - rowserrcheck
-    - scopelint
+    # - scopelint
     - sqlclosecheck
     - staticcheck
-    - structcheck
+    # - structcheck
     - stylecheck
     - testpackage
     - tparallel
@@ -60,7 +61,7 @@ linters:
     - unconvert
     - unparam
     - unused
-    - varcheck
+    # - varcheck
     - whitespace
     # - wrapcheck
     # - wsl

@@ -1,13 +1,21 @@
 NAME:
-   enaptercli.test devices logs - Stream logs from a device
+   enaptercli.test devices logs - Show device logs
 
 USAGE:
-   enaptercli.test devices logs [command options] [arguments...]
+   enaptercli.test devices logs [command options]
 
 OPTIONS:
-   --hardware-id value  Hardware ID of the device; can be obtained in cloud.enapter.com
-   --help, -h           show help (default: false)
-   
+   --device_id value, -d value  device ID
+   --from value, -f value       from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
+   --to value, -t value         to timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
+   --limit value, -l value      maximum number of logs to retrieve (default: 0)
+   --offset value, -o value     number of logs to skip on retrieve (default: 0)
+   --severity value, -s value   filter logs by severity
+   --order value                order logs by criteria (received_at_asc[default], received_at_desc)
+   --show value                 filter logs by criteria (all[default], persist_only, temporary_only)
+   --help, -h                   show help
+
 ENVIRONMENT VARIABLES:
    ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
 

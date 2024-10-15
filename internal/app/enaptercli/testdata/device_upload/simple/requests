@@ -1,7 +1,0 @@
-{"query":"mutation($input:UploadBlueprintInput!){device{uploadBlueprint(input: $input){data{code,message,title,operationId},errors{code,message,path,title}}}}","variables":{"input":{"blueprint":"data:application/gzip;base64,UEsDBBQACAAIAAAAAAAAAAAAAAAAAAAAAAAMAAAAbWFuaWZlc3QueW1sAQAA//9QSwcIAAAAAAUAAAAAAAAAUEsBAhQAFAAIAAgAAAAAAAAAAAAFAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAG1hbmlmZXN0LnltbFBLBQYAAAAAAQABADoAAAA/AAAAAAA=","hardwareId":"SIM-WTM"}}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"","hardware_id":"SIM-WTM","operation_id":"25"}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"MQ","hardware_id":"SIM-WTM","operation_id":"25"}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"NA","hardware_id":"SIM-WTM","operation_id":"25"}}

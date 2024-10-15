@@ -1,0 +1,15 @@
+NAME:
+   enaptercli.test blueprints download - Download blueprint zip from Platform
+
+USAGE:
+   enaptercli.test blueprints download [command options]
+
+OPTIONS:
+   --blueprint_id value, -b value  blueprint name or ID to download
+   --output value, -o value        blueprint file name to save
+   --help, -h                      show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

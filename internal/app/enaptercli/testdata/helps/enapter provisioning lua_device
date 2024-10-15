@@ -1,0 +1,16 @@
+NAME:
+   enaptercli.test provisioning lua_device - Create a new Lua device
+
+USAGE:
+   enaptercli.test provisioning lua_device [command options]
+
+OPTIONS:
+   --runtime_id value, -r value    runtime UCM device ID where to run a new Lua device
+   --device_name value, -n value   name of a new Lua device
+   --blueprint_id value, -b value  blueprint ID of a new Lua device
+   --help, -h                      show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

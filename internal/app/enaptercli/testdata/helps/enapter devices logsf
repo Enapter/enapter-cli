@@ -1,0 +1,14 @@
+NAME:
+   enaptercli.test devices logsf - Follow device logs
+
+USAGE:
+   enaptercli.test devices logsf [command options]
+
+OPTIONS:
+   --device_id value, -d value  device ID
+   --help, -h                   show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER_API_TOKEN  Enapter API access token
+   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+
