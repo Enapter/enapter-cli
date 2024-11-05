@@ -73,7 +73,7 @@ type doHTTPRequestParams struct {
 }
 
 func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
-	req, err := http.NewRequestWithContext(ctx, p.Method, c.apiHost+"/v2"+p.Path, p.Body)
+	req, err := http.NewRequestWithContext(ctx, p.Method, c.apiHost+"/v3"+p.Path, p.Body)
 	if err != nil {
 		return fmt.Errorf("build http request: %w", err)
 	}
