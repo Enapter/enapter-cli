@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/url"
 
 	"github.com/urfave/cli/v2"
 )
@@ -38,7 +39,11 @@ func (c *cmdDevices) Flags() []cli.Flag {
 }
 
 func (c *cmdDevices) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
-	p.Path = "/devices/" + c.deviceID
+	path, err := url.JoinPath("/devices", c.deviceID, p.Path)
+	if err != nil {
+		return fmt.Errorf("join path: %w", err)
+	}
+	p.Path = path
 	return c.cmdBase.doHTTPRequest(ctx, p)
 }
 
