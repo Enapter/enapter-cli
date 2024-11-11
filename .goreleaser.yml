@@ -3,7 +3,7 @@ version: 2
 project_name: enapter-cli
 
 builds:
-  - binary: enapter
+  - binary: enapter3
     main: ./cmd/enapter/
     ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
     env:
@@ -54,6 +54,6 @@ brews:
     description: Command-line tool for Enapter Energy Management System Toolkit
 
     install: |
-      bin.install "enapter"
+      bin.install "enapter3"
     test: |
-      assert_match "Enapter CLI #{version}", shell_output("#{bin}/enapter --version")
+      assert_match "Enapter CLI #{version}", shell_output("#{bin}/enapter3 --version")

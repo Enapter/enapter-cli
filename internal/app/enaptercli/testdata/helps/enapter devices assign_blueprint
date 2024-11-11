@@ -10,6 +10,6 @@ OPTIONS:
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:
-   ENAPTER_API_TOKEN  Enapter API access token
-   ENAPTER_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
 
