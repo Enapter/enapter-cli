@@ -16,8 +16,6 @@ This tool helps Enapter customers to work with devices. It useful in the followi
 brew tap enapter/tap && brew install enapter@3
 ```
 
-If you already have installed previous version you probably need to update symblink as brew suggested you after install new version.
-
 ### Get prebuilt binaries
 
 Choose your platform and required release on the [Releases page](https://github.com/Enapter/enapter-cli/releases).
@@ -46,10 +44,10 @@ Enapter CLI requires access token for authentication. Obtaining of the token is 
 4. Follow the instructions on the screen
 <img src="./.assets/token.png">
 
-5. Set environment variable `ENAPTER_API_TOKEN` with new token. To make it permanent don't forget to add it to configuration files of your shell.
+5. Set environment variable `ENAPTER3_API_TOKEN` with new token. To make it permanent don't forget to add it to configuration files of your shell.
 
   ```bash
-  export ENAPTER_API_TOKEN="your token"
+  export ENAPTER3_API_TOKEN="your token"
   ```
 
 Please note that if you don't save your token, it is not possible to reveal it anymore. You need generate new token.

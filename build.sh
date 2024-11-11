@@ -2,7 +2,7 @@
 
 set -ex
 
-output=${1:-enapter}
+output=${1:-enapter3}
 
 BUILD_VERSION=$(git describe --tag 2> /dev/null)
 BUILD_COMMIT=$(git rev-parse --short HEAD)
