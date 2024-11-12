@@ -5,8 +5,8 @@ USAGE:
    enaptercli.test devices assign_blueprint [command options]
 
 OPTIONS:
-   --device_id value, -d value     device ID
-   --blueprint_id value, -b value  blueprint ID to assign
+   --device-id value, -d value     device ID
+   --blueprint-id value, -b value  blueprint ID to assign
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:

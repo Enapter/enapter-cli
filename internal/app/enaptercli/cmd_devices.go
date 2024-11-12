@@ -30,7 +30,7 @@ func buildCmdDevices() *cli.Command {
 func (c *cmdDevices) Flags() []cli.Flag {
 	flags := c.cmdBase.Flags()
 	return append(flags, &cli.StringFlag{
-		Name:        "device_id",
+		Name:        "device-id",
 		Aliases:     []string{"d"},
 		Usage:       "device ID",
 		Destination: &c.deviceID,

@@ -5,7 +5,7 @@ USAGE:
    enaptercli.test devices logsf [command options]
 
 OPTIONS:
-   --device_id value, -d value  device ID
+   --device-id value, -d value  device ID
    --help, -h                   show help
 
 ENVIRONMENT VARIABLES:

@@ -33,13 +33,13 @@ func buildCmdProvisioningStandalone() *cli.Command {
 func (c *cmdProvisioningStandalone) Flags() []cli.Flag {
 	flags := c.cmdProvisioning.Flags()
 	return append(flags, &cli.StringFlag{
-		Name:        "site_id",
+		Name:        "site-id",
 		Aliases:     []string{"s"},
 		Usage:       "site ID where to craate device",
 		Destination: &c.siteID,
 		Required:    true,
 	}, &cli.StringFlag{
-		Name:        "device_name",
+		Name:        "device-name",
 		Aliases:     []string{"n"},
 		Usage:       "name for a new device",
 		Destination: &c.deviceName,

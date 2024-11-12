@@ -32,7 +32,7 @@ func buildCmdDevicesAssignBlueprint() *cli.Command {
 func (c *cmdDevicesAssignBlueprint) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
 	return append(flags, &cli.StringFlag{
-		Name:        "blueprint_id",
+		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
 		Usage:       "blueprint ID to assign",
 		Destination: &c.blueprintID,

@@ -5,8 +5,8 @@ USAGE:
    enaptercli.test provisioning standalone [command options]
 
 OPTIONS:
-   --site_id value, -s value      site ID where to craate device
-   --device_name value, -n value  name for a new device
+   --site-id value, -s value      site ID where to craate device
+   --device-name value, -n value  name for a new device
    --help, -h                     show help
 
 ENVIRONMENT VARIABLES:
