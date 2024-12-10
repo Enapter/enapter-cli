@@ -8,4 +8,5 @@ var (
 	errBlueprintIDMissed    = errors.New("blueprint ID is missed")
 	errBlueprintPathMissed  = errors.New("blueprint path is missed")
 	errUnsupportedFlagValue = errors.New("unsupported flag value")
+	errProfilesPathMissed   = errors.New("profiles path is missed")
 )

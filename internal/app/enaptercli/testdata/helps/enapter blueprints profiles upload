@@ -1,0 +1,13 @@
+NAME:
+   enaptercli.test blueprints profiles upload - Upload profiles into Platform
+
+USAGE:
+   enaptercli.test blueprints profiles upload [command options] profiles zip file path
+
+OPTIONS:
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

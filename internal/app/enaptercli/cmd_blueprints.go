@@ -15,6 +15,7 @@ func buildCmdBlueprints() *cli.Command {
 		Name:  "blueprints",
 		Usage: "Manage blueprints",
 		Subcommands: []*cli.Command{
+			buildCmdBlueprintsProfiles(),
 			buildCmdBlueprintsUpload(),
 			buildCmdBlueprintsDownload(),
 			buildCmdBlueprintsInspect(),

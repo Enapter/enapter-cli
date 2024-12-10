@@ -1,0 +1,14 @@
+NAME:
+   enaptercli.test blueprints profiles download - Download profiles zip from Platform
+
+USAGE:
+   enaptercli.test blueprints profiles download [command options]
+
+OPTIONS:
+   --output value, -o value  file name to save
+   --help, -h                show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

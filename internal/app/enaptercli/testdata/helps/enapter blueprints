@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test blueprints command [command options]
 
 COMMANDS:
+   profiles  Manage blueprints profiles
    upload    Upload blueprint directory into Platform
    download  Download blueprint zip from Platform
    inspect   Get blueprint metainfo
