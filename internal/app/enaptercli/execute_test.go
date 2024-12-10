@@ -33,12 +33,21 @@ func TestHelpMessages(t *testing.T) {
 			if update {
 				err := os.WriteFile(exepctedFileName, actual, 0o600)
 				require.NoError(t, err)
+			} else {
+				require.Equal(t, readFileToString(t, exepctedFileName), string(actual))
 			}
-
-			expected, err := os.ReadFile(exepctedFileName)
-			require.NoError(t, err)
-
-			require.Equal(t, string(expected), string(actual))
 		})
 	}
+}
+
+func readFileToString(t *testing.T, path string) string {
+	t.Helper()
+	return string(shouldReadFile(t, path))
+}
+
+func shouldReadFile(t *testing.T, path string) []byte {
+	t.Helper()
+	d, err := os.ReadFile(path)
+	require.NoError(t, err)
+	return d
 }
