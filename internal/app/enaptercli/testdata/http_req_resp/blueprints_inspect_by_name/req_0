@@ -1,0 +1,16 @@
+{
+  "Method": "GET",
+  "URL": "/v3/blueprints/enapter/test_blueprint_name/latest",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "User-Agent": [
+      "Go-http-client/1.1"
+    ],
+    "X-Enapter-Auth-Token": [
+      "enapter_api_test_token"
+    ]
+  },
+  "Body": ""
+}
