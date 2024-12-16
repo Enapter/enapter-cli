@@ -51,7 +51,7 @@ func (c *cmdBlueprintsDownload) Flags() []cli.Flag {
 func (c *cmdBlueprintsDownload) do(ctx context.Context) error {
 	if c.outputFileName == "" {
 		c.outputFileName = strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(c.blueprintID,
-			":", "_"), ".", "_"), "/", "_") + ".zip"
+			":", "_"), ".", "_"), "/", "_") + ".enbp"
 	}
 
 	if !isBlueprintID(c.blueprintID) {
