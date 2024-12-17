@@ -1,0 +1,15 @@
+NAME:
+   enaptercli.test rule-engine rule update - Update a rule
+
+USAGE:
+   enaptercli.test rule-engine rule update [command options] RULE
+
+OPTIONS:
+   --slug value  A new rule slug
+   --name value  A new rule name
+   --help, -h    show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

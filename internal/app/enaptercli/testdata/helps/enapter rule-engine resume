@@ -1,0 +1,13 @@
+NAME:
+   enaptercli.test rule-engine resume - Resume execution of rules
+
+USAGE:
+   enaptercli.test rule-engine resume [command options]
+
+OPTIONS:
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+
