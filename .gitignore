@@ -1,5 +1,5 @@
 .vscode
-^enapter3$
+enapter3
 dist
 .DS_Store
 .env
