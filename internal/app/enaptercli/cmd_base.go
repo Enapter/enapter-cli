@@ -15,6 +15,7 @@ import (
 
 type cmdBase struct {
 	token      string
+	user       string
 	apiHost    string
 	writer     io.Writer
 	httpClient *http.Client
@@ -28,6 +29,13 @@ func (c *cmdBase) Flags() []cli.Flag {
 			EnvVars:     []string{"ENAPTER3_API_TOKEN"},
 			Hidden:      true,
 			Destination: &c.token,
+			Category:    "HTTP API Configuration:",
+		},
+		&cli.StringFlag{
+			Name:        "user",
+			Usage:       "Enapter API user",
+			Hidden:      true,
+			Destination: &c.user,
 			Category:    "HTTP API Configuration:",
 		},
 		&cli.StringFlag{
@@ -79,6 +87,9 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 	}
 
 	req.Header.Add("X-Enapter-Auth-Token", c.token)
+	if c.user != "" {
+		req.Header.Add("X-Enapter-Auth-User", c.user)
+	}
 	req.URL.RawQuery = p.Query.Encode()
 
 	resp, err := c.httpClient.Do(req)
