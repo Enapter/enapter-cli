@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"runtime"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/enaptercli"
 )
@@ -20,9 +20,9 @@ var (
 )
 
 func main() {
-	cli.VersionPrinter = func(c *cli.Context) {
+	cli.VersionPrinter = func(c *cli.Command) {
 		fmt.Printf("Enapter CLI %s, commit %s, built at %s, Go version %s\n",
-			c.App.Version, commit, date, runtime.Version())
+			c.Version, commit, date, runtime.Version())
 	}
 
 	app := enaptercli.NewApp()
@@ -39,7 +39,7 @@ func main() {
 		os.Exit(1)
 	}()
 
-	if err := app.RunContext(ctx, os.Args); err != nil {
+	if err := app.Run(ctx, os.Args); err != nil {
 		fmt.Println("")
 		fmt.Println("Error:", err)
 		os.Exit(1)

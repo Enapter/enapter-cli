@@ -9,12 +9,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // NewApp creates a new Enapter CLI tool application instance.
-func NewApp() *cli.App {
-	app := cli.NewApp()
+func NewApp() *cli.Command {
+	app := new(cli.Command)
 
 	app.Usage = "Command line interface for Enapter services."
 	app.Description = "Enapter CLI requires access token for authentication. " +

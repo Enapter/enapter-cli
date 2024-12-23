@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdBlueprintsUpload struct {
@@ -22,23 +22,25 @@ func buildCmdBlueprintsUpload() *cli.Command {
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Args:               true,
 		ArgsUsage:          "<blueprint path (zip file or directory)>",
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.upload(cliCtx.Context, cliCtx.Args().Get(0))
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.upload(ctx, cm.Args().Get(0))
 		},
 	}
 }
 
-func (c *cmdBlueprintsUpload) Before(cliCtx *cli.Context) error {
-	if err := c.cmdBlueprints.Before(cliCtx); err != nil {
-		return err
+func (c *cmdBlueprintsUpload) Before(
+	ctx context.Context, cm *cli.Command,
+) (context.Context, error) {
+	ctx, err := c.cmdBlueprints.Before(ctx, cm)
+	if err != nil {
+		return nil, err
 	}
 
-	if cliCtx.Args().Get(0) == "" {
-		return errBlueprintPathMissed
+	if cm.Args().Get(0) == "" {
+		return nil, errBlueprintPathMissed
 	}
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdBlueprintsUpload) upload(ctx context.Context, blueprintPath string) error {

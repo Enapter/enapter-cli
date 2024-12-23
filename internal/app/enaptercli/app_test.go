@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/enaptercli"
 )
@@ -17,7 +17,7 @@ import (
 var errExitTimeout = errors.New("exit timed out")
 
 type testApp struct {
-	app    *cli.App
+	app    *cli.Command
 	outBuf *lineBuffer
 	errBuf *bytes.Buffer
 	errCh  chan error
@@ -32,12 +32,12 @@ func startTestApp(args ...string) *testApp {
 	app.HideVersion = true
 	app.Writer = outBuf
 	app.ErrWriter = errBuf
-	app.ExitErrHandler = func(*cli.Context, error) {}
+	app.ExitErrHandler = func(context.Context, *cli.Command, error) {}
 
 	errCh := make(chan error, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
-		errCh <- app.RunContext(ctx, args)
+		errCh <- app.Run(ctx, args)
 	}()
 
 	return &testApp{

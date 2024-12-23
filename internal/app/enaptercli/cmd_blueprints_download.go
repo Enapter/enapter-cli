@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdBlueprintsDownload struct {
@@ -26,8 +26,8 @@ func buildCmdBlueprintsDownload() *cli.Command {
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }

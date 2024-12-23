@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdBase struct {
@@ -26,8 +26,7 @@ func (c *cmdBase) Flags() []cli.Flag {
 		&cli.StringFlag{
 			Name:        "token",
 			Usage:       "Enapter API token",
-			EnvVars:     []string{"ENAPTER3_API_TOKEN"},
-			Hidden:      true,
+			Sources:     cli.EnvVars("ENAPTER3_API_TOKEN"),
 			Destination: &c.token,
 			Category:    "HTTP API Configuration:",
 		},
@@ -41,12 +40,11 @@ func (c *cmdBase) Flags() []cli.Flag {
 		&cli.StringFlag{
 			Name:        "api-host",
 			Usage:       "Override API endpoint",
-			EnvVars:     []string{"ENAPTER3_API_HOST"},
-			Hidden:      true,
+			Sources:     cli.EnvVars("ENAPTER3_API_HOST"),
 			Value:       "https://api.enapter.com",
 			Destination: &c.apiHost,
 			Category:    "HTTP API Configuration:",
-			Action: func(_ *cli.Context, v string) error {
+			Action: func(_ context.Context, _ *cli.Command, v string) error {
 				c.apiHost = strings.TrimSuffix(v, "/")
 				return nil
 			},
@@ -54,13 +52,10 @@ func (c *cmdBase) Flags() []cli.Flag {
 	}
 }
 
-func (c *cmdBase) Before(cliCtx *cli.Context) error {
-	if cliCtx.String("token") == "" {
-		return errAPITokenMissed
-	}
-	c.writer = cliCtx.App.Writer
+func (c *cmdBase) Before(ctx context.Context, cm *cli.Command) (context.Context, error) {
+	c.writer = cm.Writer
 	c.httpClient = http.DefaultClient
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdBase) HelpTemplate() string {

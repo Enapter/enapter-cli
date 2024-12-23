@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngineRuleDisable struct {
@@ -19,27 +19,29 @@ func buildCmdRuleEngineRuleDisable() *cli.Command {
 	return &cli.Command{
 		Name:               "disable",
 		Usage:              "Disable one or more rules",
-		Args:               true,
 		ArgsUsage:          "RULE [RULE...]",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context, cliCtx.Args().Slice())
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.do(ctx, cm.Args().Slice())
 		},
 	}
 }
 
-func (c *cmdRuleEngineRuleDisable) Before(cliCtx *cli.Context) error {
-	if err := c.cmdRuleEngineRule.Before(cliCtx); err != nil {
-		return err
+func (c *cmdRuleEngineRuleDisable) Before(
+	ctx context.Context, cm *cli.Command,
+) (context.Context, error) {
+	ctx, err := c.cmdRuleEngineRule.Before(ctx, cm)
+	if err != nil {
+		return nil, err
 	}
 
-	if cliCtx.Args().Get(0) == "" {
-		return errRequiresAtLeastOneArgument
+	if cm.Args().Get(0) == "" {
+		return nil, errRequiresAtLeastOneArgument
 	}
 
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdRuleEngineRuleDisable) do(ctx context.Context, rules []string) error {

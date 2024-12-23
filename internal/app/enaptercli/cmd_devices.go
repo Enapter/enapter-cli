@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDevices struct {
@@ -19,7 +19,7 @@ func buildCmdDevices() *cli.Command {
 	return &cli.Command{
 		Name:  "devices",
 		Usage: "Manage devices",
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdDevicesAssignBlueprint(),
 			buildCmdDevicesLogs(),
 			buildCmdDevicesLogsf(),

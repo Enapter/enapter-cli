@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdBlueprintsInpsect struct {
@@ -19,22 +19,24 @@ func buildCmdBlueprintsInspect() *cli.Command {
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Args:               true,
 		ArgsUsage:          "<blueprint id or name>",
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.inspect(cliCtx.Context, cliCtx.Args().Get(0))
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.inspect(ctx, cm.Args().Get(0))
 		},
 	}
 }
 
-func (c *cmdBlueprintsInpsect) Before(cliCtx *cli.Context) error {
-	if err := c.cmdBlueprints.Before(cliCtx); err != nil {
-		return err
+func (c *cmdBlueprintsInpsect) Before(
+	ctx context.Context, cm *cli.Command,
+) (context.Context, error) {
+	ctx, err := c.cmdBlueprints.Before(ctx, cm)
+	if err != nil {
+		return nil, err
 	}
-	if cliCtx.Args().Get(0) == "" {
-		return errBlueprintIDMissed
+	if cm.Args().Get(0) == "" {
+		return nil, errBlueprintIDMissed
 	}
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdBlueprintsInpsect) inspect(ctx context.Context, blueprintID string) error {

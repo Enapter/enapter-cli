@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngine struct {
@@ -16,7 +16,7 @@ func buildCmdRuleEngine() *cli.Command {
 	return &cli.Command{
 		Name:  "rule-engine",
 		Usage: "Manage the rule engine",
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdRuleEngineInspect(),
 			buildCmdRuleEngineSuspend(),
 			buildCmdRuleEngineResume(),

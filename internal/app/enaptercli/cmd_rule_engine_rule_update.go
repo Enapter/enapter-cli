@@ -2,12 +2,13 @@ package enaptercli
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngineRuleUpdate struct {
@@ -21,27 +22,29 @@ func buildCmdRuleEngineRuleUpdate() *cli.Command {
 	return &cli.Command{
 		Name:               "update",
 		Usage:              "Update a rule",
-		Args:               true,
 		ArgsUsage:          "RULE",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx, cliCtx.Args().First())
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.do(ctx, cm, cm.Args().First())
 		},
 	}
 }
 
-func (c *cmdRuleEngineRuleUpdate) Before(cliCtx *cli.Context) error {
-	if err := c.cmdRuleEngineRule.Before(cliCtx); err != nil {
-		return err
+func (c *cmdRuleEngineRuleUpdate) Before(
+	ctx context.Context, cm *cli.Command,
+) (context.Context, error) {
+	ctx, err := c.cmdRuleEngineRule.Before(ctx, cm)
+	if err != nil {
+		return nil, err
 	}
 
-	if cliCtx.Args().Get(0) == "" {
-		return errRequiresAtLeastOneArgument
+	if cm.Args().Get(0) == "" {
+		return nil, errRequiresAtLeastOneArgument
 	}
 
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdRuleEngineRuleUpdate) Flags() []cli.Flag {
@@ -59,7 +62,9 @@ func (c *cmdRuleEngineRuleUpdate) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context, rule string) error {
+func (c *cmdRuleEngineRuleUpdate) do(
+	ctx context.Context, cm *cli.Command, rule string,
+) error {
 	payload := struct {
 		Rule       map[string]any `json:"rule"`
 		UpdateMask string         `json:"update_mask"`
@@ -68,11 +73,11 @@ func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context, rule string) error {
 		UpdateMask: "",
 	}
 
-	if cliCtx.IsSet("slug") {
+	if cm.IsSet("slug") {
 		payload.Rule["slug"] = c.slug
 		payload.UpdateMask = payload.UpdateMask + "slug,"
 	}
-	if cliCtx.IsSet("name") {
+	if cm.IsSet("name") {
 		payload.Rule["name"] = c.name
 		payload.UpdateMask = payload.UpdateMask + "name,"
 	}
@@ -84,7 +89,7 @@ func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context, rule string) error {
 		return fmt.Errorf("build request: %w", err)
 	}
 
-	return c.doHTTPRequest(cliCtx.Context, doHTTPRequestParams{
+	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodPatch,
 		Path:   "/" + rule,
 		Body:   bytes.NewReader(body),

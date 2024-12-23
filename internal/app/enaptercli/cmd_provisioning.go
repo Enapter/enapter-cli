@@ -1,7 +1,7 @@
 package enaptercli
 
 import (
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdProvisioning struct {
@@ -12,7 +12,7 @@ func buildCmdProvisioning() *cli.Command {
 	return &cli.Command{
 		Name:  "provisioning",
 		Usage: "Create devices of different types",
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdProvisioningStandalone(),
 			buildCmdProvisioningLua(),
 		},

@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngineRuleCreate struct {
@@ -18,7 +18,7 @@ type cmdRuleEngineRuleCreate struct {
 	slug           string
 	name           string
 	code           string
-	runtimeVersion int
+	runtimeVersion int64
 	execInterval   time.Duration
 	disable        bool
 }
@@ -31,8 +31,8 @@ func buildCmdRuleEngineRuleCreate() *cli.Command {
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }

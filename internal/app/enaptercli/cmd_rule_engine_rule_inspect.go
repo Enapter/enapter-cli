@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngineRuleInspect struct {
@@ -16,27 +16,29 @@ func buildCmdRuleEngineRuleInspect() *cli.Command {
 	return &cli.Command{
 		Name:               "inspect",
 		Usage:              "Inspect a rule",
-		Args:               true,
 		ArgsUsage:          "RULE",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context, cliCtx.Args().First())
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.do(ctx, cm.Args().First())
 		},
 	}
 }
 
-func (c *cmdRuleEngineRuleInspect) Before(cliCtx *cli.Context) error {
-	if err := c.cmdRuleEngineRule.Before(cliCtx); err != nil {
-		return err
+func (c *cmdRuleEngineRuleInspect) Before(
+	ctx context.Context, cm *cli.Command,
+) (context.Context, error) {
+	ctx, err := c.cmdRuleEngineRule.Before(ctx, cm)
+	if err != nil {
+		return nil, err
 	}
 
-	if cliCtx.Args().Get(0) == "" {
-		return errRequiresAtLeastOneArgument
+	if cm.Args().Get(0) == "" {
+		return nil, errRequiresAtLeastOneArgument
 	}
 
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdRuleEngineRuleInspect) do(ctx context.Context, rule string) error {

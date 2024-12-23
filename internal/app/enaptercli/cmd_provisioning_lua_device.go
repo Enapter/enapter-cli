@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdProvisioningLua struct {
@@ -25,8 +25,8 @@ func buildCmdProvisioningLua() *cli.Command {
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, cm *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
