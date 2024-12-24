@@ -9,7 +9,7 @@ linters:
     # - deadcode
     # - depguard
     - dogsled
-    - dupl
+    # - dupl # some commands are looks very similar in implementation
     - errcheck
     - errorlint
     - exhaustive

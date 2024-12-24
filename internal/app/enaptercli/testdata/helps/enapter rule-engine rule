@@ -1,0 +1,19 @@
+NAME:
+   enaptercli.test rule-engine rule - Manage rules
+
+USAGE:
+   enaptercli.test rule-engine rule command [command options]
+
+COMMANDS:
+   create         Create a new rule
+   delete         Delete one or more rules
+   disable        Disable one or more rules
+   enable         Enable one or more rules
+   inspect        Inspect a rule
+   list           List rules
+   update         Update a rule
+   update-script  Update the script of a rule
+   help, h        Shows a list of commands or help for one command
+
+OPTIONS:
+   --help, -h  show help

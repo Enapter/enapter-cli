@@ -1,0 +1,14 @@
+NAME:
+   enaptercli.test rule-engine rule delete - Delete one or more rules
+
+USAGE:
+   enaptercli.test rule-engine rule delete [command options]
+
+OPTIONS:
+   --rule-id value [ --rule-id value ]  Rule IDs or slugs
+   --help, -h                           show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

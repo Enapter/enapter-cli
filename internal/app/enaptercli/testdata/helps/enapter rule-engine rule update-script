@@ -1,0 +1,17 @@
+NAME:
+   enaptercli.test rule-engine rule update-script - Update the script of a rule
+
+USAGE:
+   enaptercli.test rule-engine rule update-script [command options]
+
+OPTIONS:
+   --rule-id value          Rule ID or slug to update
+   --script value           Path to a file containing the script code
+   --runtime-version value  Version of a runtime to use for the script execution (default: 3)
+   --exec-interval value    How often to execute the script. This option is only compatible with the runtime version 1 (default: 0s)
+   --help, -h               show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+
