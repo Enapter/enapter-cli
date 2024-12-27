@@ -52,8 +52,9 @@ func (c *cmdRuleEngineRuleDisable) do(ctx context.Context) error {
 
 	fmt.Println(c.ruleIDs)
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodPost,
-		Path:   "/batch_disable",
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPost,
+		Path:        "/batch_disable",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }

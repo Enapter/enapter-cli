@@ -48,8 +48,9 @@ func (c *cmdDevicesAssignBlueprint) do(ctx context.Context) error {
 		return fmt.Errorf("build request: %w", err)
 	}
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodPost,
-		Path:   "/assign_blueprint",
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPost,
+		Path:        "/assign_blueprint",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }

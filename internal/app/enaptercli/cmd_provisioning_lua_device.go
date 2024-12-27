@@ -64,8 +64,9 @@ func (c *cmdProvisioningLua) do(ctx context.Context) error {
 		return fmt.Errorf("build request: %w", err)
 	}
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodPost,
-		Path:   "/provisioning/lua_device",
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPost,
+		Path:        "/provisioning/lua_device",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }

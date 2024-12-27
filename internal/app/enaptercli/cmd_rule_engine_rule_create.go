@@ -101,8 +101,9 @@ func (c *cmdRuleEngineRuleCreate) do(ctx context.Context) error {
 	}
 
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodPost,
-		Path:   "",
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPost,
+		Path:        "",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }

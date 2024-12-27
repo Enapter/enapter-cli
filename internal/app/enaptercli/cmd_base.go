@@ -69,6 +69,7 @@ type doHTTPRequestParams struct {
 	Path          string
 	Query         url.Values
 	Body          io.Reader
+	ContentType   string
 	RespProcessor func(*http.Response) error
 }
 
@@ -79,6 +80,7 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 	}
 
 	req.Header.Add("X-Enapter-Auth-Token", c.token)
+	req.Header.Set("Content-Type", p.ContentType)
 	req.URL.RawQuery = p.Query.Encode()
 
 	resp, err := c.httpClient.Do(req)

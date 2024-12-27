@@ -84,8 +84,9 @@ func (c *cmdRuleEngineRuleUpdateScript) do(ctx context.Context) error {
 	}
 
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodPost,
-		Path:   "/" + c.ruleID + "/update_script",
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPost,
+		Path:        "/" + c.ruleID + "/update_script",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }

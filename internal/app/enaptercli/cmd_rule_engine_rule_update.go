@@ -78,8 +78,9 @@ func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context) error {
 	}
 
 	return c.doHTTPRequest(cliCtx.Context, doHTTPRequestParams{
-		Method: http.MethodPatch,
-		Path:   "/" + c.ruleID,
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPatch,
+		Path:        "/" + c.ruleID,
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }

@@ -50,8 +50,9 @@ func (c *cmdRuleEngineRuleEnable) do(ctx context.Context) error {
 		return fmt.Errorf("build request: %w", err)
 	}
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodPost,
-		Path:   "/batch_enable",
-		Body:   bytes.NewReader(body),
+		Method:      http.MethodPost,
+		Path:        "/batch_enable",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
 	})
 }
