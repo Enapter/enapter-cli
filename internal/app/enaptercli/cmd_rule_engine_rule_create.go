@@ -43,12 +43,12 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 			Name:        "slug",
 			Usage:       "Slug of a new rule",
 			Destination: &c.slug,
-			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "name",
 			Usage:       "Name of a new rule",
 			Destination: &c.name,
+			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "script",
