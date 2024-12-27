@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test blueprints upload [command options] <blueprint path (zip file or directory)>
 
 OPTIONS:
+   --verbose   log extra details about operation (default: false)
    --help, -h  show help
 
 ENVIRONMENT VARIABLES:

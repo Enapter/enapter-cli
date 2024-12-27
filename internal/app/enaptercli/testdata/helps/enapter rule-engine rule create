@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test rule-engine rule create [command options]
 
 OPTIONS:
+   --verbose                log extra details about operation (default: false)
    --slug value             Slug of a new rule
    --name value             Name of a new rule
    --script value           Path to a file containing the script code

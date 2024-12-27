@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test rule-engine rule list [command options]
 
 OPTIONS:
+   --verbose   log extra details about operation (default: false)
    --help, -h  show help
 
 ENVIRONMENT VARIABLES:

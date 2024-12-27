@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test provisioning lua_device [command options]
 
 OPTIONS:
+   --verbose                       log extra details about operation (default: false)
    --runtime-id value, -r value    runtime UCM device ID where to run a new Lua device
    --device-name value, -n value   name of a new Lua device
    --blueprint-id value, -b value  blueprint ID of a new Lua device

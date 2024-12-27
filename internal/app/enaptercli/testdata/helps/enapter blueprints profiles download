@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test blueprints profiles download [command options]
 
 OPTIONS:
+   --verbose                 log extra details about operation (default: false)
    --output value, -o value  file name to save
    --help, -h                show help
 

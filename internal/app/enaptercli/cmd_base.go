@@ -1,7 +1,9 @@
 package enaptercli
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,6 +16,7 @@ import (
 )
 
 type cmdBase struct {
+	verbose    bool
 	token      string
 	apiHost    string
 	writer     io.Writer
@@ -42,6 +45,11 @@ func (c *cmdBase) Flags() []cli.Flag {
 				c.apiHost = strings.TrimSuffix(v, "/")
 				return nil
 			},
+		},
+		&cli.BoolFlag{
+			Name:        "verbose",
+			Usage:       "log extra details about operation",
+			Destination: &c.verbose,
 		},
 	}
 }
@@ -82,6 +90,25 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 	req.Header.Add("X-Enapter-Auth-Token", c.token)
 	req.Header.Set("Content-Type", p.ContentType)
 	req.URL.RawQuery = p.Query.Encode()
+
+	if c.verbose {
+		bb := &bytes.Buffer{}
+		if _, err := io.Copy(bb, req.Body); err != nil {
+			return fmt.Errorf("reading body for verbose log: %w", err)
+		}
+		if err := req.Body.Close(); err != nil {
+			return fmt.Errorf("closing body for verbose log: %w", err)
+		}
+		req.Body = io.NopCloser(bb)
+
+		bodyStr := bb.String()
+		if p.ContentType != contentTypeJSON {
+			bodyStr = base64.RawStdEncoding.EncodeToString(bb.Bytes())
+		}
+
+		fmt.Fprintf(c.writer, "== Do http request %s %s\n", p.Method, req.URL.String())
+		fmt.Fprintf(c.writer, "=== Begin body\n%s\n=== End body\n", bodyStr)
+	}
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {

@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test blueprints profiles upload [command options] profiles zip file path
 
 OPTIONS:
+   --verbose   log extra details about operation (default: false)
    --help, -h  show help
 
 ENVIRONMENT VARIABLES:

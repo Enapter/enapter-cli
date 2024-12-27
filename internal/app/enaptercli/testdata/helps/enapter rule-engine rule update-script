@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test rule-engine rule update-script [command options]
 
 OPTIONS:
+   --verbose                log extra details about operation (default: false)
    --rule-id value          Rule ID or slug to update
    --script value           Path to a file containing the script code
    --runtime-version value  Version of a runtime to use for the script execution (default: 3)

@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test blueprints inspect [command options] <blueprint id or name>
 
 OPTIONS:
+   --verbose   log extra details about operation (default: false)
    --help, -h  show help
 
 ENVIRONMENT VARIABLES:

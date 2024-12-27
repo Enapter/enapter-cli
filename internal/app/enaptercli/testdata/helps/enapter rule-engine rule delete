@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test rule-engine rule delete [command options]
 
 OPTIONS:
+   --verbose                            log extra details about operation (default: false)
    --rule-id value [ --rule-id value ]  Rule IDs or slugs
    --help, -h                           show help
 

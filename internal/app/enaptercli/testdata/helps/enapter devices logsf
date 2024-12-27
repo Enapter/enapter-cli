@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test devices logsf [command options]
 
 OPTIONS:
+   --verbose                    log extra details about operation (default: false)
    --device-id value, -d value  device ID
    --help, -h                   show help
 

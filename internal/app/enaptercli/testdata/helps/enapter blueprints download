@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test blueprints download [command options]
 
 OPTIONS:
+   --verbose                       log extra details about operation (default: false)
    --blueprint-id value, -b value  blueprint name or ID to download
    --output value, -o value        blueprint file name to save
    --help, -h                      show help

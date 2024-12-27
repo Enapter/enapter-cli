@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test provisioning standalone [command options]
 
 OPTIONS:
+   --verbose                      log extra details about operation (default: false)
    --site-id value, -s value      site ID where to craate device
    --device-name value, -n value  name for a new device
    --help, -h                     show help

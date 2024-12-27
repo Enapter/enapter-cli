@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test devices logs [command options]
 
 OPTIONS:
+   --verbose                    log extra details about operation (default: false)
    --device-id value, -d value  device ID
    --from value, -f value       from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
    --to value, -t value         to timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
