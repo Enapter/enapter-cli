@@ -34,6 +34,7 @@ func zipDir(path string) ([]byte, error) {
 	buf := &bytes.Buffer{}
 	zw := zip.NewWriter(buf)
 
+	path = filepath.Clean(path)
 	err := filepath.WalkDir(path, func(filePath string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
