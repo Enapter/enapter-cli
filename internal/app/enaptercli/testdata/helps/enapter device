@@ -5,6 +5,8 @@ USAGE:
    enaptercli.test device command [command options]
 
 COMMANDS:
+   list              List user devices
+   inspect           Inspect a devices
    assign-blueprint  Assign blueprint to device
    logs              Show device logs
    logsf             Follow device logs
