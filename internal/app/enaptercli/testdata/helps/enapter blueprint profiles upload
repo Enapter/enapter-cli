@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test blueprints upload - Upload blueprint directory into Platform
+   enaptercli.test blueprint profiles upload - Upload profiles into Platform
 
 USAGE:
-   enaptercli.test blueprints upload [command options] <blueprint path (zip file or directory)>
+   enaptercli.test blueprint profiles upload [command options] profiles zip file path
 
 OPTIONS:
    --verbose   log extra details about operation (default: false)

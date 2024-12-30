@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test blueprints download - Download blueprint zip from Platform
+   enaptercli.test blueprint download - Download blueprint zip from Platform
 
 USAGE:
-   enaptercli.test blueprints download [command options]
+   enaptercli.test blueprint download [command options]
 
 OPTIONS:
    --verbose                       log extra details about operation (default: false)

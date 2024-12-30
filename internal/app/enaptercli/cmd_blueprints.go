@@ -12,7 +12,7 @@ type cmdBlueprints struct {
 
 func buildCmdBlueprints() *cli.Command {
 	return &cli.Command{
-		Name:  "blueprints",
+		Name:  "blueprint",
 		Usage: "Manage blueprints",
 		Subcommands: []*cli.Command{
 			buildCmdBlueprintsProfiles(),

@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test blueprints - Manage blueprints
+   enaptercli.test blueprint - Manage blueprints
 
 USAGE:
-   enaptercli.test blueprints command [command options]
+   enaptercli.test blueprint command [command options]
 
 COMMANDS:
    profiles  Manage blueprints profiles

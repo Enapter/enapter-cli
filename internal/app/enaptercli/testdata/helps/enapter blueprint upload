@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test blueprints inspect - Get blueprint metainfo
+   enaptercli.test blueprint upload - Upload blueprint directory into Platform
 
 USAGE:
-   enaptercli.test blueprints inspect [command options] <blueprint id or name>
+   enaptercli.test blueprint upload [command options] <blueprint path (zip file or directory)>
 
 OPTIONS:
    --verbose   log extra details about operation (default: false)

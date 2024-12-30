@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test blueprints profiles upload - Upload profiles into Platform
+   enaptercli.test blueprint inspect - Get blueprint metainfo
 
 USAGE:
-   enaptercli.test blueprints profiles upload [command options] profiles zip file path
+   enaptercli.test blueprint inspect [command options] <blueprint id or name>
 
 OPTIONS:
    --verbose   log extra details about operation (default: false)
