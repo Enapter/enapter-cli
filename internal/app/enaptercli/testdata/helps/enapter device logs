@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test devices logs - Show device logs
+   enaptercli.test device logs - Show device logs
 
 USAGE:
-   enaptercli.test devices logs [command options]
+   enaptercli.test device logs [command options]
 
 OPTIONS:
    --verbose                    log extra details about operation (default: false)

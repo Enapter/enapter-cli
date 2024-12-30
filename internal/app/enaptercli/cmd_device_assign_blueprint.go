@@ -19,7 +19,7 @@ type cmdDevicesAssignBlueprint struct {
 func buildCmdDevicesAssignBlueprint() *cli.Command {
 	cmd := &cmdDevicesAssignBlueprint{}
 	return &cli.Command{
-		Name:               "assign_blueprint",
+		Name:               "assign-blueprint",
 		Usage:              "Assign blueprint to device",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),

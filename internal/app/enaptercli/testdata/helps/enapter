@@ -8,7 +8,7 @@ DESCRIPTION:
    Enapter CLI requires access token for authentication. The token can be obtained in your Enapter Cloud account settings.
 
 COMMANDS:
-   devices       Manage devices
+   device        Manage devices
    blueprint     Manage blueprints
    provisioning  Create devices of different types
    rule-engine   Manage the rule engine

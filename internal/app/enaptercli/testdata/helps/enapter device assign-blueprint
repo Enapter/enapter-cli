@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test devices assign_blueprint - Assign blueprint to device
+   enaptercli.test device assign-blueprint - Assign blueprint to device
 
 USAGE:
-   enaptercli.test devices assign_blueprint [command options]
+   enaptercli.test device assign-blueprint [command options]
 
 OPTIONS:
    --verbose                       log extra details about operation (default: false)

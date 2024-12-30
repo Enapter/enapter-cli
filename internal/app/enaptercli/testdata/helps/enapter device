@@ -1,11 +1,11 @@
 NAME:
-   enaptercli.test devices - Manage devices
+   enaptercli.test device - Manage devices
 
 USAGE:
-   enaptercli.test devices command [command options]
+   enaptercli.test device command [command options]
 
 COMMANDS:
-   assign_blueprint  Assign blueprint to device
+   assign-blueprint  Assign blueprint to device
    logs              Show device logs
    logsf             Follow device logs
    help, h           Shows a list of commands or help for one command
