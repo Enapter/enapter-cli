@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test provisioning lua_device - Create a new Lua device
+   enaptercli.test provisioning lua-device - Create a new Lua device
 
 USAGE:
-   enaptercli.test provisioning lua_device [command options]
+   enaptercli.test provisioning lua-device [command options]
 
 OPTIONS:
    --verbose                       log extra details about operation (default: false)

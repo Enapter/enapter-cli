@@ -20,7 +20,7 @@ type cmdProvisioningLua struct {
 func buildCmdProvisioningLua() *cli.Command {
 	cmd := &cmdProvisioningLua{}
 	return &cli.Command{
-		Name:               "lua_device",
+		Name:               "lua-device",
 		Usage:              "Create a new Lua device",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
