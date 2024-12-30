@@ -6,7 +6,7 @@ USAGE:
 
 COMMANDS:
    profiles  Manage blueprints profiles
-   upload    Upload blueprint directory into Platform
+   upload    Upload blueprint into Platform
    download  Download blueprint zip from Platform
    inspect   Get blueprint metainfo
    help, h   Shows a list of commands or help for one command

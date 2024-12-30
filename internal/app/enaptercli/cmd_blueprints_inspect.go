@@ -9,6 +9,7 @@ import (
 
 type cmdBlueprintsInpsect struct {
 	cmdBlueprints
+	blueprintID string
 }
 
 func buildCmdBlueprintsInspect() *cli.Command {
@@ -19,33 +20,32 @@ func buildCmdBlueprintsInspect() *cli.Command {
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Args:               true,
-		ArgsUsage:          "<blueprint id or name>",
 		Action: func(cliCtx *cli.Context) error {
-			return cmd.inspect(cliCtx.Context, cliCtx.Args().Get(0))
+			return cmd.inspect(cliCtx.Context)
 		},
 	}
 }
 
-func (c *cmdBlueprintsInpsect) Before(cliCtx *cli.Context) error {
-	if err := c.cmdBlueprints.Before(cliCtx); err != nil {
-		return err
-	}
-	if cliCtx.Args().Get(0) == "" {
-		return errBlueprintIDMissed
-	}
-	return nil
+func (c *cmdBlueprintsInpsect) Flags() []cli.Flag {
+	flags := c.cmdBlueprints.Flags()
+	return append(flags, &cli.StringFlag{
+		Name:        "blueprint-id",
+		Aliases:     []string{"b"},
+		Usage:       "blueprint name or ID to inspect",
+		Destination: &c.blueprintID,
+		Required:    true,
+	})
 }
 
-func (c *cmdBlueprintsInpsect) inspect(ctx context.Context, blueprintID string) error {
-	if isBlueprintID(blueprintID) {
+func (c *cmdBlueprintsInpsect) inspect(ctx context.Context) error {
+	if isBlueprintID(c.blueprintID) {
 		return c.doHTTPRequest(ctx, doHTTPRequestParams{
 			Method: http.MethodGet,
-			Path:   "/blueprints/" + blueprintID,
+			Path:   "/blueprints/" + c.blueprintID,
 		})
 	}
 
-	blueprintName, blueprintTag := parseBlueprintName(blueprintID)
+	blueprintName, blueprintTag := parseBlueprintName(c.blueprintID)
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodGet,
 		Path:   "/blueprints/enapter/" + blueprintName + "/" + blueprintTag,

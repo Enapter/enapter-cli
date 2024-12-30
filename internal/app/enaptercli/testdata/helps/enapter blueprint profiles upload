@@ -2,11 +2,12 @@ NAME:
    enaptercli.test blueprint profiles upload - Upload profiles into Platform
 
 USAGE:
-   enaptercli.test blueprint profiles upload [command options] profiles zip file path
+   enaptercli.test blueprint profiles upload [command options]
 
 OPTIONS:
-   --verbose   log extra details about operation (default: false)
-   --help, -h  show help
+   --verbose                        log extra details about operation (default: false)
+   --profiles-path value, -p value  profiles zip file path
+   --help, -h                       show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN  Enapter API access token

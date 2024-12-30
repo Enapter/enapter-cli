@@ -1,12 +1,13 @@
 NAME:
-   enaptercli.test blueprint upload - Upload blueprint directory into Platform
+   enaptercli.test blueprint upload - Upload blueprint into Platform
 
 USAGE:
-   enaptercli.test blueprint upload [command options] <blueprint path (zip file or directory)>
+   enaptercli.test blueprint upload [command options]
 
 OPTIONS:
-   --verbose   log extra details about operation (default: false)
-   --help, -h  show help
+   --verbose               log extra details about operation (default: false)
+   --path value, -p value  blueprint path (zip file or directory)
+   --help, -h              show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN  Enapter API access token
