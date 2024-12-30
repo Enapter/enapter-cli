@@ -14,6 +14,7 @@ import (
 
 type cmdDevicesLogs struct {
 	cmdDevices
+	deviceID   string
 	from       cli.Timestamp
 	to         cli.Timestamp
 	offset     int
@@ -39,7 +40,13 @@ func buildCmdDevicesLogs() *cli.Command {
 
 func (c *cmdDevicesLogs) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
-	return append(flags, &cli.TimestampFlag{
+	return append(flags, &cli.StringFlag{
+		Name:        "device-id",
+		Aliases:     []string{"d"},
+		Usage:       "device ID",
+		Destination: &c.deviceID,
+		Required:    true,
+	}, &cli.TimestampFlag{
 		Name:        "from",
 		Aliases:     []string{"f"},
 		Usage:       "from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)",
@@ -115,7 +122,7 @@ func (c *cmdDevicesLogs) do(ctx context.Context) error {
 
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodGet,
-		Path:   "/logs",
+		Path:   "/" + c.deviceID + "/logs",
 		Query:  query,
 		//nolint:bodyclose //body is closed in doHTTPRequest
 		RespProcessor: okRespBodyProcessor(func(body io.Reader) error {

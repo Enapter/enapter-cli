@@ -15,6 +15,7 @@ import (
 
 type cmdDevicesLogsf struct {
 	cmdDevices
+	deviceID string
 }
 
 func buildCmdDevicesLogsf() *cli.Command {
@@ -31,6 +32,17 @@ func buildCmdDevicesLogsf() *cli.Command {
 	}
 }
 
+func (c *cmdDevicesLogsf) Flags() []cli.Flag {
+	flags := c.cmdBase.Flags()
+	return append(flags, &cli.StringFlag{
+		Name:        "device-id",
+		Aliases:     []string{"d"},
+		Usage:       "device ID",
+		Destination: &c.deviceID,
+		Required:    true,
+	})
+}
+
 func (c *cmdDevicesLogsf) do(ctx context.Context) error {
 	const singleRequestLimit = 10
 
@@ -45,7 +57,7 @@ func (c *cmdDevicesLogsf) do(ctx context.Context) error {
 		retryNow := false
 		err := c.doHTTPRequest(ctx, doHTTPRequestParams{
 			Method: http.MethodGet,
-			Path:   "/logs",
+			Path:   "/" + c.deviceID + "/logs",
 			Query:  query,
 			//nolint:bodyclose //body is closed in doHTTPRequest
 			RespProcessor: okRespBodyProcessor(func(body io.Reader) error {

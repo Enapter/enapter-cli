@@ -12,6 +12,7 @@ import (
 
 type cmdDevicesAssignBlueprint struct {
 	cmdDevices
+	deviceID    string
 	blueprintID string
 }
 
@@ -32,6 +33,12 @@ func buildCmdDevicesAssignBlueprint() *cli.Command {
 func (c *cmdDevicesAssignBlueprint) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
 	return append(flags, &cli.StringFlag{
+		Name:        "device-id",
+		Aliases:     []string{"d"},
+		Usage:       "device ID",
+		Destination: &c.deviceID,
+		Required:    true,
+	}, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
 		Usage:       "blueprint ID to assign",
@@ -49,7 +56,7 @@ func (c *cmdDevicesAssignBlueprint) do(ctx context.Context) error {
 	}
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method:      http.MethodPost,
-		Path:        "/assign_blueprint",
+		Path:        "/" + c.deviceID + "/assign_blueprint",
 		Body:        bytes.NewReader(body),
 		ContentType: contentTypeJSON,
 	})

@@ -12,7 +12,6 @@ import (
 
 type cmdDevices struct {
 	cmdBase
-	deviceID string
 }
 
 func buildCmdDevices() *cli.Command {
@@ -27,19 +26,8 @@ func buildCmdDevices() *cli.Command {
 	}
 }
 
-func (c *cmdDevices) Flags() []cli.Flag {
-	flags := c.cmdBase.Flags()
-	return append(flags, &cli.StringFlag{
-		Name:        "device-id",
-		Aliases:     []string{"d"},
-		Usage:       "device ID",
-		Destination: &c.deviceID,
-		Required:    true,
-	})
-}
-
 func (c *cmdDevices) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
-	path, err := url.JoinPath("/devices", c.deviceID, p.Path)
+	path, err := url.JoinPath("/devices", p.Path)
 	if err != nil {
 		return fmt.Errorf("join path: %w", err)
 	}
