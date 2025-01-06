@@ -49,8 +49,6 @@ func (c *cmdRuleEngineRuleDisable) do(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("build request: %w", err)
 	}
-
-	fmt.Println(c.ruleIDs)
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method:      http.MethodPost,
 		Path:        "/batch_disable",
