@@ -14,7 +14,6 @@ type cmdRuleEngineRuleUpdate struct {
 	cmdRuleEngineRule
 	ruleID string
 	slug   string
-	name   string
 }
 
 func buildCmdRuleEngineRuleUpdate() *cli.Command {
@@ -44,11 +43,6 @@ func (c *cmdRuleEngineRuleUpdate) Flags() []cli.Flag {
 			Usage:       "A new rule slug",
 			Destination: &c.slug,
 		},
-		&cli.StringFlag{
-			Name:        "name",
-			Usage:       "A new rule name",
-			Destination: &c.name,
-		},
 	)
 }
 
@@ -64,10 +58,6 @@ func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context) error {
 	if cliCtx.IsSet("slug") {
 		payload.Rule["slug"] = c.slug
 		payload.UpdateMask += "slug,"
-	}
-	if cliCtx.IsSet("name") {
-		payload.Rule["name"] = c.name
-		payload.UpdateMask += "name,"
 	}
 
 	payload.UpdateMask = strings.TrimSuffix(payload.UpdateMask, ",")
