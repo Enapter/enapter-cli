@@ -16,7 +16,6 @@ import (
 type cmdRuleEngineRuleCreate struct {
 	cmdRuleEngineRule
 	slug           string
-	name           string
 	scriptPath     string
 	runtimeVersion int
 	execInterval   time.Duration
@@ -43,11 +42,6 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 			Name:        "slug",
 			Usage:       "Slug of a new rule",
 			Destination: &c.slug,
-		},
-		&cli.StringFlag{
-			Name:        "name",
-			Usage:       "Name of a new rule",
-			Destination: &c.name,
 			Required:    true,
 		},
 		&cli.StringFlag{
@@ -87,7 +81,6 @@ func (c *cmdRuleEngineRuleCreate) do(ctx context.Context) error {
 	body, err := json.Marshal(map[string]any{
 		"rule": map[string]any{
 			"slug": c.slug,
-			"name": c.name,
 			"script": map[string]any{
 				"code":            base64.StdEncoding.EncodeToString(scriptBytes),
 				"runtime_version": c.runtimeVersion,

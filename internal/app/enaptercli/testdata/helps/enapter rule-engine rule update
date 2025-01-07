@@ -8,7 +8,6 @@ OPTIONS:
    --verbose        log extra details about operation (default: false)
    --rule-id value  Rule ID or slug to update
    --slug value     A new rule slug
-   --name value     A new rule name
    --help, -h       show help
 
 ENVIRONMENT VARIABLES:
