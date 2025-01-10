@@ -79,15 +79,13 @@ func (c *cmdRuleEngineRuleCreate) do(ctx context.Context) error {
 	}
 
 	body, err := json.Marshal(map[string]any{
-		"rule": map[string]any{
-			"slug": c.slug,
-			"script": map[string]any{
-				"code":            base64.StdEncoding.EncodeToString(scriptBytes),
-				"runtime_version": c.runtimeVersion,
-				"exec_interval":   c.execInterval.String(),
-			},
+		"slug": c.slug,
+		"script": map[string]any{
+			"code":            base64.StdEncoding.EncodeToString(scriptBytes),
+			"runtime_version": c.runtimeVersion,
+			"exec_interval":   c.execInterval.String(),
 		},
-		"disable_rule": c.disable,
+		"disable": c.disable,
 	})
 	if err != nil {
 		return fmt.Errorf("build request: %w", err)

@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -47,20 +46,11 @@ func (c *cmdRuleEngineRuleUpdate) Flags() []cli.Flag {
 }
 
 func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context) error {
-	payload := struct {
-		Rule       map[string]any `json:"rule"`
-		UpdateMask string         `json:"update_mask"`
-	}{
-		Rule:       make(map[string]any),
-		UpdateMask: "",
-	}
+	payload := make(map[string]any)
 
 	if cliCtx.IsSet("slug") {
-		payload.Rule["slug"] = c.slug
-		payload.UpdateMask += "slug,"
+		payload["slug"] = c.slug
 	}
-
-	payload.UpdateMask = strings.TrimSuffix(payload.UpdateMask, ",")
 
 	body, err := json.Marshal(payload)
 	if err != nil {
