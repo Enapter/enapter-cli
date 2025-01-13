@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/gorilla/websocket"
 	"github.com/urfave/cli/v2"
 )
 
@@ -120,6 +121,38 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 		return c.defaultRespProcessor(resp)
 	}
 	return p.RespProcessor(resp)
+}
+
+func (c *cmdBase) dialWebSocket(ctx context.Context, path string) (*websocket.Conn, error) {
+	url, err := url.Parse(c.apiHost + "/v3" + path)
+	if err != nil {
+		return nil, fmt.Errorf("parse url: %w", err)
+	}
+
+	switch url.Scheme {
+	case "https":
+		url.Scheme = "wss"
+	case "http":
+		url.Scheme = "ws"
+	}
+
+	headers := make(http.Header)
+	headers.Add("X-Enapter-Auth-Token", c.token)
+
+	if c.verbose {
+		fmt.Fprintf(c.writer, "== Dialing WebSocket at %s\n", url.String())
+	}
+
+	//nolint:bodyclose // body should be closed by callers
+	conn, resp, err := websocket.DefaultDialer.DialContext(ctx, url.String(), headers)
+	if err != nil {
+		return nil, fmt.Errorf("dial: %w", err)
+	}
+	if resp.StatusCode != http.StatusSwitchingProtocols {
+		return nil, cli.Exit(parseRespErrorMessage(resp), 1)
+	}
+
+	return conn, nil
 }
 
 func (c *cmdBase) defaultRespProcessor(resp *http.Response) error {

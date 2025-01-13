@@ -30,6 +30,7 @@ func buildCmdRuleEngineRule() *cli.Command {
 			buildCmdRuleEngineRuleList(),
 			buildCmdRuleEngineRuleUpdate(),
 			buildCmdRuleEngineRuleUpdateScript(),
+			buildCmdRuleEngineRuleLogs(),
 		},
 	}
 }

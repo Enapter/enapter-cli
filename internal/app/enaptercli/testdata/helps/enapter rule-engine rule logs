@@ -1,0 +1,16 @@
+NAME:
+   enaptercli.test rule-engine rule logs - Show rule logs
+
+USAGE:
+   enaptercli.test rule-engine rule logs [command options]
+
+OPTIONS:
+   --verbose        log extra details about operation (default: false)
+   --rule-id value  rule ID
+   --follow, -f     follow log output (default: false)
+   --help, -h       show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

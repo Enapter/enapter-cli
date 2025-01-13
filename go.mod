@@ -3,6 +3,7 @@ module github.com/enapter/enapter-cli
 go 1.21
 
 require (
+	github.com/gorilla/websocket v1.5.3
 	github.com/stretchr/testify v1.9.0
 	github.com/urfave/cli/v2 v2.27.4
 )
