@@ -13,6 +13,7 @@ import (
 type cmdProvisioningLua struct {
 	cmdProvisioning
 	deviceName  string
+	deviceSlug  string
 	runtimeID   string
 	blueprintID string
 }
@@ -46,6 +47,10 @@ func (c *cmdProvisioningLua) Flags() []cli.Flag {
 		Destination: &c.deviceName,
 		Required:    true,
 	}, &cli.StringFlag{
+		Name:        "device-slug",
+		Usage:       "slug of a new Lua device",
+		Destination: &c.deviceSlug,
+	}, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
 		Usage:       "blueprint ID of a new Lua device",
@@ -58,6 +63,7 @@ func (c *cmdProvisioningLua) do(ctx context.Context) error {
 	body, err := json.Marshal(map[string]interface{}{
 		"runtime_id":   c.runtimeID,
 		"name":         c.deviceName,
+		"slug":         c.deviceSlug,
 		"blueprint_id": c.blueprintID,
 	})
 	if err != nil {
