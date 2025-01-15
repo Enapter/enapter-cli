@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/gorilla/websocket"
 	"github.com/urfave/cli/v2"
 )
 
@@ -51,25 +52,50 @@ func (c *cmdRuleEngineRuleLogs) do(cliCtx *cli.Context) error {
 	}
 
 	path := fmt.Sprintf("/site/rule_engine/rules/%s/logs/ws", c.ruleID)
-	conn, err := c.dialWebSocket(cliCtx.Context, path)
-	if err != nil {
-		return fmt.Errorf("connect: %w", err)
-	}
+	for retry := false; ; retry = true {
+		if retry {
+			fmt.Fprintln(c.writer, "Reconnecting...")
+			time.Sleep(time.Second)
+		}
 
-	go func() {
-		<-cliCtx.Done()
-		conn.Close()
-	}()
-
-	for {
-		_, r, err := conn.NextReader()
+		conn, err := c.dialWebSocket(cliCtx.Context, path)
 		if err != nil {
 			select {
 			case <-cliCtx.Done():
 				return nil
 			default:
-				return fmt.Errorf("read: %w", err)
+				fmt.Fprintln(c.writer, "Failed to retrieve logs:", err)
+				continue
 			}
+		}
+		fmt.Fprintln(c.writer, "Connection established")
+
+		closeCh := make(chan struct{})
+		go func() {
+			select {
+			case <-cliCtx.Done():
+			case <-closeCh:
+			}
+			conn.Close()
+		}()
+
+		if err := c.runProxy(conn); err != nil {
+			select {
+			case <-cliCtx.Done():
+				return nil
+			default:
+				fmt.Fprintln(c.writer, "Failed to retrieve logs:", err)
+				close(closeCh)
+			}
+		}
+	}
+}
+
+func (c *cmdRuleEngineRuleLogs) runProxy(conn *websocket.Conn) error {
+	for {
+		_, r, err := conn.NextReader()
+		if err != nil {
+			return fmt.Errorf("read: %w", err)
 		}
 
 		var msg struct {

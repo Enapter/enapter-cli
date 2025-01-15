@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/gorilla/websocket"
 	"github.com/urfave/cli/v2"
@@ -143,8 +144,13 @@ func (c *cmdBase) dialWebSocket(ctx context.Context, path string) (*websocket.Co
 		fmt.Fprintf(c.writer, "== Dialing WebSocket at %s\n", url.String())
 	}
 
+	const timeout = 5 * time.Second
+	dialer := websocket.Dialer{
+		HandshakeTimeout: timeout,
+	}
+
 	//nolint:bodyclose // body should be closed by callers
-	conn, resp, err := websocket.DefaultDialer.DialContext(ctx, url.String(), headers)
+	conn, resp, err := dialer.DialContext(ctx, url.String(), headers)
 	if err != nil {
 		return nil, fmt.Errorf("dial: %w", err)
 	}
