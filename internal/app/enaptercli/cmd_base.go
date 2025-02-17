@@ -94,18 +94,9 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 	req.URL.RawQuery = p.Query.Encode()
 
 	if c.verbose {
-		bb := &bytes.Buffer{}
-		if _, err := io.Copy(bb, req.Body); err != nil {
-			return fmt.Errorf("reading body for verbose log: %w", err)
-		}
-		if err := req.Body.Close(); err != nil {
-			return fmt.Errorf("closing body for verbose log: %w", err)
-		}
-		req.Body = io.NopCloser(bb)
-
-		bodyStr := bb.String()
-		if p.ContentType != contentTypeJSON {
-			bodyStr = base64.RawStdEncoding.EncodeToString(bb.Bytes())
+		bodyStr, err := getRequestBodyString(req, p.ContentType)
+		if err != nil {
+			return err
 		}
 
 		fmt.Fprintf(c.writer, "== Do http request %s %s\n", p.Method, req.URL.String())
@@ -172,6 +163,26 @@ func (c *cmdBase) defaultRespProcessor(resp *http.Response) error {
 	}
 
 	return nil
+}
+
+func getRequestBodyString(req *http.Request, contentType string) (string, error) {
+	if req.Body == nil {
+		return "", nil
+	}
+	bb := &bytes.Buffer{}
+	if _, err := io.Copy(bb, req.Body); err != nil {
+		return "", fmt.Errorf("reading body for verbose log: %w", err)
+	}
+	if err := req.Body.Close(); err != nil {
+		return "", fmt.Errorf("closing body for verbose log: %w", err)
+	}
+	req.Body = io.NopCloser(bb)
+
+	if contentType != contentTypeJSON {
+		return base64.RawStdEncoding.EncodeToString(bb.Bytes()), nil
+	}
+
+	return bb.String(), nil
 }
 
 func okRespBodyProcessor(fn func(body io.Reader) error) func(resp *http.Response) error {
