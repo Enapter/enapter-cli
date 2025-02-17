@@ -25,6 +25,7 @@ func buildCmdDevices() *cli.Command {
 			buildCmdDevicesAssignBlueprint(),
 			buildCmdDevicesLogs(),
 			buildCmdDevicesLogsf(),
+			buildCmdDevicesDelete(),
 		},
 	}
 }

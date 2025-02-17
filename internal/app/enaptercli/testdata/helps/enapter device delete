@@ -1,0 +1,15 @@
+NAME:
+   enaptercli.test device delete - Delete a device
+
+USAGE:
+   enaptercli.test device delete [command options]
+
+OPTIONS:
+   --verbose          log extra details about operation (default: false)
+   --device-id value  device ID
+   --help, -h         show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+
