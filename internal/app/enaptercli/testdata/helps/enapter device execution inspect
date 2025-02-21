@@ -1,0 +1,17 @@
+NAME:
+   enaptercli.test device execution inspect - Inspect a device command execution
+
+USAGE:
+   enaptercli.test device execution inspect [command options]
+
+OPTIONS:
+   --verbose                          log extra details about operation (default: false)
+   --device-id value, -d value        device ID
+   --execution-id value               execution ID
+   --expand value [ --expand value ]  coma separated list of expanded options
+   --help, -h                         show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

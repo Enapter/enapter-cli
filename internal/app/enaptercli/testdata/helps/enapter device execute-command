@@ -1,0 +1,18 @@
+NAME:
+   enaptercli.test device execute-command - Execute a device command
+
+USAGE:
+   enaptercli.test device execute-command [command options]
+
+OPTIONS:
+   --verbose          log extra details about operation (default: false)
+   --device-id value  device ID
+   --cmd-name value   command name
+   --cmd-args value   command args (should be a JSON string)
+   --ephemeral        run command in ephemeral mode (default: false)
+   --help, -h         show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

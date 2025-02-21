@@ -11,6 +11,8 @@ COMMANDS:
    logs              Show device logs
    logsf             Follow device logs
    delete            Delete a device
+   execute-command   Execute a device command
+   execution         Manage device command executions
    help, h           Shows a list of commands or help for one command
 
 OPTIONS:

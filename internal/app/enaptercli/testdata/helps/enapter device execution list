@@ -1,0 +1,16 @@
+NAME:
+   enaptercli.test device execution list - List device command executions
+
+USAGE:
+   enaptercli.test device execution list [command options]
+
+OPTIONS:
+   --verbose                          log extra details about operation (default: false)
+   --device-id value, -d value        device ID
+   --expand value [ --expand value ]  coma separated list of expanded options
+   --help, -h                         show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

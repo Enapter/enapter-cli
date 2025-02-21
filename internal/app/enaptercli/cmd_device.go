@@ -26,6 +26,8 @@ func buildCmdDevices() *cli.Command {
 			buildCmdDevicesLogs(),
 			buildCmdDevicesLogsf(),
 			buildCmdDevicesDelete(),
+			buildCmdDevicesExecuteCommand(),
+			buildCmdDeviceExecution(),
 		},
 	}
 }
@@ -60,12 +62,5 @@ func (c *cmdDevices) parseAndDumpDeviceLogs(body io.Reader) (int, error) {
 func (c *cmdDevices) validateExpandFlag(cliCtx *cli.Context) error {
 	supportedFields := []string{"connectivity", "manifest", "properties", "communication_info", "site"}
 	slices.Sort(supportedFields)
-
-	for _, field := range cliCtx.StringSlice("expand") {
-		if _, ok := slices.BinarySearch(supportedFields, field); !ok {
-			return fmt.Errorf("%w: %s is not supported by expand, should be one of %s",
-				errUnsupportedFlagValue, field, supportedFields)
-		}
-	}
-	return nil
+	return validateExpandFlag(cliCtx, supportedFields)
 }

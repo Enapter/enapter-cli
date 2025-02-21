@@ -10,6 +10,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"slices"
 	"strings"
 	"time"
 
@@ -214,4 +215,16 @@ func parseRespErrorMessage(resp *http.Response) string {
 	}
 
 	return fmt.Sprintf("request finished with HTTP status %q, but without error message", resp.Status)
+}
+
+func validateExpandFlag(cliCtx *cli.Context, supportedFields []string) error {
+	slices.Sort(supportedFields)
+
+	for _, field := range cliCtx.StringSlice("expand") {
+		if _, ok := slices.BinarySearch(supportedFields, field); !ok {
+			return fmt.Errorf("%w: %s is not supported by expand, should be one of %s",
+				errUnsupportedFlagValue, field, supportedFields)
+		}
+	}
+	return nil
 }
