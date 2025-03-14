@@ -17,7 +17,7 @@ type cmdRuleEngineRuleCreate struct {
 	cmdRuleEngineRule
 	slug           string
 	scriptPath     string
-	runtimeVersion int
+	runtimeVersion string
 	execInterval   time.Duration
 	disable        bool
 }
@@ -50,11 +50,14 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 			Destination: &c.scriptPath,
 			Required:    true,
 		},
-		&cli.IntFlag{
+		&cli.StringFlag{
 			Name:        "runtime-version",
 			Usage:       "Version of a runtime to use for the script execution",
 			Destination: &c.runtimeVersion,
-			Value:       ruleRuntimeVersion3,
+			Value:       ruleRuntimeV3,
+			Action: func(_ *cli.Context, v string) error {
+				return c.validateRuntimeVersion(v)
+			},
 		},
 		&cli.DurationFlag{
 			Name:        "exec-interval",
