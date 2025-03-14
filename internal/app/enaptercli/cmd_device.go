@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/url"
-	"slices"
 
 	"github.com/urfave/cli/v2"
 )
@@ -61,6 +60,5 @@ func (c *cmdDevices) parseAndDumpDeviceLogs(body io.Reader) (int, error) {
 
 func (c *cmdDevices) validateExpandFlag(cliCtx *cli.Context) error {
 	supportedFields := []string{"connectivity", "manifest", "properties", "communication_info", "site"}
-	slices.Sort(supportedFields)
 	return validateExpandFlag(cliCtx, supportedFields)
 }

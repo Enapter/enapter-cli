@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ruleRuntimeVersion1 = 1
-	ruleRuntimeVersion3 = 3
+	ruleRuntimeV1 = "V1"
+	ruleRuntimeV3 = "V3"
 )
 
 type cmdRuleEngineRule struct {
@@ -42,4 +42,9 @@ func (c *cmdRuleEngineRule) doHTTPRequest(ctx context.Context, p doHTTPRequestPa
 	}
 	p.Path = path
 	return c.cmdRuleEngine.doHTTPRequest(ctx, p)
+}
+
+func (c *cmdRuleEngineRule) validateRuntimeVersion(value string) error {
+	supportedVersions := []string{ruleRuntimeV1, ruleRuntimeV3}
+	return validateFlag("runtime-version", value, supportedVersions)
 }

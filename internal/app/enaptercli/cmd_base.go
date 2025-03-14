@@ -218,13 +218,19 @@ func parseRespErrorMessage(resp *http.Response) string {
 }
 
 func validateExpandFlag(cliCtx *cli.Context, supportedFields []string) error {
-	slices.Sort(supportedFields)
-
 	for _, field := range cliCtx.StringSlice("expand") {
-		if _, ok := slices.BinarySearch(supportedFields, field); !ok {
-			return fmt.Errorf("%w: %s is not supported by expand, should be one of %s",
-				errUnsupportedFlagValue, field, supportedFields)
+		if err := validateFlag("expand", field, supportedFields); err != nil {
+			return err
 		}
+	}
+	return nil
+}
+
+func validateFlag(context, value string, allowedValues []string) error {
+	slices.Sort(allowedValues)
+	if _, ok := slices.BinarySearch(allowedValues, value); !ok {
+		return fmt.Errorf("%w: %s is not supported for %s, should be one of %s",
+			errUnsupportedFlagValue, value, context, allowedValues)
 	}
 	return nil
 }
