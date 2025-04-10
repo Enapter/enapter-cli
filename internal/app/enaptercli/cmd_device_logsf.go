@@ -48,7 +48,7 @@ func (c *cmdDevicesLogsf) do(ctx context.Context) error {
 
 	query := url.Values{}
 	query.Add("received_at_from", time.Now().Add(-time.Hour).UTC().Format(time.RFC3339))
-	query.Add("order", "received_at_asc")
+	query.Add("order", "RECEIVED_AT_ASC")
 	query.Add("limit", strconv.Itoa(singleRequestLimit))
 
 	offset := 0

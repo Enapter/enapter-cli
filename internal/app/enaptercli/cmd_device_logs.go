@@ -75,21 +75,21 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 		Destination: &c.severity,
 	}, &cli.StringFlag{
 		Name:        "order",
-		Usage:       "order logs by criteria (received_at_asc[default], received_at_desc)",
+		Usage:       "order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)",
 		Destination: &c.order,
 		Action: func(_ *cli.Context, v string) error {
-			if v != "received_at_asc" && v != "received_at_desc" {
-				return fmt.Errorf("%w: should be one of [received_at_asc, received_at_desc]", errUnsupportedFlagValue)
+			if v != "RECEIVED_AT_ASC" && v != "RECEIVED_AT_DESC" {
+				return fmt.Errorf("%w: should be one of [RECEIVED_AT_ASC, RECEIVED_AT_DESC]", errUnsupportedFlagValue)
 			}
 			return nil
 		},
 	}, &cli.StringFlag{
 		Name:        "show",
-		Usage:       "filter logs by criteria (all[default], persist_only, temporary_only)",
+		Usage:       "filter logs by criteria (ALL[default], PERSIST_ONLY, TEMPORARY_ONLY)",
 		Destination: &c.showFilter,
 		Action: func(_ *cli.Context, v string) error {
-			if v != "all" && v != "persist_only" && v != "temporary_only" {
-				return fmt.Errorf("%w: should be one of [all, persist_only, temporary_only]", errUnsupportedFlagValue)
+			if v != "ALL" && v != "PERSIST_ONLY" && v != "TEMPORARY_ONLY" {
+				return fmt.Errorf("%w: should be one of [ALL, PERSIST_ONLY, TEMPORARY_ONLY]", errUnsupportedFlagValue)
 			}
 			return nil
 		},
