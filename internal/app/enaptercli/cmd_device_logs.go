@@ -2,6 +2,7 @@ package enaptercli
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 type cmdDevicesLogs struct {
 	cmdDevices
 	deviceID   string
+	follow     bool
 	from       cli.Timestamp
 	to         cli.Timestamp
 	offset     int
@@ -46,15 +48,18 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 		Usage:       "device ID",
 		Destination: &c.deviceID,
 		Required:    true,
+	}, &cli.BoolFlag{
+		Name:        "follow",
+		Aliases:     []string{"f"},
+		Usage:       "follow log output",
+		Destination: &c.follow,
 	}, &cli.TimestampFlag{
 		Name:        "from",
-		Aliases:     []string{"f"},
 		Usage:       "from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)",
 		Destination: &c.from,
 		Layout:      time.RFC3339,
 	}, &cli.TimestampFlag{
 		Name:        "to",
-		Aliases:     []string{"t"},
 		Usage:       "to timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)",
 		Destination: &c.to,
 		Layout:      time.RFC3339,
@@ -85,11 +90,11 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 		},
 	}, &cli.StringFlag{
 		Name:        "show",
-		Usage:       "filter logs by criteria (ALL[default], PERSIST_ONLY, TEMPORARY_ONLY)",
+		Usage:       "filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)",
 		Destination: &c.showFilter,
 		Action: func(_ *cli.Context, v string) error {
-			if v != "ALL" && v != "PERSIST_ONLY" && v != "TEMPORARY_ONLY" {
-				return fmt.Errorf("%w: should be one of [ALL, PERSIST_ONLY, TEMPORARY_ONLY]", errUnsupportedFlagValue)
+			if v != "ALL" && v != "PERSISTED_ONLY" && v != "TEMPORARY_ONLY" {
+				return fmt.Errorf("%w: should be one of [ALL, PERSISTED_ONLY, TEMPORARY_ONLY]", errUnsupportedFlagValue)
 			}
 			return nil
 		},
@@ -97,6 +102,59 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 }
 
 func (c *cmdDevicesLogs) do(ctx context.Context) error {
+	if c.follow {
+		return c.doFollow(ctx)
+	}
+	return c.doList(ctx)
+}
+
+func (c *cmdDevicesLogs) doFollow(ctx context.Context) error {
+	if c.from.Value() != nil {
+		return cli.Exit("Option received_at_from is unsupported in follow mode.", 1)
+	}
+	if c.to.Value() != nil {
+		return cli.Exit("Option received_at_to is unsupported in follow mode.", 1)
+	}
+	if c.offset > 0 {
+		return cli.Exit("Option offset is unsupported in follow mode.", 1)
+	}
+	if c.limit > 0 {
+		return cli.Exit("Option limit is unsupported in follow mode.", 1)
+	}
+	if c.order != "" {
+		return cli.Exit("Option order is unsupported in follow mode.", 1)
+	}
+
+	query := url.Values{}
+	if c.severity != "" {
+		query.Add("severity", c.severity)
+	}
+	if c.showFilter != "" {
+		query.Add("show", c.showFilter)
+	}
+
+	path := fmt.Sprintf("/devices/%s/logs", c.deviceID)
+
+	return c.runWebSocket(ctx, runWebSocketParams{
+		Path:  path,
+		Query: query,
+		RespProcessor: func(r io.Reader) error {
+			var msg struct {
+				ReceivedAt string `json:"received_at"`
+				Timestamp  string `json:"timestamp"`
+				Severity   string `json:"severity"`
+				Message    string `json:"message"`
+			}
+			if err := json.NewDecoder(r).Decode(&msg); err != nil {
+				return fmt.Errorf("parse payload: %w", err)
+			}
+			fmt.Fprintf(c.writer, "%s [%s] %s\n", msg.ReceivedAt, msg.Severity, msg.Message)
+			return nil
+		},
+	})
+}
+
+func (c *cmdDevicesLogs) doList(ctx context.Context) error {
 	query := url.Values{}
 	if c.from.Value() != nil {
 		query.Add("received_at_from", c.from.Value().Format(time.RFC3339))
@@ -126,8 +184,21 @@ func (c *cmdDevicesLogs) do(ctx context.Context) error {
 		Query:  query,
 		//nolint:bodyclose //body is closed in doHTTPRequest
 		RespProcessor: okRespBodyProcessor(func(body io.Reader) error {
-			_, err := c.parseAndDumpDeviceLogs(body)
-			return err
+			var resp struct {
+				Logs []struct {
+					ReceivedAt string `json:"received_at"`
+					Timestamp  string `json:"timestamp"`
+					Severity   string `json:"severity"`
+					Message    string `json:"message"`
+				} `json:"logs"`
+			}
+			if err := json.NewDecoder(body).Decode(&resp); err != nil {
+				return fmt.Errorf("parse response body: %w", err)
+			}
+			for _, l := range resp.Logs {
+				fmt.Fprintf(c.writer, "%s [%s] %s\n", l.ReceivedAt, l.Severity, l.Message)
+			}
+			return nil
 		}),
 	})
 }

@@ -116,11 +116,73 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 	return p.RespProcessor(resp)
 }
 
-func (c *cmdBase) dialWebSocket(ctx context.Context, path string) (*websocket.Conn, error) {
+type runWebSocketParams struct {
+	Path          string
+	Query         url.Values
+	RespProcessor func(io.Reader) error
+}
+
+func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error {
+	for retry := false; ; retry = true {
+		if retry {
+			fmt.Fprintln(c.writer, "Reconnecting...")
+			time.Sleep(time.Second)
+		}
+
+		conn, err := c.dialWebSocket(ctx, p.Path, p.Query)
+		if err != nil {
+			select {
+			case <-ctx.Done():
+				return nil
+			default:
+				fmt.Fprintln(c.writer, "Failed to retrieve data:", err)
+				continue
+			}
+		}
+		fmt.Fprintln(c.writer, "Connection established")
+
+		closeCh := make(chan struct{})
+		go func() {
+			select {
+			case <-ctx.Done():
+			case <-closeCh:
+			}
+			conn.Close()
+		}()
+
+		if err := c.readWebSocket(conn, p.RespProcessor); err != nil {
+			select {
+			case <-ctx.Done():
+				return nil
+			default:
+				fmt.Fprintln(c.writer, "Failed to retrieve data:", err)
+				close(closeCh)
+			}
+		}
+	}
+}
+
+func (c *cmdBase) defaultRespProcessor(resp *http.Response) error {
+	if resp.StatusCode != http.StatusOK {
+		return cli.Exit(parseRespErrorMessage(resp), 1)
+	}
+
+	n, _ := io.Copy(c.writer, resp.Body)
+	if n == 0 {
+		_, _ = io.WriteString(c.writer, "Request finished without body\n")
+	}
+
+	return nil
+}
+
+func (c *cmdBase) dialWebSocket(
+	ctx context.Context, path string, query url.Values,
+) (*websocket.Conn, error) {
 	url, err := url.Parse(c.apiHost + "/v3" + path)
 	if err != nil {
 		return nil, fmt.Errorf("parse url: %w", err)
 	}
+	url.RawQuery = query.Encode()
 
 	switch url.Scheme {
 	case "https":
@@ -153,17 +215,18 @@ func (c *cmdBase) dialWebSocket(ctx context.Context, path string) (*websocket.Co
 	return conn, nil
 }
 
-func (c *cmdBase) defaultRespProcessor(resp *http.Response) error {
-	if resp.StatusCode != http.StatusOK {
-		return cli.Exit(parseRespErrorMessage(resp), 1)
+func (c *cmdBase) readWebSocket(
+	conn *websocket.Conn, processor func(io.Reader) error,
+) error {
+	for {
+		_, r, err := conn.NextReader()
+		if err != nil {
+			return fmt.Errorf("read: %w", err)
+		}
+		if err := processor(r); err != nil {
+			return err
+		}
 	}
-
-	n, _ := io.Copy(c.writer, resp.Body)
-	if n == 0 {
-		_, _ = io.WriteString(c.writer, "Request finished without body\n")
-	}
-
-	return nil
 }
 
 func getRequestBodyString(req *http.Request, contentType string) (string, error) {

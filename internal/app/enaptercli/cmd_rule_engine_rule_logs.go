@@ -3,9 +3,9 @@ package enaptercli
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"time"
 
-	"github.com/gorilla/websocket"
 	"github.com/urfave/cli/v2"
 )
 
@@ -51,63 +51,22 @@ func (c *cmdRuleEngineRuleLogs) do(cliCtx *cli.Context) error {
 		return cli.Exit("Currently, only follow mode (--follow) is supported.", 1)
 	}
 
-	path := fmt.Sprintf("/site/rule_engine/rules/%s/logs/ws", c.ruleID)
-	for retry := false; ; retry = true {
-		if retry {
-			fmt.Fprintln(c.writer, "Reconnecting...")
-			time.Sleep(time.Second)
-		}
+	path := fmt.Sprintf("/site/rule_engine/rules/%s/logs", c.ruleID)
 
-		conn, err := c.dialWebSocket(cliCtx.Context, path)
-		if err != nil {
-			select {
-			case <-cliCtx.Done():
-				return nil
-			default:
-				fmt.Fprintln(c.writer, "Failed to retrieve logs:", err)
-				continue
+	return c.runWebSocket(cliCtx.Context, runWebSocketParams{
+		Path: path,
+		RespProcessor: func(r io.Reader) error {
+			var msg struct {
+				Timestamp int64  `json:"timestamp"`
+				Severity  string `json:"severity"`
+				Message   string `json:"message"`
 			}
-		}
-		fmt.Fprintln(c.writer, "Connection established")
-
-		closeCh := make(chan struct{})
-		go func() {
-			select {
-			case <-cliCtx.Done():
-			case <-closeCh:
+			if err := json.NewDecoder(r).Decode(&msg); err != nil {
+				return fmt.Errorf("parse payload: %w", err)
 			}
-			conn.Close()
-		}()
-
-		if err := c.runProxy(conn); err != nil {
-			select {
-			case <-cliCtx.Done():
-				return nil
-			default:
-				fmt.Fprintln(c.writer, "Failed to retrieve logs:", err)
-				close(closeCh)
-			}
-		}
-	}
-}
-
-func (c *cmdRuleEngineRuleLogs) runProxy(conn *websocket.Conn) error {
-	for {
-		_, r, err := conn.NextReader()
-		if err != nil {
-			return fmt.Errorf("read: %w", err)
-		}
-
-		var msg struct {
-			Timestamp int64  `json:"timestamp"`
-			Severity  string `json:"severity"`
-			Message   string `json:"message"`
-		}
-		if err := json.NewDecoder(r).Decode(&msg); err != nil {
-			return fmt.Errorf("parse payload: %w", err)
-		}
-
-		ts := time.Unix(msg.Timestamp, 0).Format(time.RFC3339)
-		fmt.Fprintf(c.writer, "%s [%s] %s\n", ts, msg.Severity, msg.Message)
-	}
+			ts := time.Unix(msg.Timestamp, 0).Format(time.RFC3339)
+			fmt.Fprintf(c.writer, "%s [%s] %s\n", ts, msg.Severity, msg.Message)
+			return nil
+		},
+	})
 }

@@ -7,13 +7,14 @@ USAGE:
 OPTIONS:
    --verbose                    log extra details about operation (default: false)
    --device-id value, -d value  device ID
-   --from value, -f value       from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
-   --to value, -t value         to timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
+   --follow, -f                 follow log output (default: false)
+   --from value                 from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
+   --to value                   to timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)
    --limit value, -l value      maximum number of logs to retrieve (default: 0)
    --offset value, -o value     number of logs to skip on retrieve (default: 0)
    --severity value, -s value   filter logs by severity
    --order value                order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)
-   --show value                 filter logs by criteria (ALL[default], PERSIST_ONLY, TEMPORARY_ONLY)
+   --show value                 filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)
    --help, -h                   show help
 
 ENVIRONMENT VARIABLES:
