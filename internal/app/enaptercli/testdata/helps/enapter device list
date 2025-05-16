@@ -7,6 +7,7 @@ USAGE:
 OPTIONS:
    --verbose                          log extra details about operation (default: false)
    --expand value [ --expand value ]  coma separated list of expanded device info
+   --site-id value                    list devices from this site
    --help, -h                         show help
 
 ENVIRONMENT VARIABLES:

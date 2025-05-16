@@ -11,6 +11,7 @@ import (
 
 type cmdDevicesList struct {
 	cmdDevices
+	siteID string
 	expand []string
 }
 
@@ -36,6 +37,10 @@ func (c *cmdDevicesList) Flags() []cli.Flag {
 			Usage: "coma separated list of expanded device info",
 		},
 		Destination: &c.expand,
+	}, &cli.StringFlag{
+		Name:        "site-id",
+		Usage:       "list devices from this site",
+		Destination: &c.siteID,
 	})
 }
 
@@ -50,6 +55,15 @@ func (c *cmdDevicesList) do(ctx context.Context) error {
 	query := url.Values{}
 	if len(c.expand) != 0 {
 		query.Set("expand", strings.Join(c.expand, ","))
+	}
+
+	if c.siteID != "" {
+		query.Set("site_id", c.siteID)
+		return c.cmdBase.doHTTPRequest(ctx, doHTTPRequestParams{
+			Method: http.MethodGet,
+			Path:   "/sites/" + c.siteID + "/devices",
+			Query:  query,
+		})
 	}
 
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
