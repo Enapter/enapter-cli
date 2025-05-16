@@ -21,6 +21,7 @@ func NewApp() *cli.App {
 		"The token can be obtained in your Enapter Cloud account settings."
 
 	app.Commands = []*cli.Command{
+		buildCmdSites(),
 		buildCmdDevices(),
 		buildCmdBlueprints(),
 		buildCmdProvisioning(),

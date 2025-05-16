@@ -1,0 +1,14 @@
+NAME:
+   enaptercli.test site list - List user sites
+
+USAGE:
+   enaptercli.test site list [command options]
+
+OPTIONS:
+   --verbose   log extra details about operation (default: false)
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+

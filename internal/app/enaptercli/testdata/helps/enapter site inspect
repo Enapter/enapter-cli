@@ -1,0 +1,15 @@
+NAME:
+   enaptercli.test site inspect - Inspect a site
+
+USAGE:
+   enaptercli.test site inspect [command options]
+
+OPTIONS:
+   --verbose        log extra details about operation (default: false)
+   --site-id value  site ID
+   --help, -h       show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN  Enapter API access token
+   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+
