@@ -1,0 +1,22 @@
+{
+  "Method": "POST",
+  "URL": "/v3/devices/3b0a0626-2dc4-44a3-ac5a-34d58b7b2a26/assign_blueprint",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "Content-Length": [
+      "35"
+    ],
+    "Content-Type": [
+      "application/json"
+    ],
+    "User-Agent": [
+      "Go-http-client/1.1"
+    ],
+    "X-Enapter-Auth-Token": [
+      "enapter_api_test_token"
+    ]
+  },
+  "Body": "{\"blueprint_id\":\"new_blueprint_id\"}"
+}
