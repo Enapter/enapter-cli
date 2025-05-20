@@ -8,6 +8,9 @@
     "Content-Length": [
       "55"
     ],
+    "Content-Type": [
+      "application/json"
+    ],
     "User-Agent": [
       "Go-http-client/1.1"
     ],

@@ -73,10 +73,14 @@ func TestHTTPReqResp(t *testing.T) {
 				if update {
 					err := os.WriteFile(expReqFileName, shouldMarshalIndent(t, reqObj), 0o600)
 					require.NoError(t, err)
+				} else {
+					require.Equal(t, readFileToString(t, expReqFileName), string(shouldMarshalIndent(t, reqObj)))
 				}
 
 				resp := shouldReadFile(t, filepath.Join(testdataPath, tc.Name(), "resp_"+strconv.Itoa(reqCount)))
 				_, _ = w.Write(resp)
+
+				reqCount++
 			}))
 			defer srv.Close()
 
