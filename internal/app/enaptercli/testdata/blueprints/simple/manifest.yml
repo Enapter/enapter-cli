@@ -1,0 +1,7 @@
+blueprint_spec: device/3.0
+display_name: Simple Lua
+
+runtime:
+  type: lua
+  options:
+    file: firmware.lua
