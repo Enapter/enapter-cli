@@ -5,6 +5,9 @@
     "Accept-Encoding": [
       "gzip"
     ],
+    "Content-Type": [
+      ""
+    ],
     "User-Agent": [
       "Go-http-client/1.1"
     ],
