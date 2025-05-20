@@ -6,15 +6,17 @@ linters:
   enable:
     - asciicheck
     - bodyclose
+    - copyloopvar
     # - deadcode
     # - depguard
     - dogsled
     # - dupl # some commands are looks very similar in implementation
+    - err113
     - errcheck
     - errorlint
     - exhaustive
     # - exhaustivestruct
-    - exportloopref
+    # - exportloopref
     - funlen
     - gci
     - gochecknoglobals
@@ -25,13 +27,11 @@ linters:
     - gocyclo
     - godot
     # - godox
-    - goerr113
     - gofmt
     - gofumpt
     - goheader
     - goimports
     # - golint
-    - gomnd
     - gomodguard
     - goprintffuncname
     - gosec
@@ -42,6 +42,7 @@ linters:
     - lll
     # - maligned
     - misspell
+    - mnd
     - nakedret
     - nestif
     # - nlreturn
@@ -70,7 +71,10 @@ linters-settings:
   lll:
     line-length: 110
   gci:
-    local-prefixes: github.com/enapter/enapter-cli
+      sections:
+      - standard
+      - default
+      - prefix(github.com/enapter/enapter-cli/)
 
 issues:
   exclude-rules:

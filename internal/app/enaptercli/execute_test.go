@@ -23,7 +23,6 @@ func TestHelpMessages(t *testing.T) {
 	require.NoError(t, err)
 
 	for _, fi := range files {
-		fi := fi
 		t.Run(fi.Name(), func(t *testing.T) {
 			args := strings.Split(fi.Name(), " ")
 			args = append(args, "-h")
@@ -54,7 +53,6 @@ func TestHTTPReqResp(t *testing.T) {
 	require.NoError(t, err)
 
 	for _, tc := range tests {
-		tc := tc
 		t.Run(tc.Name(), func(t *testing.T) {
 			reqCount := 0
 			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -84,9 +82,7 @@ func TestHTTPReqResp(t *testing.T) {
 			}))
 			defer srv.Close()
 
-			tmplParams := struct {
-				BaseFlags string
-			}{
+			tmplParams := struct{ BaseFlags string }{
 				BaseFlags: strings.Join([]string{"--token", testToken, "--api-host", srv.URL}, " "),
 			}
 

@@ -68,10 +68,10 @@ func (c *cmdProvisioningLua) Before(cliCtx *cli.Context) error {
 		return err
 	}
 	if c.blueprintID != "" && c.blueprintPath != "" {
-		return fmt.Errorf("only one of --blueprint-id or --blueprint-path can be specified")
+		return errOnlyOneBlueprinFlag
 	}
 	if c.blueprintID == "" && c.blueprintPath == "" {
-		return fmt.Errorf("one of --blueprint-id or --blueprint-path must be specified")
+		return errMissedBlueprintFlag
 	}
 	return nil
 }
