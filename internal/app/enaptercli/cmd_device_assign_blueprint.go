@@ -12,8 +12,9 @@ import (
 
 type cmdDevicesAssignBlueprint struct {
 	cmdDevices
-	deviceID    string
-	blueprintID string
+	deviceID      string
+	blueprintID   string
+	blueprintPath string
 }
 
 func buildCmdDevicesAssignBlueprint() *cli.Command {
@@ -43,12 +44,36 @@ func (c *cmdDevicesAssignBlueprint) Flags() []cli.Flag {
 		Aliases:     []string{"b"},
 		Usage:       "blueprint ID to assign",
 		Destination: &c.blueprintID,
-		Required:    true,
+	}, &cli.StringFlag{
+		Name:        "blueprint-path",
+		Usage:       "blueprint path (zip file or directory) to assign",
+		Destination: &c.blueprintPath,
 	})
 }
 
+func (c *cmdDevicesAssignBlueprint) Before(cliCtx *cli.Context) error {
+	if err := c.cmdDevices.Before(cliCtx); err != nil {
+		return err
+	}
+	if c.blueprintID != "" && c.blueprintPath != "" {
+		return fmt.Errorf("only one of --blueprint-id or --blueprint-path can be specified")
+	}
+	if c.blueprintID == "" && c.blueprintPath == "" {
+		return fmt.Errorf("one of --blueprint-id or --blueprint-path must be specified")
+	}
+	return c.validateExpandFlag(cliCtx)
+}
+
 func (c *cmdDevicesAssignBlueprint) do(ctx context.Context) error {
-	body, err := json.Marshal(map[string]interface{}{
+	if c.blueprintPath != "" {
+		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.cmdBase.doHTTPRequest)
+		if err != nil {
+			return fmt.Errorf("upload blueprint: %w", err)
+		}
+		c.blueprintID = blueprintID
+	}
+
+	body, err := json.Marshal(map[string]any{
 		"blueprint_id": c.blueprintID,
 	})
 	if err != nil {

@@ -8,6 +8,7 @@ OPTIONS:
    --verbose                       log extra details about operation (default: false)
    --device-id value, -d value     device ID
    --blueprint-id value, -b value  blueprint ID to assign
+   --blueprint-path value          blueprint path (zip file or directory) to assign
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:

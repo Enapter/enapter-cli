@@ -12,10 +12,11 @@ import (
 
 type cmdProvisioningLua struct {
 	cmdProvisioning
-	deviceName  string
-	deviceSlug  string
-	runtimeID   string
-	blueprintID string
+	deviceName    string
+	deviceSlug    string
+	runtimeID     string
+	blueprintID   string
+	blueprintPath string
 }
 
 func buildCmdProvisioningLua() *cli.Command {
@@ -55,11 +56,35 @@ func (c *cmdProvisioningLua) Flags() []cli.Flag {
 		Aliases:     []string{"b"},
 		Usage:       "blueprint ID of a new Lua device",
 		Destination: &c.blueprintID,
-		Required:    true,
+	}, &cli.StringFlag{
+		Name:        "blueprint-path",
+		Usage:       "blueprint path (zip file or directory) to assign",
+		Destination: &c.blueprintPath,
 	})
 }
 
+func (c *cmdProvisioningLua) Before(cliCtx *cli.Context) error {
+	if err := c.cmdProvisioning.Before(cliCtx); err != nil {
+		return err
+	}
+	if c.blueprintID != "" && c.blueprintPath != "" {
+		return fmt.Errorf("only one of --blueprint-id or --blueprint-path can be specified")
+	}
+	if c.blueprintID == "" && c.blueprintPath == "" {
+		return fmt.Errorf("one of --blueprint-id or --blueprint-path must be specified")
+	}
+	return nil
+}
+
 func (c *cmdProvisioningLua) do(ctx context.Context) error {
+	if c.blueprintPath != "" {
+		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.cmdBase.doHTTPRequest)
+		if err != nil {
+			return fmt.Errorf("upload blueprint: %w", err)
+		}
+		c.blueprintID = blueprintID
+	}
+
 	body, err := json.Marshal(map[string]interface{}{
 		"runtime_id":   c.runtimeID,
 		"name":         c.deviceName,

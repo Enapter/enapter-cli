@@ -10,6 +10,7 @@ OPTIONS:
    --device-name value, -n value   name of a new Lua device
    --device-slug value             slug of a new Lua device
    --blueprint-id value, -b value  blueprint ID of a new Lua device
+   --blueprint-path value          blueprint path (zip file or directory) to assign
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:
