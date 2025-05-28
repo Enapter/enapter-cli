@@ -9,7 +9,6 @@ OPTIONS:
    --device-id value  device ID
    --cmd-name value   command name
    --cmd-args value   command args (should be a JSON string)
-   --ephemeral        run command in ephemeral mode (default: false)
    --help, -h         show help
 
 ENVIRONMENT VARIABLES:
