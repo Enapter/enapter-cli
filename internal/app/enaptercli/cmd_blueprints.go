@@ -11,9 +11,11 @@ type cmdBlueprints struct {
 }
 
 func buildCmdBlueprints() *cli.Command {
+	cmd := &cmdBlueprints{}
 	return &cli.Command{
-		Name:  "blueprint",
-		Usage: "Manage blueprints",
+		Name:               "blueprint",
+		Usage:              "Manage blueprints",
+		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdBlueprintsProfiles(),
 			buildCmdBlueprintsUpload(),

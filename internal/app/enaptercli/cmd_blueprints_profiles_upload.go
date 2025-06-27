@@ -20,7 +20,7 @@ func buildCmdBlueprintsProfilesUpload() *cli.Command {
 	return &cli.Command{
 		Name:               "upload",
 		Usage:              "Upload profiles into Platform",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

@@ -26,7 +26,7 @@ func buildCmdRuleEngineRuleUpdateScript() *cli.Command {
 	return &cli.Command{
 		Name:               "update-script",
 		Usage:              "Update the script of a rule",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

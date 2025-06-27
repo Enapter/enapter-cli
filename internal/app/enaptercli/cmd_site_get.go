@@ -17,7 +17,7 @@ func buildCmdSiteGet() *cli.Command {
 	return &cli.Command{
 		Name:               "get",
 		Usage:              "Get a site",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

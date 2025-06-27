@@ -22,7 +22,7 @@ func buildCmdDevicesAssignBlueprint() *cli.Command {
 	return &cli.Command{
 		Name:               "assign-blueprint",
 		Usage:              "Assign blueprint to device",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

@@ -77,14 +77,20 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 	return nil
 }
 
-func (c *cmdBase) HelpTemplate() string {
-	return cli.CommandHelpTemplate + `
+const enapterAPIEnvVarsHelp = `
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
    ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
    ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
 
 `
+
+func (c *cmdBase) CommandHelpTemplate() string {
+	return cli.CommandHelpTemplate + enapterAPIEnvVarsHelp
+}
+
+func (c *cmdBase) SubcommandHelpTemplate() string {
+	return cli.SubcommandHelpTemplate + enapterAPIEnvVarsHelp
 }
 
 type doHTTPRequestParams struct {

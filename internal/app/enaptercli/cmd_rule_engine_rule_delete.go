@@ -20,7 +20,7 @@ func buildCmdRuleEngineRuleDelete() *cli.Command {
 	return &cli.Command{
 		Name:               "delete",
 		Usage:              "Delete one or more rules",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

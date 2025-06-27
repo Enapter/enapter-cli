@@ -14,9 +14,11 @@ type cmdDeviceExecution struct {
 }
 
 func buildCmdDeviceExecution() *cli.Command {
+	cmd := &cmdDeviceExecution{}
 	return &cli.Command{
-		Name:  "execution",
-		Usage: "Manage device command executions",
+		Name:               "execution",
+		Usage:              "Manage device command executions",
+		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdDeviceExecutionList(),
 			buildCmdDeviceExecutionGet(),

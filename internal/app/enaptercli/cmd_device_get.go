@@ -20,7 +20,7 @@ func buildCmdDevicesGet() *cli.Command {
 	return &cli.Command{
 		Name:               "get",
 		Usage:              "Get a device info",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

@@ -13,9 +13,11 @@ type cmdSite struct {
 }
 
 func buildCmdSites() *cli.Command {
+	cmd := &cmdSite{}
 	return &cli.Command{
-		Name:  "site",
-		Usage: "Manage sites",
+		Name:               "site",
+		Usage:              "Manage sites",
+		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdSitesList(),
 			buildCmdSiteGet(),
