@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test device execution inspect - Inspect a device command execution
+   enaptercli.test device execution get - Get a device command execution
 
 USAGE:
-   enaptercli.test device execution inspect [command options]
+   enaptercli.test device execution get [command options]
 
 OPTIONS:
    --verbose                          log extra details about operation (default: false)

@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test rule-engine inspect - Inspect the rule engine
+   enaptercli.test rule-engine get - Get the rule engine
 
 USAGE:
-   enaptercli.test rule-engine inspect [command options]
+   enaptercli.test rule-engine get [command options]
 
 OPTIONS:
    --verbose   log extra details about operation (default: false)

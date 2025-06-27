@@ -7,16 +7,16 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdSiteInspect struct {
+type cmdSiteGet struct {
 	cmdSite
 	siteID string
 }
 
-func buildCmdSiteInspect() *cli.Command {
-	cmd := &cmdSiteInspect{}
+func buildCmdSiteGet() *cli.Command {
+	cmd := &cmdSiteGet{}
 	return &cli.Command{
-		Name:               "inspect",
-		Usage:              "Inspect a site",
+		Name:               "get",
+		Usage:              "Get a site",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -26,7 +26,7 @@ func buildCmdSiteInspect() *cli.Command {
 	}
 }
 
-func (c *cmdSiteInspect) Flags() []cli.Flag {
+func (c *cmdSiteGet) Flags() []cli.Flag {
 	flags := c.cmdSite.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
@@ -36,7 +36,7 @@ func (c *cmdSiteInspect) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdSiteInspect) do(ctx context.Context) error {
+func (c *cmdSiteGet) do(ctx context.Context) error {
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodGet,
 		Path:   "/" + c.siteID,

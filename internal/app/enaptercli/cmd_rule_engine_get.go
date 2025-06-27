@@ -7,15 +7,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdRuleEngineInspect struct {
+type cmdRuleEngineGet struct {
 	cmdRuleEngine
 }
 
-func buildCmdRuleEngineInspect() *cli.Command {
-	cmd := &cmdRuleEngineInspect{}
+func buildCmdRuleEngineGet() *cli.Command {
+	cmd := &cmdRuleEngineGet{}
 	return &cli.Command{
-		Name:               "inspect",
-		Usage:              "Inspect the rule engine",
+		Name:               "get",
+		Usage:              "Get the rule engine",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -25,7 +25,7 @@ func buildCmdRuleEngineInspect() *cli.Command {
 	}
 }
 
-func (c *cmdRuleEngineInspect) do(ctx context.Context) error {
+func (c *cmdRuleEngineGet) do(ctx context.Context) error {
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodGet,
 		Path:   "",

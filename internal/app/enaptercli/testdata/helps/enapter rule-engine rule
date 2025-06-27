@@ -9,7 +9,7 @@ COMMANDS:
    delete         Delete one or more rules
    disable        Disable one or more rules
    enable         Enable one or more rules
-   inspect        Inspect a rule
+   get            Get a rule
    list           List rules
    update         Update a rule
    update-script  Update the script of a rule

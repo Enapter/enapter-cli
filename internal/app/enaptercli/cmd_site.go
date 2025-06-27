@@ -18,7 +18,7 @@ func buildCmdSites() *cli.Command {
 		Usage: "Manage sites",
 		Subcommands: []*cli.Command{
 			buildCmdSitesList(),
-			buildCmdSiteInspect(),
+			buildCmdSiteGet(),
 		},
 	}
 }

@@ -18,7 +18,7 @@ func buildCmdDevices() *cli.Command {
 		Usage: "Manage devices",
 		Subcommands: []*cli.Command{
 			buildCmdDevicesList(),
-			buildCmdDevicesInspect(),
+			buildCmdDevicesGet(),
 			buildCmdDevicesAssignBlueprint(),
 			buildCmdDevicesLogs(),
 			buildCmdDevicesDelete(),

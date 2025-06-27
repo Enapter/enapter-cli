@@ -18,7 +18,7 @@ func buildCmdBlueprints() *cli.Command {
 			buildCmdBlueprintsProfiles(),
 			buildCmdBlueprintsUpload(),
 			buildCmdBlueprintsDownload(),
-			buildCmdBlueprintsInspect(),
+			buildCmdBlueprintsGet(),
 		},
 	}
 }

@@ -9,17 +9,17 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDeviceExecutionInspect struct {
+type cmdDeviceExecutionGet struct {
 	cmdDeviceExecution
 	executionID string
 	expand      []string
 }
 
-func buildCmdDeviceExecutionInspect() *cli.Command {
-	cmd := &cmdDeviceExecutionInspect{}
+func buildCmdDeviceExecutionGet() *cli.Command {
+	cmd := &cmdDeviceExecutionGet{}
 	return &cli.Command{
-		Name:               "inspect",
-		Usage:              "Inspect a device command execution",
+		Name:               "get",
+		Usage:              "Get a device command execution",
 		CustomHelpTemplate: cmd.HelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -29,7 +29,7 @@ func buildCmdDeviceExecutionInspect() *cli.Command {
 	}
 }
 
-func (c *cmdDeviceExecutionInspect) Flags() []cli.Flag {
+func (c *cmdDeviceExecutionGet) Flags() []cli.Flag {
 	flags := c.cmdDeviceExecution.Flags()
 	return append(flags,
 		&cli.StringFlag{
@@ -47,14 +47,14 @@ func (c *cmdDeviceExecutionInspect) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdDeviceExecutionInspect) Before(cliCtx *cli.Context) error {
+func (c *cmdDeviceExecutionGet) Before(cliCtx *cli.Context) error {
 	if err := c.cmdDevices.Before(cliCtx); err != nil {
 		return err
 	}
 	return validateExpandFlag(cliCtx, []string{"log"})
 }
 
-func (c *cmdDeviceExecutionInspect) do(ctx context.Context) error {
+func (c *cmdDeviceExecutionGet) do(ctx context.Context) error {
 	query := url.Values{}
 	if len(c.expand) != 0 {
 		query.Set("expand", strings.Join(c.expand, ","))

@@ -6,7 +6,7 @@ USAGE:
 
 COMMANDS:
    list              List user devices
-   inspect           Inspect a devices
+   get               Get a device info
    assign-blueprint  Assign blueprint to device
    logs              Show device logs
    delete            Delete a device
