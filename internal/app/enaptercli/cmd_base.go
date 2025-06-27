@@ -3,6 +3,7 @@ package enaptercli
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -19,11 +20,12 @@ import (
 )
 
 type cmdBase struct {
-	verbose    bool
-	token      string
-	apiHost    string
-	writer     io.Writer
-	httpClient *http.Client
+	verbose          bool
+	token            string
+	apiHost          string
+	apiAllowInsecure bool
+	writer           io.Writer
+	httpClient       *http.Client
 }
 
 func (c *cmdBase) Flags() []cli.Flag {
@@ -47,6 +49,12 @@ func (c *cmdBase) Flags() []cli.Flag {
 			},
 		},
 		&cli.BoolFlag{
+			Name:        "api-allow-insecure",
+			Usage:       "allow insecure connections to Enapter API",
+			EnvVars:     []string{"ENAPTER3_API_ALLOW_INSECURE"},
+			Destination: &c.apiAllowInsecure,
+		},
+		&cli.BoolFlag{
 			Name:        "verbose",
 			Usage:       "log extra details about operation",
 			Destination: &c.verbose,
@@ -59,15 +67,22 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 		return errAPITokenMissed
 	}
 	c.writer = cliCtx.App.Writer
-	c.httpClient = http.DefaultClient
+	c.httpClient = &http.Client{
+		Transport: &http.Transport{
+			//nolint:gosec // This is needed to allow self-signed certificates on Gateway.
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: c.apiAllowInsecure},
+		},
+	}
+
 	return nil
 }
 
 func (c *cmdBase) HelpTemplate() string {
 	return cli.CommandHelpTemplate + `
 ENVIRONMENT VARIABLES:
-   ENAPTER3_API_TOKEN  Enapter API access token
-   ENAPTER3_API_URL    Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
 
 `
 }
