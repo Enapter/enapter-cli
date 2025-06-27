@@ -9,8 +9,8 @@ OPTIONS:
    --api-allow-insecure  allow insecure connections to Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose             log extra details about operation (default: false)
    --device-id value     device ID
-   --cmd-name value      command name
-   --cmd-args value      command args (should be a JSON string)
+   --name value          command name
+   --arguments value     command arguments (should be a JSON string)
    --ephemeral           run command in ephemeral mode (default: false)
    --help, -h            show help
 

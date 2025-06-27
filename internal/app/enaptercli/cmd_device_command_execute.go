@@ -42,14 +42,14 @@ func (c *cmdDeviceCommandExecute) Flags() []cli.Flag {
 			Required:    true,
 		},
 		&cli.StringFlag{
-			Name:        "cmd-name",
+			Name:        "name",
 			Usage:       "command name",
 			Destination: &c.cmdName,
 			Required:    true,
 		},
 		&cli.StringFlag{
-			Name:        "cmd-args",
-			Usage:       "command args (should be a JSON string)",
+			Name:        "arguments",
+			Usage:       "command arguments (should be a JSON string)",
 			Destination: &c.cmdArgs,
 		},
 		&cli.BoolFlag{
