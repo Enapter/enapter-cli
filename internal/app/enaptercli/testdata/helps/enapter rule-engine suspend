@@ -5,11 +5,13 @@ USAGE:
    enaptercli.test rule-engine suspend [command options]
 
 OPTIONS:
-   --api-url value  override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
-   --verbose        log extra details about operation (default: false)
-   --help, -h       show help
+   --api-url value       override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure  allow insecure connections to Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose             log extra details about operation (default: false)
+   --help, -h            show help
 
 ENVIRONMENT VARIABLES:
-   ENAPTER3_API_TOKEN  Enapter API access token
-   ENAPTER3_API_URL    Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
 
