@@ -34,16 +34,13 @@ func (c *cmdBase) Flags() []cli.Flag {
 			EnvVars:     []string{"ENAPTER3_API_TOKEN"},
 			Hidden:      true,
 			Destination: &c.token,
-			Category:    "HTTP API Configuration:",
 		},
 		&cli.StringFlag{
-			Name:        "api-host",
-			Usage:       "Override API endpoint",
-			EnvVars:     []string{"ENAPTER3_API_HOST"},
-			Hidden:      true,
+			Name:        "api-url",
+			Usage:       "override API base URL",
+			EnvVars:     []string{"ENAPTER3_API_URL"},
 			Value:       "https://api.enapter.com",
 			Destination: &c.apiHost,
-			Category:    "HTTP API Configuration:",
 			Action: func(_ *cli.Context, v string) error {
 				c.apiHost = strings.TrimSuffix(v, "/")
 				return nil
@@ -70,7 +67,7 @@ func (c *cmdBase) HelpTemplate() string {
 	return cli.CommandHelpTemplate + `
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN  Enapter API access token
-   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_URL    Enapter API base URL (https://api.enapter.com by default)
 
 `
 }
