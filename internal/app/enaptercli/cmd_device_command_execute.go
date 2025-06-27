@@ -10,7 +10,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevicesExecuteCommand struct {
+type cmdDeviceCommandExecute struct {
 	cmdDevices
 	deviceID  string
 	cmdName   string
@@ -18,10 +18,10 @@ type cmdDevicesExecuteCommand struct {
 	ephemeral bool
 }
 
-func buildCmdDevicesExecuteCommand() *cli.Command {
-	cmd := &cmdDevicesExecuteCommand{}
+func buildCmdDeviceCommandExecute() *cli.Command {
+	cmd := &cmdDeviceCommandExecute{}
 	return &cli.Command{
-		Name:               "execute-command",
+		Name:               "execute",
 		Usage:              "Execute a device command",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
@@ -32,7 +32,7 @@ func buildCmdDevicesExecuteCommand() *cli.Command {
 	}
 }
 
-func (c *cmdDevicesExecuteCommand) Flags() []cli.Flag {
+func (c *cmdDeviceCommandExecute) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
 	return append(flags,
 		&cli.StringFlag{
@@ -60,7 +60,7 @@ func (c *cmdDevicesExecuteCommand) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdDevicesExecuteCommand) do(ctx context.Context) error {
+func (c *cmdDeviceCommandExecute) do(ctx context.Context) error {
 	reqBody := struct {
 		Name      string          `json:"name"`
 		Args      json.RawMessage `json:"arguments,omitempty"`

@@ -9,13 +9,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDeviceExecutionList struct {
-	cmdDeviceExecution
+type cmdDeviceCommandList struct {
+	cmdDeviceCommand
 	expand []string
 }
 
-func buildCmdDeviceExecutionList() *cli.Command {
-	cmd := &cmdDeviceExecutionList{}
+func buildCmdDeviceCommandList() *cli.Command {
+	cmd := &cmdDeviceCommandList{}
 	return &cli.Command{
 		Name:               "list",
 		Usage:              "List device command executions",
@@ -28,8 +28,8 @@ func buildCmdDeviceExecutionList() *cli.Command {
 	}
 }
 
-func (c *cmdDeviceExecutionList) Flags() []cli.Flag {
-	flags := c.cmdDeviceExecution.Flags()
+func (c *cmdDeviceCommandList) Flags() []cli.Flag {
+	flags := c.cmdDeviceCommand.Flags()
 	return append(flags,
 		&cli.MultiStringFlag{
 			Target: &cli.StringSliceFlag{
@@ -41,14 +41,14 @@ func (c *cmdDeviceExecutionList) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdDeviceExecutionList) Before(cliCtx *cli.Context) error {
+func (c *cmdDeviceCommandList) Before(cliCtx *cli.Context) error {
 	if err := c.cmdDevices.Before(cliCtx); err != nil {
 		return err
 	}
 	return validateExpandFlag(cliCtx, []string{"ephemeral"})
 }
 
-func (c *cmdDeviceExecutionList) do(ctx context.Context) error {
+func (c *cmdDeviceCommandList) do(ctx context.Context) error {
 	query := url.Values{}
 	if len(c.expand) != 0 {
 		query.Set("expand", strings.Join(c.expand, ","))
