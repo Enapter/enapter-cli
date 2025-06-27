@@ -37,6 +37,7 @@ func (c *cmdDeviceCommandExecute) Flags() []cli.Flag {
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "device-id",
+			Aliases:     []string{"d"},
 			Usage:       "device ID",
 			Destination: &c.deviceID,
 			Required:    true,
