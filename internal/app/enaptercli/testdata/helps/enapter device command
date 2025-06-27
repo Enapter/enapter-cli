@@ -1,10 +1,11 @@
 NAME:
-   enaptercli.test device execution - Manage device command executions
+   enaptercli.test device command - Manage device commands
 
 USAGE:
-   enaptercli.test device execution command [command options]
+   enaptercli.test device command command [command options]
 
 COMMANDS:
+   execute  Execute a device command
    list     List device command executions
    get      Get a device command execution
    help, h  Shows a list of commands or help for one command

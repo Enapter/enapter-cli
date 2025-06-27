@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test device execution get - Get a device command execution
+   enaptercli.test device command get - Get a device command execution
 
 USAGE:
-   enaptercli.test device execution get [command options]
+   enaptercli.test device command get [command options]
 
 OPTIONS:
    --api-url value                    override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]

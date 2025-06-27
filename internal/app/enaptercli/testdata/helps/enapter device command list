@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test device execution list - List device command executions
+   enaptercli.test device command list - List device command executions
 
 USAGE:
-   enaptercli.test device execution list [command options]
+   enaptercli.test device command list [command options]
 
 OPTIONS:
    --api-url value                    override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]

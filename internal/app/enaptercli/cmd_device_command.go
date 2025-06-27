@@ -8,25 +8,26 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDeviceExecution struct {
+type cmdDeviceCommand struct {
 	cmdDevices
 	deviceID string
 }
 
-func buildCmdDeviceExecution() *cli.Command {
-	cmd := &cmdDeviceExecution{}
+func buildCmdDeviceCommand() *cli.Command {
+	cmd := &cmdDeviceCommand{}
 	return &cli.Command{
-		Name:               "execution",
-		Usage:              "Manage device command executions",
+		Name:               "command",
+		Usage:              "Manage device commands",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
-			buildCmdDeviceExecutionList(),
-			buildCmdDeviceExecutionGet(),
+			buildCmdDeviceCommandExecute(),
+			buildCmdDeviceCommandList(),
+			buildCmdDeviceCommandGet(),
 		},
 	}
 }
 
-func (c *cmdDeviceExecution) Flags() []cli.Flag {
+func (c *cmdDeviceCommand) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
 	return append(flags,
 		&cli.StringFlag{
@@ -39,7 +40,7 @@ func (c *cmdDeviceExecution) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdDeviceExecution) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
+func (c *cmdDeviceCommand) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
 	path, err := url.JoinPath(c.deviceID, "command_executions", p.Path)
 	if err != nil {
 		return fmt.Errorf("join path: %w", err)
