@@ -32,7 +32,7 @@ func buildCmdBlueprintsProfilesUpload() *cli.Command {
 func (c *cmdBlueprintsProfilesUpload) Flags() []cli.Flag {
 	flags := c.cmdBlueprintsProfiles.Flags()
 	return append(flags, &cli.StringFlag{
-		Name:        "profiles-path",
+		Name:        "path",
 		Aliases:     []string{"p"},
 		Usage:       "profiles zip file path",
 		Destination: &c.profilesPath,
