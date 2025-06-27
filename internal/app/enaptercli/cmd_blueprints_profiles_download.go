@@ -20,7 +20,7 @@ func buildCmdBlueprintsProfilesDownload() *cli.Command {
 	return &cli.Command{
 		Name:               "download",
 		Usage:              "Download profiles zip from Platform",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

@@ -20,7 +20,7 @@ func buildCmdRuleEngineRuleUpdate() *cli.Command {
 	return &cli.Command{
 		Name:               "update",
 		Usage:              "Update a rule",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

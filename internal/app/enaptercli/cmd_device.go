@@ -13,9 +13,11 @@ type cmdDevices struct {
 }
 
 func buildCmdDevices() *cli.Command {
+	cmd := &cmdDevices{}
 	return &cli.Command{
-		Name:  "device",
-		Usage: "Manage devices",
+		Name:               "device",
+		Usage:              "Manage devices",
+		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdDevicesList(),
 			buildCmdDevicesGet(),

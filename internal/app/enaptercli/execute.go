@@ -19,6 +19,7 @@ func NewApp() *cli.App {
 	app.Usage = "Command line interface for Enapter services."
 	app.Description = "Enapter CLI requires access token for authentication. " +
 		"The token can be obtained in your Enapter Cloud account settings."
+	app.CustomAppHelpTemplate = cli.AppHelpTemplate + enapterAPIEnvVarsHelp
 
 	app.Commands = []*cli.Command{
 		buildCmdSites(),

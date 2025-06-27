@@ -20,7 +20,7 @@ func buildCmdRuleEngineRuleLogs() *cli.Command {
 	return &cli.Command{
 		Name:               "logs",
 		Usage:              "Show rule logs",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

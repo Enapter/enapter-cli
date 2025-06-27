@@ -17,7 +17,7 @@ func buildCmdDevicesDelete() *cli.Command {
 	return &cli.Command{
 		Name:               "delete",
 		Usage:              "Delete a device",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

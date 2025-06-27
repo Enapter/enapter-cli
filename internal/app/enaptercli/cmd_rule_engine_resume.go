@@ -16,7 +16,7 @@ func buildCmdRuleEngineResume() *cli.Command {
 	return &cli.Command{
 		Name:               "resume",
 		Usage:              "Resume execution of rules",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

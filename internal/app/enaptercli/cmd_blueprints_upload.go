@@ -21,7 +21,7 @@ func buildCmdBlueprintsUpload() *cli.Command {
 	return &cli.Command{
 		Name:               "upload",
 		Usage:              "Upload blueprint into Platform",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

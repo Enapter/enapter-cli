@@ -18,9 +18,11 @@ type cmdRuleEngineRule struct {
 }
 
 func buildCmdRuleEngineRule() *cli.Command {
+	cmd := &cmdRuleEngineRule{}
 	return &cli.Command{
-		Name:  "rule",
-		Usage: "Manage rules",
+		Name:               "rule",
+		Usage:              "Manage rules",
+		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdRuleEngineRuleCreate(),
 			buildCmdRuleEngineRuleDelete(),

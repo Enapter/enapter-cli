@@ -16,7 +16,7 @@ func buildCmdRuleEngineGet() *cli.Command {
 	return &cli.Command{
 		Name:               "get",
 		Usage:              "Get the rule engine",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

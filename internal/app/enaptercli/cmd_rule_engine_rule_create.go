@@ -27,7 +27,7 @@ func buildCmdRuleEngineRuleCreate() *cli.Command {
 	return &cli.Command{
 		Name:               "create",
 		Usage:              "Create a new rule",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

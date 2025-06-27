@@ -23,7 +23,7 @@ func buildCmdDevicesExecuteCommand() *cli.Command {
 	return &cli.Command{
 		Name:               "execute-command",
 		Usage:              "Execute a device command",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

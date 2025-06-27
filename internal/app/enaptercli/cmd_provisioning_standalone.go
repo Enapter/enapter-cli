@@ -21,7 +21,7 @@ func buildCmdProvisioningStandalone() *cli.Command {
 	return &cli.Command{
 		Name:               "standalone",
 		Usage:              "Create a new standalone device",
-		CustomHelpTemplate: cmd.HelpTemplate(),
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
 		Action: func(cliCtx *cli.Context) error {

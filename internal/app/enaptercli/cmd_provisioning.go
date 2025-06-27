@@ -9,9 +9,11 @@ type cmdProvisioning struct {
 }
 
 func buildCmdProvisioning() *cli.Command {
+	cmd := &cmdProvisioning{}
 	return &cli.Command{
-		Name:  "provisioning",
-		Usage: "Create devices of different types",
+		Name:               "provisioning",
+		Usage:              "Create devices of different types",
+		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdProvisioningStandalone(),
 			buildCmdProvisioningLua(),
