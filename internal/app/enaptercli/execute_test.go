@@ -83,7 +83,7 @@ func TestHTTPReqResp(t *testing.T) {
 			defer srv.Close()
 
 			tmplParams := struct{ BaseFlags string }{
-				BaseFlags: strings.Join([]string{"--token", testToken, "--api-host", srv.URL}, " "),
+				BaseFlags: strings.Join([]string{"--token", testToken, "--api-url", srv.URL}, " "),
 			}
 
 			cmd := executeTmpl(t, filepath.Join(testdataPath, tc.Name(), "cmd.tmpl"), tmplParams)

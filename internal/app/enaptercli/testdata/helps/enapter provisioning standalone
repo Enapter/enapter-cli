@@ -5,6 +5,7 @@ USAGE:
    enaptercli.test provisioning standalone [command options]
 
 OPTIONS:
+   --api-url value                override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
    --verbose                      log extra details about operation (default: false)
    --site-id value, -s value      site ID where to craate device
    --device-name value, -n value  name for a new device
@@ -12,5 +13,5 @@ OPTIONS:
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN  Enapter API access token
-   ENAPTER3_API_HOST   Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_URL    Enapter API base URL (https://api.enapter.com by default)
 
