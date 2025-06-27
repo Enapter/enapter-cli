@@ -1,12 +1,12 @@
 NAME:
-   enaptercli.test rule-engine rule inspect - Inspect a rule
+   enaptercli.test site get - Get a site
 
 USAGE:
-   enaptercli.test rule-engine rule inspect [command options]
+   enaptercli.test site get [command options]
 
 OPTIONS:
    --verbose        log extra details about operation (default: false)
-   --rule-id value  Rule ID or slug
+   --site-id value  site ID
    --help, -h       show help
 
 ENVIRONMENT VARIABLES:

@@ -17,7 +17,7 @@ func buildCmdRuleEngine() *cli.Command {
 		Name:  "rule-engine",
 		Usage: "Manage the rule engine",
 		Subcommands: []*cli.Command{
-			buildCmdRuleEngineInspect(),
+			buildCmdRuleEngineGet(),
 			buildCmdRuleEngineSuspend(),
 			buildCmdRuleEngineResume(),
 			buildCmdRuleEngineRule(),

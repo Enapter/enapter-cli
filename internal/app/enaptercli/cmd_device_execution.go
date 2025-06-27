@@ -19,7 +19,7 @@ func buildCmdDeviceExecution() *cli.Command {
 		Usage: "Manage device command executions",
 		Subcommands: []*cli.Command{
 			buildCmdDeviceExecutionList(),
-			buildCmdDeviceExecutionInspect(),
+			buildCmdDeviceExecutionGet(),
 		},
 	}
 }

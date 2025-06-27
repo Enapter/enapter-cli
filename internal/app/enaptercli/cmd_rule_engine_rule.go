@@ -26,7 +26,7 @@ func buildCmdRuleEngineRule() *cli.Command {
 			buildCmdRuleEngineRuleDelete(),
 			buildCmdRuleEngineRuleDisable(),
 			buildCmdRuleEngineRuleEnable(),
-			buildCmdRuleEngineRuleInspect(),
+			buildCmdRuleEngineRuleGet(),
 			buildCmdRuleEngineRuleList(),
 			buildCmdRuleEngineRuleUpdate(),
 			buildCmdRuleEngineRuleUpdateScript(),

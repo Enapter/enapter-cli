@@ -5,7 +5,7 @@ USAGE:
    enaptercli.test rule-engine command [command options]
 
 COMMANDS:
-   inspect  Inspect the rule engine
+   get      Get the rule engine
    suspend  Suspend execution of rules
    resume   Resume execution of rules
    rule     Manage rules
