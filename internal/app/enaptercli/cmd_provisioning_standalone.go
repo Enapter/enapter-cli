@@ -37,7 +37,6 @@ func (c *cmdProvisioningStandalone) Flags() []cli.Flag {
 		Aliases:     []string{"s"},
 		Usage:       "site ID where to craate device",
 		Destination: &c.siteID,
-		Required:    true,
 	}, &cli.StringFlag{
 		Name:        "device-name",
 		Aliases:     []string{"n"},
@@ -48,7 +47,7 @@ func (c *cmdProvisioningStandalone) Flags() []cli.Flag {
 }
 
 func (c *cmdProvisioningStandalone) do(ctx context.Context) error {
-	body, err := json.Marshal(map[string]interface{}{
+	body, err := json.Marshal(map[string]any{
 		"site_id": c.siteID,
 		"name":    c.deviceName,
 	})
