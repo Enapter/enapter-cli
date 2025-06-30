@@ -1,0 +1,19 @@
+NAME:
+   enaptercli.test device communication-config generate - Generate a new communication config for device
+
+USAGE:
+   enaptercli.test device communication-config generate [command options]
+
+OPTIONS:
+   --api-url value              override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure         allow insecure connections to Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                    log extra details about operation (default: false)
+   --device-id value, -d value  device ID
+   --protocol value             connection protocol (supported values: MQTT, MQTTS)
+   --help, -h                   show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
+

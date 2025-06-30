@@ -5,13 +5,14 @@ USAGE:
    enaptercli.test device command [command options]
 
 COMMANDS:
-   list              List user devices
-   get               Get a device info
-   assign-blueprint  Assign blueprint to device
-   logs              Show device logs
-   delete            Delete a device
-   command           Manage device commands
-   help, h           Shows a list of commands or help for one command
+   list                  List user devices
+   get                   Get a device info
+   assign-blueprint      Assign blueprint to device
+   logs                  Show device logs
+   delete                Delete a device
+   command               Manage device commands
+   communication-config  Manage device communication config
+   help, h               Shows a list of commands or help for one command
 
 OPTIONS:
    --help, -h  show help
