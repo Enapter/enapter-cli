@@ -39,8 +39,9 @@ func (c *cmdDevicesGet) Flags() []cli.Flag {
 		Required:    true,
 	}, &cli.MultiStringFlag{
 		Target: &cli.StringSliceFlag{
-			Name:  "expand",
-			Usage: "coma separated list of expanded device info",
+			Name: "expand",
+			Usage: "coma separated list of expanded device info (supported values: " +
+				"connectivity, manifest, properties, communication_info, site)",
 		},
 		Destination: &c.expand,
 	})

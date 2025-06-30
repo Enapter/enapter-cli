@@ -40,7 +40,7 @@ func (c *cmdDeviceCommandGet) Flags() []cli.Flag {
 		}, &cli.MultiStringFlag{
 			Target: &cli.StringSliceFlag{
 				Name:  "expand",
-				Usage: "coma separated list of expanded options",
+				Usage: "coma separated list of expanded options (supported values: log)",
 			},
 			Destination: &c.expand,
 		},

@@ -10,7 +10,7 @@ OPTIONS:
    --verbose                          log extra details about operation (default: false)
    --device-id value, -d value        device ID
    --execution-id value               execution ID
-   --expand value [ --expand value ]  coma separated list of expanded options
+   --expand value [ --expand value ]  coma separated list of expanded options (supported values: log)
    --help, -h                         show help
 
 ENVIRONMENT VARIABLES:
