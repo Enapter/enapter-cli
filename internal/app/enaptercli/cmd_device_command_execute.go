@@ -57,6 +57,7 @@ func (c *cmdDeviceCommandExecute) Flags() []cli.Flag {
 			Name:        "ephemeral",
 			Usage:       "run command in ephemeral mode",
 			Destination: &c.ephemeral,
+			Hidden:      true,
 		},
 	)
 }

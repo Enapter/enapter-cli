@@ -11,7 +11,6 @@ OPTIONS:
    --device-id value, -d value  device ID
    --name value                 command name
    --arguments value            command arguments (should be a JSON string)
-   --ephemeral                  run command in ephemeral mode (default: false)
    --help, -h                   show help
 
 ENVIRONMENT VARIABLES:
