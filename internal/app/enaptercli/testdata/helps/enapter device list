@@ -8,7 +8,7 @@ OPTIONS:
    --api-url value                    override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
    --api-allow-insecure               allow insecure connections to Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                          log extra details about operation (default: false)
-   --expand value [ --expand value ]  coma separated list of expanded device info
+   --expand value [ --expand value ]  coma separated list of expanded device info (supported values: connectivity, manifest, properties, communication_info, site)
    --site-id value                    list devices from this site
    --help, -h                         show help
 
