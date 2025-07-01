@@ -11,6 +11,8 @@ import (
 	"time"
 
 	"github.com/urfave/cli/v2"
+
+	"github.com/enapter/enapter-cli/internal/app/cliflags"
 )
 
 type cmdRuleEngineRuleCreate struct {
@@ -59,10 +61,12 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 				return c.validateRuntimeVersion(v)
 			},
 		},
-		&cli.DurationFlag{
-			Name:        "exec-interval",
-			Usage:       "How often to execute the script. This option is only compatible with the runtime version 1",
-			Destination: &c.execInterval,
+		&cliflags.Duration{
+			DurationFlag: cli.DurationFlag{
+				Name:        "exec-interval",
+				Usage:       "How often to execute the script. This option is only compatible with the runtime version 1",
+				Destination: &c.execInterval,
+			},
 		},
 		&cli.BoolFlag{
 			Name:        "disable",
