@@ -3,16 +3,13 @@ package enaptercli
 import (
 	"context"
 	"net/http"
-	"net/url"
-	"strconv"
 
 	"github.com/urfave/cli/v2"
 )
 
 type cmdSitesList struct {
 	cmdSite
-	offset int
-	limit  int
+	mySites bool
 }
 
 func buildCmdSitesList() *cli.Command {
@@ -29,18 +26,22 @@ func buildCmdSitesList() *cli.Command {
 	}
 }
 
+func (c *cmdSitesList) Flags() []cli.Flag {
+	flags := c.cmdSite.Flags()
+	return append(flags, &cli.BoolFlag{
+		Name:        "my-sites",
+		Usage:       "returns only sites where user is owner or installer",
+		Destination: &c.mySites,
+	})
+}
+
 func (c *cmdSitesList) do(ctx context.Context) error {
-	query := url.Values{}
-	if c.offset != 0 {
-		query.Set("offset", strconv.Itoa(c.offset))
-	}
-	if c.limit != 0 {
-		query.Set("limit", strconv.Itoa(c.limit))
+	if c.mySites {
+		return c.cmdBase.doHTTPRequest(ctx, doHTTPRequestParams{
+			Method: http.MethodGet,
+			Path:   "/users/me/sites",
+		})
 	}
 
-	return c.cmdBase.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodGet,
-		Path:   "/users/me/sites",
-		Query:  query,
-	})
+	return c.cmdSite.doHTTPRequest(ctx, doHTTPRequestParams{Method: http.MethodGet})
 }
