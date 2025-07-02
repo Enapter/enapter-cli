@@ -5,10 +5,10 @@ USAGE:
    enaptercli.test blueprint command [command options]
 
 COMMANDS:
-   profiles  Manage blueprints profiles
-   upload    Upload blueprint into Platform
-   download  Download blueprint zip from Platform
-   get       Get blueprint metadata
+   profiles  Manage blueprint profiles
+   upload    Upload the blueprint to the Platform
+   download  Download the blueprint zip from the Platform
+   get       Retrieve blueprint metadata
    help, h   Shows a list of commands or help for one command
 
 OPTIONS:
@@ -16,6 +16,6 @@ OPTIONS:
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
-   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
-   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
 

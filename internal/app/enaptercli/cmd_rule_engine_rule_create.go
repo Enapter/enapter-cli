@@ -42,19 +42,19 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 	return append(c.cmdRuleEngineRule.Flags(),
 		&cli.StringFlag{
 			Name:        "slug",
-			Usage:       "Slug of a new rule",
+			Usage:       "Slug for the new rule",
 			Destination: &c.slug,
 			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "script",
-			Usage:       "Path to a file containing the script code",
+			Usage:       "Path to the file containing the script code",
 			Destination: &c.scriptPath,
 			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "runtime-version",
-			Usage:       "Version of a runtime to use for the script execution",
+			Usage:       "Version of the runtime to use for the script execution",
 			Destination: &c.runtimeVersion,
 			Value:       ruleRuntimeV3,
 			Action: func(_ *cli.Context, v string) error {
@@ -64,13 +64,13 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 		&cliflags.Duration{
 			DurationFlag: cli.DurationFlag{
 				Name:        "exec-interval",
-				Usage:       "How often to execute the script. This option is only compatible with the runtime version 1",
+				Usage:       "How often to execute the script (only compatible with the runtime version 1)",
 				Destination: &c.execInterval,
 			},
 		},
 		&cli.BoolFlag{
 			Name:        "disable",
-			Usage:       "Whether to disable a rule upon creation",
+			Usage:       "Disable the rule upon creation",
 			Destination: &c.disable,
 		},
 	)

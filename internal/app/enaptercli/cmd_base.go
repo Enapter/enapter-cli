@@ -50,13 +50,13 @@ func (c *cmdBase) Flags() []cli.Flag {
 		},
 		&cli.BoolFlag{
 			Name:        "api-allow-insecure",
-			Usage:       "allow insecure connections to Enapter API",
+			Usage:       "allow insecure connections to the Enapter API",
 			EnvVars:     []string{"ENAPTER3_API_ALLOW_INSECURE"},
 			Destination: &c.apiAllowInsecure,
 		},
 		&cli.BoolFlag{
 			Name:        "verbose",
-			Usage:       "log extra details about operation",
+			Usage:       "log extra details about the operation",
 			Destination: &c.verbose,
 		},
 	}
@@ -80,8 +80,8 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 const enapterAPIEnvVarsHelp = `
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
-   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
-   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
 
 `
 

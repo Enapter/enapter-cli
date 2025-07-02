@@ -51,16 +51,16 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 	}, &cli.BoolFlag{
 		Name:        "follow",
 		Aliases:     []string{"f"},
-		Usage:       "follow log output",
+		Usage:       "follow the log output",
 		Destination: &c.follow,
 	}, &cli.TimestampFlag{
 		Name:        "from",
-		Usage:       "from timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)",
+		Usage:       "from timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
 		Destination: &c.from,
 		Layout:      time.RFC3339,
 	}, &cli.TimestampFlag{
 		Name:        "to",
-		Usage:       "to timestamp in rfc 3339 format (like 2006-01-02T15:04:05Z)",
+		Usage:       "to timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
 		Destination: &c.to,
 		Layout:      time.RFC3339,
 	}, &cli.IntFlag{
@@ -71,7 +71,7 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 	}, &cli.IntFlag{
 		Name:        "offset",
 		Aliases:     []string{"o"},
-		Usage:       "number of logs to skip on retrieve",
+		Usage:       "number of logs to skip when retrieving",
 		Destination: &c.offset,
 	}, &cli.StringFlag{
 		Name:        "severity",

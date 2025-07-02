@@ -1,11 +1,11 @@
 NAME:
-   enaptercli.test - Command line interface for Enapter services.
+   enaptercli.test - Command Line Interface (CLI) for Enapter services.
 
 USAGE:
    enaptercli.test [global options] command [command options]
 
 DESCRIPTION:
-   Enapter CLI requires access token for authentication. The token can be obtained in your Enapter Cloud account settings.
+   The Enapter CLI requires an access token for authentication. You can obtain the token in your Enapter Cloud account settings.
 
 COMMANDS:
    site          Manage sites
@@ -20,6 +20,6 @@ GLOBAL OPTIONS:
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
-   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
-   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
 

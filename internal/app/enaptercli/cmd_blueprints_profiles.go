@@ -12,7 +12,7 @@ func buildCmdBlueprintsProfiles() *cli.Command {
 	cmd := &cmdBlueprintsProfiles{}
 	return &cli.Command{
 		Name:               "profiles",
-		Usage:              "Manage blueprints profiles",
+		Usage:              "Manage blueprint profiles",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdBlueprintsProfilesDownload(),

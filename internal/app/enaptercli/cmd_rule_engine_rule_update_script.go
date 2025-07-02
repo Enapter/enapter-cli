@@ -53,7 +53,7 @@ func (c *cmdRuleEngineRuleUpdateScript) Flags() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "runtime-version",
-			Usage:       "Version of a runtime to use for the script execution",
+			Usage:       "Version of the runtime to use for the script execution",
 			Destination: &c.runtimeVersion,
 			Value:       ruleRuntimeV3,
 			Action: func(_ *cli.Context, v string) error {
@@ -63,7 +63,7 @@ func (c *cmdRuleEngineRuleUpdateScript) Flags() []cli.Flag {
 		&cliflags.Duration{
 			DurationFlag: cli.DurationFlag{
 				Name:        "exec-interval",
-				Usage:       "How often to execute the script. This option is only compatible with the runtime version 1",
+				Usage:       "How often to execute the script (only compatible with the runtime version 1)",
 				Destination: &c.execInterval,
 			},
 		},

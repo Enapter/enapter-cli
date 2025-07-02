@@ -40,7 +40,7 @@ func (c *cmdRuleEngineRuleLogs) Flags() []cli.Flag {
 		&cli.BoolFlag{
 			Name:        "follow",
 			Aliases:     []string{"f"},
-			Usage:       "follow log output",
+			Usage:       "follow the log output",
 			Destination: &c.follow,
 		},
 	)

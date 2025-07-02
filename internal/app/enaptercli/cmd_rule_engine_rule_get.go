@@ -16,7 +16,7 @@ func buildCmdRuleEngineRuleGet() *cli.Command {
 	cmd := &cmdRuleEngineRuleGet{}
 	return &cli.Command{
 		Name:               "get",
-		Usage:              "Get a rule",
+		Usage:              "Retrieve a rule",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,

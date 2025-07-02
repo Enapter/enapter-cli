@@ -38,23 +38,23 @@ func (c *cmdProvisioningLua) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "runtime-id",
 		Aliases:     []string{"r"},
-		Usage:       "runtime UCM device ID where to run a new Lua device",
+		Usage:       "UCM device ID where the new Lua device will run",
 		Destination: &c.runtimeID,
 		Required:    true,
 	}, &cli.StringFlag{
 		Name:        "device-name",
 		Aliases:     []string{"n"},
-		Usage:       "name of a new Lua device",
+		Usage:       "name for the new Lua device",
 		Destination: &c.deviceName,
 		Required:    true,
 	}, &cli.StringFlag{
 		Name:        "device-slug",
-		Usage:       "slug of a new Lua device",
+		Usage:       "slug for the new Lua device",
 		Destination: &c.deviceSlug,
 	}, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
-		Usage:       "blueprint ID of a new Lua device",
+		Usage:       "blueprint ID for the new Lua device",
 		Destination: &c.blueprintID,
 	}, &cli.StringFlag{
 		Name:        "blueprint-path",
