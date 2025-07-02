@@ -35,12 +35,12 @@ func (c *cmdProvisioningStandalone) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
 		Aliases:     []string{"s"},
-		Usage:       "site ID where to craate device",
+		Usage:       "site ID where the device will be created",
 		Destination: &c.siteID,
 	}, &cli.StringFlag{
 		Name:        "device-name",
 		Aliases:     []string{"n"},
-		Usage:       "name for a new device",
+		Usage:       "name for the new device",
 		Destination: &c.deviceName,
 		Required:    true,
 	})

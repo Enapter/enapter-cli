@@ -19,7 +19,7 @@ func buildCmdBlueprintsProfilesUpload() *cli.Command {
 	cmd := &cmdBlueprintsProfilesUpload{}
 	return &cli.Command{
 		Name:               "upload",
-		Usage:              "Upload profiles into Platform",
+		Usage:              "Upload profiles to the Platform",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,

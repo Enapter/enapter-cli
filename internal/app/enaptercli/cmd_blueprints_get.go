@@ -16,7 +16,7 @@ func buildCmdBlueprintsGet() *cli.Command {
 	cmd := &cmdBlueprintsGet{}
 	return &cli.Command{
 		Name:               "get",
-		Usage:              "Get blueprint metadata",
+		Usage:              "Retrieve blueprint metadata",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -31,7 +31,7 @@ func (c *cmdBlueprintsGet) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
-		Usage:       "blueprint name or ID to get",
+		Usage:       "blueprint name or ID to retrieve",
 		Destination: &c.blueprintID,
 		Required:    true,
 	})

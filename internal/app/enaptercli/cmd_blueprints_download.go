@@ -22,7 +22,7 @@ func buildCmdBlueprintsDownload() *cli.Command {
 	cmd := &cmdBlueprintsDownload{}
 	return &cli.Command{
 		Name:               "download",
-		Usage:              "Download blueprint zip from Platform",
+		Usage:              "Download the blueprint zip from the Platform",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -43,7 +43,7 @@ func (c *cmdBlueprintsDownload) Flags() []cli.Flag {
 	}, &cli.StringFlag{
 		Name:        "output",
 		Aliases:     []string{"o"},
-		Usage:       "blueprint file name to save",
+		Usage:       "blueprint file name to save the blueprint",
 		Destination: &c.outputFileName,
 	})
 }

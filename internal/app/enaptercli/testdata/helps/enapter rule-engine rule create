@@ -6,17 +6,17 @@ USAGE:
 
 OPTIONS:
    --api-url value          override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
-   --api-allow-insecure     allow insecure connections to Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                log extra details about operation (default: false)
-   --slug value             Slug of a new rule
-   --script value           Path to a file containing the script code
-   --runtime-version value  Version of a runtime to use for the script execution (default: "V3")
-   --exec-interval value    How often to execute the script. This option is only compatible with the runtime version 1
-   --disable                Whether to disable a rule upon creation (default: false)
+   --api-allow-insecure     allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                log extra details about the operation (default: false)
+   --slug value             Slug for the new rule
+   --script value           Path to the file containing the script code
+   --runtime-version value  Version of the runtime to use for the script execution (default: "V3")
+   --exec-interval value    How often to execute the script (only compatible with the runtime version 1)
+   --disable                Disable the rule upon creation (default: false)
    --help, -h               show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
-   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
-   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
 

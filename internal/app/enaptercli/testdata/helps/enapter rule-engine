@@ -5,7 +5,7 @@ USAGE:
    enaptercli.test rule-engine command [command options]
 
 COMMANDS:
-   get      Get the rule engine
+   get      Retrieve the rule engine
    suspend  Suspend execution of rules
    resume   Resume execution of rules
    rule     Manage rules
@@ -16,6 +16,6 @@ OPTIONS:
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
-   ENAPTER3_API_URL            Enapter API base URL (https://api.enapter.com by default)
-   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to Enapter API (default false)
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
 

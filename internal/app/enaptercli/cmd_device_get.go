@@ -19,7 +19,7 @@ func buildCmdDevicesGet() *cli.Command {
 	cmd := &cmdDevicesGet{}
 	return &cli.Command{
 		Name:               "get",
-		Usage:              "Get a device info",
+		Usage:              "Retrieve device information",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -40,7 +40,7 @@ func (c *cmdDevicesGet) Flags() []cli.Flag {
 	}, &cli.MultiStringFlag{
 		Target: &cli.StringSliceFlag{
 			Name: "expand",
-			Usage: "coma separated list of expanded device info (supported values: " +
+			Usage: "coma-separated list of expanded device information (supported values: " +
 				"connectivity, manifest, properties, communication_info, site)",
 		},
 		Destination: &c.expand,

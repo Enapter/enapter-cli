@@ -16,9 +16,9 @@ import (
 func NewApp() *cli.App {
 	app := cli.NewApp()
 
-	app.Usage = "Command line interface for Enapter services."
-	app.Description = "Enapter CLI requires access token for authentication. " +
-		"The token can be obtained in your Enapter Cloud account settings."
+	app.Usage = "Command Line Interface (CLI) for Enapter services."
+	app.Description = "The Enapter CLI requires an access token for authentication. " +
+		"You can obtain the token in your Enapter Cloud account settings."
 	app.CustomAppHelpTemplate = cli.AppHelpTemplate + enapterAPIEnvVarsHelp
 
 	app.Commands = []*cli.Command{
