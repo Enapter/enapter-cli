@@ -285,9 +285,11 @@ func parseRespErrorMessage(resp *http.Response) string {
 			Message string `json:"message"`
 		} `json:"errors"`
 	}
-	if err := json.NewDecoder(resp.Body).Decode(&errs); err != nil {
+	bodyBytes, _ := io.ReadAll(resp.Body)
+	if err := json.Unmarshal(bodyBytes, &errs); err != nil {
 		if !errors.Is(err, io.EOF) {
-			return fmt.Sprintf("parse error response: %s", err)
+			return fmt.Sprintf("Request finished with HTTP status %q, but body is not valid JSON error response. "+
+				"Please, check API URL is correct.\n\nReceived body:\n%s\n", resp.Status, bodyBytes)
 		}
 	}
 
@@ -298,7 +300,7 @@ func parseRespErrorMessage(resp *http.Response) string {
 		}
 	}
 
-	return fmt.Sprintf("request finished with HTTP status %q, but without error message", resp.Status)
+	return fmt.Sprintf("Request finished with HTTP status %q, but without error message", resp.Status)
 }
 
 func validateExpandFlag(cliCtx *cli.Context, supportedFields []string) error {
