@@ -124,6 +124,9 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
+		if e := (&tls.CertificateVerificationError{}); errors.As(err, &e) {
+			return fmt.Errorf("do http request: %w (try to use --api-allow-insecure)", err)
+		}
 		return fmt.Errorf("do http request: %w", err)
 	}
 	defer resp.Body.Close()
