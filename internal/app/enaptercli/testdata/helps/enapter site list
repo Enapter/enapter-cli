@@ -9,6 +9,7 @@ OPTIONS:
    --api-allow-insecure  allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose             log extra details about the operation (default: false)
    --my-sites            returns only sites where user is owner or installer (default: false)
+   --limit value         maximum number of sites to retrieve (default: retrieves all)
    --help, -h            show help
 
 ENVIRONMENT VARIABLES:

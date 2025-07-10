@@ -10,6 +10,7 @@ OPTIONS:
    --verbose                          log extra details about the operation (default: false)
    --expand value [ --expand value ]  coma-separated list of expanded device information (supported values: connectivity, manifest, properties, communication_info, site)
    --site-id value                    list devices from this site
+   --limit value                      maximum number of devices to retrieve (default: retrieves all)
    --help, -h                         show help
 
 ENVIRONMENT VARIABLES:

@@ -13,6 +13,7 @@ type cmdDevicesList struct {
 	cmdDevices
 	siteID string
 	expand []string
+	limit  int
 }
 
 func buildCmdDevicesList() *cli.Command {
@@ -42,6 +43,11 @@ func (c *cmdDevicesList) Flags() []cli.Flag {
 		Name:        "site-id",
 		Usage:       "list devices from this site",
 		Destination: &c.siteID,
+	}, &cli.IntFlag{
+		Name:        "limit",
+		Usage:       "maximum number of devices to retrieve",
+		Destination: &c.limit,
+		DefaultText: "retrieves all",
 	})
 }
 
@@ -58,18 +64,22 @@ func (c *cmdDevicesList) do(ctx context.Context) error {
 		query.Set("expand", strings.Join(c.expand, ","))
 	}
 
-	if c.siteID != "" {
-		query.Set("site_id", c.siteID)
-		return c.cmdBase.doHTTPRequest(ctx, doHTTPRequestParams{
+	doPaginateRequestParams := paginateHTTPRequestParams{
+		ObjectName: "devices",
+		Limit:      c.limit,
+		DoFn:       c.doHTTPRequest,
+		BaseParams: doHTTPRequestParams{
 			Method: http.MethodGet,
-			Path:   "/sites/" + c.siteID + "/devices",
+			Path:   "",
 			Query:  query,
-		})
+		},
 	}
 
-	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodGet,
-		Path:   "",
-		Query:  query,
-	})
+	if c.siteID != "" {
+		doPaginateRequestParams.BaseParams.Query.Set("site_id", c.siteID)
+		doPaginateRequestParams.BaseParams.Path = "/sites/" + c.siteID + "/devices"
+		doPaginateRequestParams.DoFn = c.cmdBase.doHTTPRequest
+	}
+
+	return c.doPaginateRequest(ctx, doPaginateRequestParams)
 }
