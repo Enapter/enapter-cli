@@ -25,7 +25,6 @@ func NewApp() *cli.App {
 		buildCmdSites(),
 		buildCmdDevices(),
 		buildCmdBlueprints(),
-		buildCmdProvisioning(),
 		buildCmdRuleEngine(),
 	}
 

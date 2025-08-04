@@ -19,6 +19,7 @@ func buildCmdDevices() *cli.Command {
 		Usage:              "Manage devices",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
+			buildCmdDeviceCreate(),
 			buildCmdDevicesList(),
 			buildCmdDevicesGet(),
 			buildCmdDevicesAssignBlueprint(),

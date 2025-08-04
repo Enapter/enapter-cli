@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test provisioning standalone - Create a new standalone device
+   enaptercli.test device create standalone - Create a new standalone device
 
 USAGE:
-   enaptercli.test provisioning standalone [command options]
+   enaptercli.test device create standalone [command options]
 
 OPTIONS:
    --api-url value                override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]

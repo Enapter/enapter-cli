@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test provisioning lua-device - Create a new Lua device
+   enaptercli.test device create lua-device - Create a new Lua device
 
 USAGE:
-   enaptercli.test provisioning lua-device [command options]
+   enaptercli.test device create lua-device [command options]
 
 OPTIONS:
    --api-url value                 override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]

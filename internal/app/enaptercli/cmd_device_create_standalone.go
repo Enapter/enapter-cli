@@ -10,14 +10,14 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdProvisioningStandalone struct {
-	cmdProvisioning
+type cmdDeviceCreateStandalone struct {
+	cmdDeviceCreate
 	siteID     string
 	deviceName string
 }
 
-func buildCmdProvisioningStandalone() *cli.Command {
-	cmd := &cmdProvisioningStandalone{}
+func buildCmdDeviceCreateStandalone() *cli.Command {
+	cmd := &cmdDeviceCreateStandalone{}
 	return &cli.Command{
 		Name:               "standalone",
 		Usage:              "Create a new standalone device",
@@ -30,8 +30,8 @@ func buildCmdProvisioningStandalone() *cli.Command {
 	}
 }
 
-func (c *cmdProvisioningStandalone) Flags() []cli.Flag {
-	flags := c.cmdProvisioning.Flags()
+func (c *cmdDeviceCreateStandalone) Flags() []cli.Flag {
+	flags := c.cmdDeviceCreate.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
 		Aliases:     []string{"s"},
@@ -46,7 +46,7 @@ func (c *cmdProvisioningStandalone) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdProvisioningStandalone) do(ctx context.Context) error {
+func (c *cmdDeviceCreateStandalone) do(ctx context.Context) error {
 	body, err := json.Marshal(map[string]any{
 		"site_id": c.siteID,
 		"name":    c.deviceName,

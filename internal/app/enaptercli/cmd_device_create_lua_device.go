@@ -10,8 +10,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdProvisioningLua struct {
-	cmdProvisioning
+type cmdDeviceCreateLua struct {
+	cmdDeviceCreate
 	deviceName    string
 	deviceSlug    string
 	runtimeID     string
@@ -19,8 +19,8 @@ type cmdProvisioningLua struct {
 	blueprintPath string
 }
 
-func buildCmdProvisioningLua() *cli.Command {
-	cmd := &cmdProvisioningLua{}
+func buildCmdDeviceCreateLua() *cli.Command {
+	cmd := &cmdDeviceCreateLua{}
 	return &cli.Command{
 		Name:               "lua-device",
 		Usage:              "Create a new Lua device",
@@ -33,8 +33,8 @@ func buildCmdProvisioningLua() *cli.Command {
 	}
 }
 
-func (c *cmdProvisioningLua) Flags() []cli.Flag {
-	flags := c.cmdProvisioning.Flags()
+func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
+	flags := c.cmdDeviceCreate.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "runtime-id",
 		Aliases:     []string{"r"},
@@ -63,8 +63,8 @@ func (c *cmdProvisioningLua) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdProvisioningLua) Before(cliCtx *cli.Context) error {
-	if err := c.cmdProvisioning.Before(cliCtx); err != nil {
+func (c *cmdDeviceCreateLua) Before(cliCtx *cli.Context) error {
+	if err := c.cmdDeviceCreate.Before(cliCtx); err != nil {
 		return err
 	}
 	if c.blueprintID != "" && c.blueprintPath != "" {
@@ -76,7 +76,7 @@ func (c *cmdProvisioningLua) Before(cliCtx *cli.Context) error {
 	return nil
 }
 
-func (c *cmdProvisioningLua) do(ctx context.Context) error {
+func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 	if c.blueprintPath != "" {
 		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.cmdBase.doHTTPRequest)
 		if err != nil {
