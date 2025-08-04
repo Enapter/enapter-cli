@@ -22,7 +22,7 @@ func buildCmdDevices() *cli.Command {
 			buildCmdDeviceCreate(),
 			buildCmdDevicesList(),
 			buildCmdDevicesGet(),
-			buildCmdDevicesAssignBlueprint(),
+			buildCmdDevicesChangeBlueprint(),
 			buildCmdDevicesLogs(),
 			buildCmdDevicesDelete(),
 			buildCmdDeviceCommand(),

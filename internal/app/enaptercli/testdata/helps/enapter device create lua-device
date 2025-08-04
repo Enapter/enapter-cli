@@ -11,8 +11,8 @@ OPTIONS:
    --runtime-id value, -r value    UCM device ID where the new Lua device will run
    --device-name value, -n value   name for the new Lua device
    --device-slug value             slug for the new Lua device
-   --blueprint-id value, -b value  blueprint ID for the new Lua device
-   --blueprint-path value          blueprint path (zip file or directory) to assign
+   --blueprint-id value, -b value  blueprint ID to use for the new Lua device
+   --blueprint-path value          blueprint path (zip file or directory) to use for the new Lua device
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:

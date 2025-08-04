@@ -8,7 +8,7 @@ COMMANDS:
    create                Create devices of different types
    list                  List user devices
    get                   Retrieve device information
-   assign-blueprint      Assign blueprint to device
+   change-blueprint      Change blueprint to device
    logs                  Show device logs
    delete                Delete a device
    command               Manage device commands

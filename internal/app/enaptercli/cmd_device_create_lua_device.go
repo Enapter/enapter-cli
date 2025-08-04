@@ -54,11 +54,11 @@ func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
 	}, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
-		Usage:       "blueprint ID for the new Lua device",
+		Usage:       "blueprint ID to use for the new Lua device",
 		Destination: &c.blueprintID,
 	}, &cli.StringFlag{
 		Name:        "blueprint-path",
-		Usage:       "blueprint path (zip file or directory) to assign",
+		Usage:       "blueprint path (zip file or directory) to use for the new Lua device",
 		Destination: &c.blueprintPath,
 	})
 }

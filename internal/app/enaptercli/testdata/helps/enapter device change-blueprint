@@ -1,16 +1,16 @@
 NAME:
-   enaptercli.test device assign-blueprint - Assign blueprint to device
+   enaptercli.test device change-blueprint - Change blueprint to device
 
 USAGE:
-   enaptercli.test device assign-blueprint [command options]
+   enaptercli.test device change-blueprint [command options]
 
 OPTIONS:
    --api-url value                 override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
    --api-allow-insecure            allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                       log extra details about the operation (default: false)
    --device-id value, -d value     device ID
-   --blueprint-id value, -b value  blueprint ID to assign
-   --blueprint-path value          blueprint path (zip file or directory) to assign
+   --blueprint-id value, -b value  blueprint ID to use as new device blueprint
+   --blueprint-path value          blueprint path (zip file or directory) to use as new device blueprint
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:

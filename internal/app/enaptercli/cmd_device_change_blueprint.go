@@ -10,18 +10,18 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevicesAssignBlueprint struct {
+type cmdDevicesChangeBlueprint struct {
 	cmdDevices
 	deviceID      string
 	blueprintID   string
 	blueprintPath string
 }
 
-func buildCmdDevicesAssignBlueprint() *cli.Command {
-	cmd := &cmdDevicesAssignBlueprint{}
+func buildCmdDevicesChangeBlueprint() *cli.Command {
+	cmd := &cmdDevicesChangeBlueprint{}
 	return &cli.Command{
-		Name:               "assign-blueprint",
-		Usage:              "Assign blueprint to device",
+		Name:               "change-blueprint",
+		Usage:              "Change blueprint to device",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
@@ -31,7 +31,7 @@ func buildCmdDevicesAssignBlueprint() *cli.Command {
 	}
 }
 
-func (c *cmdDevicesAssignBlueprint) Flags() []cli.Flag {
+func (c *cmdDevicesChangeBlueprint) Flags() []cli.Flag {
 	flags := c.cmdDevices.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
@@ -42,16 +42,16 @@ func (c *cmdDevicesAssignBlueprint) Flags() []cli.Flag {
 	}, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
-		Usage:       "blueprint ID to assign",
+		Usage:       "blueprint ID to use as new device blueprint",
 		Destination: &c.blueprintID,
 	}, &cli.StringFlag{
 		Name:        "blueprint-path",
-		Usage:       "blueprint path (zip file or directory) to assign",
+		Usage:       "blueprint path (zip file or directory) to use as new device blueprint",
 		Destination: &c.blueprintPath,
 	})
 }
 
-func (c *cmdDevicesAssignBlueprint) Before(cliCtx *cli.Context) error {
+func (c *cmdDevicesChangeBlueprint) Before(cliCtx *cli.Context) error {
 	if err := c.cmdDevices.Before(cliCtx); err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func (c *cmdDevicesAssignBlueprint) Before(cliCtx *cli.Context) error {
 	return c.validateExpandFlag(cliCtx)
 }
 
-func (c *cmdDevicesAssignBlueprint) do(ctx context.Context) error {
+func (c *cmdDevicesChangeBlueprint) do(ctx context.Context) error {
 	if c.blueprintPath != "" {
 		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.cmdBase.doHTTPRequest)
 		if err != nil {
