@@ -41,13 +41,6 @@ func (c *cmdDeviceCommunicationConfigGenerate) Flags() []cli.Flag {
 	)
 }
 
-// func (c *cmdDeviceCommandGet) Before(cliCtx *cli.Context) error {
-// 	if err := c.cmdDevices.Before(cliCtx); err != nil {
-// 		return err
-// 	}
-// 	return validateExpandFlag(cliCtx, []string{"log"})
-// }
-
 func (c *cmdDeviceCommunicationConfigGenerate) do(ctx context.Context) error {
 	reqBody := struct {
 		Protocol string `json:"protocol"`
@@ -60,7 +53,7 @@ func (c *cmdDeviceCommunicationConfigGenerate) do(ctx context.Context) error {
 	}
 
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodGet,
+		Method: http.MethodPost,
 		Path:   "/generate_config",
 		Body:   bytes.NewReader(data),
 	})
