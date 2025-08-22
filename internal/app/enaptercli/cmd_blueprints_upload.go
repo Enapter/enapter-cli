@@ -51,6 +51,10 @@ func uploadBlueprintAndReturnBlueprintID(ctx context.Context, blueprintPath stri
 	var blueprintID string
 	err := uploadBlueprint(ctx, blueprintPath, func(ctx context.Context, reqParams doHTTPRequestParams) error {
 		reqParams.RespProcessor = func(resp *http.Response) error {
+			if resp.StatusCode != http.StatusOK {
+				return cli.Exit(parseRespErrorMessage(resp), 1)
+			}
+
 			var respBlueprint struct {
 				Blueprint struct {
 					ID string `json:"id"`
