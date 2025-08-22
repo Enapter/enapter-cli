@@ -11,7 +11,7 @@ OPTIONS:
    --slug value             Slug for the new rule
    --script value           Path to the file containing the script code
    --runtime-version value  Version of the runtime to use for the script execution (default: "V3")
-   --exec-interval value    How often to execute the script (only compatible with the runtime version 1)
+   --exec-interval value    How frequently to execute the script (compatible only with runtime version 1) in duration format (e.g., 5s, 2m)
    --disable                Disable the rule upon creation (default: false)
    --help, -h               show help
 

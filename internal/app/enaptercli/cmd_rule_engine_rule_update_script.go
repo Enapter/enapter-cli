@@ -62,8 +62,9 @@ func (c *cmdRuleEngineRuleUpdateScript) Flags() []cli.Flag {
 		},
 		&cliflags.Duration{
 			DurationFlag: cli.DurationFlag{
-				Name:        "exec-interval",
-				Usage:       "How often to execute the script (only compatible with the runtime version 1)",
+				Name: "exec-interval",
+				Usage: "How frequently to execute the script " +
+					"(compatible only with runtime version 1) in duration format (e.g., 5s, 2m)",
 				Destination: &c.execInterval,
 			},
 		},
