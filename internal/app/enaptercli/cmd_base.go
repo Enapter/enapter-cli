@@ -205,35 +205,44 @@ func (c *cmdBase) dialWebSocket(
 	}
 	url.RawQuery = query.Encode()
 
-	switch url.Scheme {
-	case "https":
-		url.Scheme = "wss"
-	case "http":
-		url.Scheme = "ws"
-	}
-
 	headers := make(http.Header)
 	headers.Add("X-Enapter-Auth-Token", c.token)
-
-	if c.verbose {
-		fmt.Fprintf(c.writer, "== Dialing WebSocket at %s\n", url.String())
-	}
 
 	const timeout = 5 * time.Second
 	dialer := websocket.Dialer{
 		HandshakeTimeout: timeout,
+		//nolint:gosec // This is needed to allow self-signed certificates on Gateway.
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: c.apiAllowInsecure},
 	}
 
-	//nolint:bodyclose // body should be closed by callers
-	conn, resp, err := dialer.DialContext(ctx, url.String(), headers)
-	if err != nil {
-		return nil, fmt.Errorf("dial: %w", err)
-	}
-	if resp.StatusCode != http.StatusSwitchingProtocols {
-		return nil, cli.Exit(parseRespErrorMessage(resp), 1)
+	const maxRetries = 2
+	for i := 0; i < maxRetries; i++ {
+		url.Scheme = websocketScheme(url.Scheme)
+
+		if c.verbose {
+			fmt.Fprintf(c.writer, "== Dialing WebSocket at %s\n", url.String())
+		}
+
+		//nolint:bodyclose // body should be closed by callers
+		conn, resp, err := dialer.DialContext(ctx, url.String(), headers)
+		if err != nil {
+			if loc, err := redirectLocation(resp); err != nil {
+				return nil, err
+			} else if loc != nil {
+				url = loc
+				continue
+			}
+			return nil, fmt.Errorf("dial: %w", err)
+		}
+
+		if resp.StatusCode != http.StatusSwitchingProtocols {
+			return nil, cli.Exit(parseRespErrorMessage(resp), 1)
+		}
+
+		return conn, nil
 	}
 
-	return conn, nil
+	return nil, cli.Exit("Too many redirects", 1)
 }
 
 func (c *cmdBase) readWebSocket(
@@ -319,4 +328,30 @@ func validateFlag(context, value string, allowedValues []string) error {
 			errUnsupportedFlagValue, value, context, allowedValues)
 	}
 	return nil
+}
+
+func websocketScheme(s string) string {
+	switch s {
+	case "https":
+		return "wss"
+	case "http":
+		return "ws"
+	default:
+		return s
+	}
+}
+
+func redirectLocation(resp *http.Response) (*url.URL, error) {
+	if resp == nil {
+		return nil, nil
+	}
+	if resp.StatusCode != http.StatusPermanentRedirect {
+		return nil, nil
+	}
+	location := resp.Header.Get("Location")
+	url, err := url.Parse(location)
+	if err != nil {
+		return nil, fmt.Errorf("parse location: %w", err)
+	}
+	return url, nil
 }
