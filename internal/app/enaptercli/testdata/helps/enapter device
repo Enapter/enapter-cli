@@ -12,6 +12,7 @@ COMMANDS:
    logs                  Show device logs
    delete                Delete a device
    command               Manage device commands
+   telemetry             Show device telemetry
    communication-config  Manage device communication config
    help, h               Shows a list of commands or help for one command
 

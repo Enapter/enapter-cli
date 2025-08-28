@@ -26,6 +26,7 @@ func buildCmdDevices() *cli.Command {
 			buildCmdDevicesLogs(),
 			buildCmdDevicesDelete(),
 			buildCmdDeviceCommand(),
+			buildCmdDeviceTelemetry(),
 			buildCmdDeviceCommunicationConfig(),
 		},
 	}
