@@ -25,6 +25,7 @@ type cmdBase struct {
 	apiHost          string
 	apiAllowInsecure bool
 	writer           io.Writer
+	errWriter        io.Writer
 	httpClient       *http.Client
 }
 
@@ -67,6 +68,7 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 		return errAPITokenMissed
 	}
 	c.writer = cliCtx.App.Writer
+	c.errWriter = cliCtx.App.ErrWriter
 	c.httpClient = &http.Client{
 		Transport: &http.Transport{
 			//nolint:gosec // This is needed to allow self-signed certificates on Gateway.
@@ -118,8 +120,8 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 			return err
 		}
 
-		fmt.Fprintf(c.writer, "== Do http request %s %s\n", p.Method, req.URL.String())
-		fmt.Fprintf(c.writer, "=== Begin body\n%s\n=== End body\n", bodyStr)
+		fmt.Fprintf(c.errWriter, "== Do http request %s %s\n", p.Method, req.URL.String())
+		fmt.Fprintf(c.errWriter, "=== Begin body\n%s\n=== End body\n", bodyStr)
 	}
 
 	resp, err := c.httpClient.Do(req)
@@ -146,7 +148,7 @@ type runWebSocketParams struct {
 func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error {
 	for retry := false; ; retry = true {
 		if retry {
-			fmt.Fprintln(c.writer, "Reconnecting...")
+			fmt.Fprintln(c.errWriter, "Reconnecting...")
 			time.Sleep(time.Second)
 		}
 
@@ -156,11 +158,11 @@ func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error 
 			case <-ctx.Done():
 				return nil
 			default:
-				fmt.Fprintln(c.writer, "Failed to retrieve data:", err)
+				fmt.Fprintln(c.errWriter, "Failed to retrieve data:", err)
 				continue
 			}
 		}
-		fmt.Fprintln(c.writer, "Connection established")
+		fmt.Fprintln(c.errWriter, "Connection established")
 
 		closeCh := make(chan struct{})
 		go func() {
@@ -176,7 +178,7 @@ func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error 
 			case <-ctx.Done():
 				return nil
 			default:
-				fmt.Fprintln(c.writer, "Failed to retrieve data:", err)
+				fmt.Fprintln(c.errWriter, "Failed to retrieve data:", err)
 				close(closeCh)
 			}
 		}
@@ -220,7 +222,7 @@ func (c *cmdBase) dialWebSocket(
 		url.Scheme = websocketScheme(url.Scheme)
 
 		if c.verbose {
-			fmt.Fprintf(c.writer, "== Dialing WebSocket at %s\n", url.String())
+			fmt.Fprintf(c.errWriter, "== Dialing WebSocket at %s\n", url.String())
 		}
 
 		//nolint:bodyclose // body should be closed by callers
