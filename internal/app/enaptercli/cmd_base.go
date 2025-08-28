@@ -154,6 +154,9 @@ func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error 
 
 		conn, err := c.dialWebSocket(ctx, p.Path, p.Query)
 		if err != nil {
+			if e := cli.ExitCoder(nil); errors.As(err, &e) {
+				return err
+			}
 			select {
 			case <-ctx.Done():
 				return nil
@@ -234,11 +237,15 @@ func (c *cmdBase) dialWebSocket(
 				url = loc
 				continue
 			}
+			if e := (&tls.CertificateVerificationError{}); errors.As(err, &e) {
+				message := fmt.Sprintf("dial: %v (try to use --api-allow-insecure)", err)
+				return nil, cli.Exit(message, 1)
+			}
+			if resp != nil {
+				message := parseRespErrorMessage(resp)
+				return nil, fmt.Errorf("dial: %w: %s", err, message)
+			}
 			return nil, fmt.Errorf("dial: %w", err)
-		}
-
-		if resp.StatusCode != http.StatusSwitchingProtocols {
-			return nil, cli.Exit(parseRespErrorMessage(resp), 1)
 		}
 
 		return conn, nil
