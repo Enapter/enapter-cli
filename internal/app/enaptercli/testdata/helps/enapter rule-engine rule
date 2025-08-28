@@ -6,7 +6,7 @@ USAGE:
 
 COMMANDS:
    create         Create a new rule
-   delete         Delete one or more rules
+   delete         Delete a rule
    disable        Disable one or more rules
    enable         Enable one or more rules
    get            Retrieve a rule
