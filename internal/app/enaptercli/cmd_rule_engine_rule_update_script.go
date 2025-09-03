@@ -81,7 +81,7 @@ func (c *cmdRuleEngineRuleUpdateScript) do(ctx context.Context) error {
 	}
 
 	body, err := json.Marshal(map[string]any{
-		"new_rule_script": map[string]any{
+		"script": map[string]any{
 			"code":            base64.StdEncoding.EncodeToString(scriptBytes),
 			"runtime_version": c.runtimeVersion,
 			"exec_interval":   c.execInterval.String(),
