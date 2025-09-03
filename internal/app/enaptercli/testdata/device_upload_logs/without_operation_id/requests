@@ -1,9 +1,0 @@
-{"query":"query($hardware_id:ID!$last_int:Int!){device(hardwareId: $hardware_id){blueprintUpdateOperations(last: $last_int){nodes{id}}}}","variables":{"hardware_id":"SIM-WTM","last_int":2}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"","hardware_id":"SIM-WTM","operation_id":"17"}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"NA","hardware_id":"SIM-WTM","operation_id":"17"}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"","hardware_id":"SIM-WTM","operation_id":"20"}}
-
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"NA","hardware_id":"SIM-WTM","operation_id":"20"}}

@@ -1,0 +1,19 @@
+{
+  "Method": "GET",
+  "URL": "/v3/blueprints/cdd82438-dda8-4f69-aad1-0be9adeab964",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "Content-Type": [
+      ""
+    ],
+    "User-Agent": [
+      "Go-http-client/1.1"
+    ],
+    "X-Enapter-Auth-Token": [
+      "enapter_api_test_token"
+    ]
+  },
+  "Body": ""
+}

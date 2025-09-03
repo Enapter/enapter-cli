@@ -1,0 +1,26 @@
+NAME:
+   enaptercli.test device logs - Show device logs
+
+USAGE:
+   enaptercli.test device logs [command options]
+
+OPTIONS:
+   --api-url value              override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure         allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                    log extra details about the operation (default: false)
+   --device-id value, -d value  device ID
+   --follow, -f                 follow the log output (default: false)
+   --from value                 from timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)
+   --to value                   to timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)
+   --limit value, -l value      maximum number of logs to retrieve (default: 0)
+   --offset value, -o value     number of logs to skip when retrieving (default: 0)
+   --severity value, -s value   filter logs by severity
+   --order value                order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)
+   --show value                 filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)
+   --help, -h                   show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

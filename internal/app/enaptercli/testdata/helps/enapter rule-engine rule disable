@@ -1,0 +1,18 @@
+NAME:
+   enaptercli.test rule-engine rule disable - Disable one or more rules
+
+USAGE:
+   enaptercli.test rule-engine rule disable [command options]
+
+OPTIONS:
+   --api-url value                      override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure                 allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                            log extra details about the operation (default: false)
+   --rule-id value [ --rule-id value ]  Rule IDs or slugs
+   --help, -h                           show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

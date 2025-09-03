@@ -1,26 +1,59 @@
----
+version: 2
+
 project_name: enapter-cli
+
+builds:
+  - binary: enapter3
+    main: ./cmd/enapter/
+    ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: linux
+        goarch: arm64
+      - goos: windows
+        goarch: arm64
 
 release:
   github:
     owner: enapter
     name: enapter-cli
 
-builds:
-  - binary: enapter
-    goos:
-      - darwin
-      - windows
-      - linux
-    goarch:
-      - amd64
-    env:
-      - CGO_ENABLED=0
-    main: ./cmd/enapter/
-    ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}}
+archives:
+  - formats: ['tar.gz']
+    wrap_in_directory: true
+    format_overrides:
+      - goos: windows
+        formats: ['zip']
+    name_template: '{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}'
 
 checksum:
   name_template: '{{ .ProjectName }}-{{ .Version }}-checksums.txt'
 
+snapshot:
+  version_template: 'SNAPSHOT-{{ .Tag }}'
+
 changelog:
-  skip: true
+  disable: true
+
+brews:
+  - repository:
+      owner: enapter
+      name: homebrew-tap
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+    name: enapter@3
+    directory: Formula
+    homepage: https://github.com/Enapter/enapter-cli
+    description: Command-line tool for Enapter Energy Management System Toolkit
+
+    install: |
+      bin.install "enapter3"
+    test: |
+      assert_match "Enapter CLI #{version}", shell_output("#{bin}/enapter3 --version")

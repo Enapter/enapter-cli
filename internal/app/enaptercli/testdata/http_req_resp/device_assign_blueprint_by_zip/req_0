@@ -1,0 +1,22 @@
+{
+  "Method": "POST",
+  "URL": "/v3/blueprints/upload",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "Content-Length": [
+      "14"
+    ],
+    "Content-Type": [
+      ""
+    ],
+    "User-Agent": [
+      "Go-http-client/1.1"
+    ],
+    "X-Enapter-Auth-Token": [
+      "enapter_api_test_token"
+    ]
+  },
+  "Body": "blueprint.zip\n"
+}

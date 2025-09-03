@@ -1,0 +1,19 @@
+NAME:
+   enaptercli.test blueprint profiles - Manage blueprint profiles
+
+USAGE:
+   enaptercli.test blueprint profiles command [command options]
+
+COMMANDS:
+   download  Download profiles zip from the Platform
+   upload    Upload profiles to the Platform
+   help, h   Shows a list of commands or help for one command
+
+OPTIONS:
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

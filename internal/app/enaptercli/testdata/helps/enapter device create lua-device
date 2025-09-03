@@ -1,0 +1,22 @@
+NAME:
+   enaptercli.test device create lua-device - Create a new Lua device
+
+USAGE:
+   enaptercli.test device create lua-device [command options]
+
+OPTIONS:
+   --api-url value                 override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure            allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                       log extra details about the operation (default: false)
+   --runtime-id value, -r value    UCM device ID where the new Lua device will run
+   --device-name value, -n value   name for the new Lua device
+   --device-slug value             slug for the new Lua device
+   --blueprint-id value, -b value  blueprint ID to use for the new Lua device
+   --blueprint-path value          blueprint path (zip file or directory) to use for the new Lua device
+   --help, -h                      show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

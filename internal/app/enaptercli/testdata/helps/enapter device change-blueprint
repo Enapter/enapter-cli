@@ -1,0 +1,20 @@
+NAME:
+   enaptercli.test device change-blueprint - Change blueprint to device
+
+USAGE:
+   enaptercli.test device change-blueprint [command options]
+
+OPTIONS:
+   --api-url value                 override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure            allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                       log extra details about the operation (default: false)
+   --device-id value, -d value     device ID
+   --blueprint-id value, -b value  blueprint ID to use as new device blueprint
+   --blueprint-path value          blueprint path (zip file or directory) to use as new device blueprint
+   --help, -h                      show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

@@ -1,0 +1,22 @@
+NAME:
+   enaptercli.test rule-engine rule create - Create a new rule
+
+USAGE:
+   enaptercli.test rule-engine rule create [command options]
+
+OPTIONS:
+   --api-url value          override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure     allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                log extra details about the operation (default: false)
+   --slug value             Slug for the new rule
+   --script value           Path to the file containing the script code
+   --runtime-version value  Version of the runtime to use for the script execution (default: "V3")
+   --exec-interval value    How frequently to execute the script (compatible only with runtime version 1) in duration format (e.g., 5s, 2m)
+   --disable                Disable the rule upon creation (default: false)
+   --help, -h               show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

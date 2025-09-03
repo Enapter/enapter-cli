@@ -1,0 +1,19 @@
+NAME:
+   enaptercli.test device create standalone - Create a new standalone device
+
+USAGE:
+   enaptercli.test device create standalone [command options]
+
+OPTIONS:
+   --api-url value                override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
+   --api-allow-insecure           allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                      log extra details about the operation (default: false)
+   --site-id value, -s value      site ID where the device will be created
+   --device-name value, -n value  name for the new device
+   --help, -h                     show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+
