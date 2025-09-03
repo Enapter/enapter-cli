@@ -9,7 +9,7 @@ OPTIONS:
    --api-allow-insecure               allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                          log extra details about the operation (default: false)
    --device-id value, -d value        device ID
-   --expand value [ --expand value ]  coma-separated list of expanded device information (supported values: connectivity, manifest, properties, communication_info, site)
+   --expand value [ --expand value ]  coma-separated list of expanded device information (supported values: connectivity, manifest, properties, communication, site)
    --help, -h                         show help
 
 ENVIRONMENT VARIABLES:

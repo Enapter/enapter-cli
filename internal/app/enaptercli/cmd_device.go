@@ -42,6 +42,9 @@ func (c *cmdDevices) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) e
 }
 
 func (c *cmdDevices) validateExpandFlag(cliCtx *cli.Context) error {
-	supportedFields := []string{"connectivity", "manifest", "properties", "communication_info", "site"}
-	return validateExpandFlag(cliCtx, supportedFields)
+	return validateExpandFlag(cliCtx, c.supportedExpandFields())
+}
+
+func (c *cmdDevices) supportedExpandFields() []string {
+	return []string{"connectivity", "manifest", "properties", "communication", "site"}
 }
