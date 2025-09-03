@@ -1,5 +1,5 @@
 NAME:
-   enaptercli.test device list - List user devices
+   enaptercli.test device list - List user devices ordered by device ID
 
 USAGE:
    enaptercli.test device list [command options]

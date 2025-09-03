@@ -20,7 +20,7 @@ func buildCmdDevicesList() *cli.Command {
 	cmd := &cmdDevicesList{}
 	return &cli.Command{
 		Name:               "list",
-		Usage:              "List user devices",
+		Usage:              "List user devices ordered by device ID",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
