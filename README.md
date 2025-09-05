@@ -46,11 +46,8 @@ Also you can pass custom output path:
 
 ## How to use Version 1:
 
----
-**NOTE**
-
-Version 1 works only with Enapter Cloud connection.
----
+> [!NOTE]
+> Version 1 works only with Enapter Cloud connection.
 
 ### API token
 
@@ -95,11 +92,8 @@ Enapter CLI requires access token for authentication. Obtaining of the token is 
 
 ### Autocompletion in your favourite terminal app
 
----
-**NOTE**
-
-Available for Version 1 now.
----
+> [!NOTE]
+> Available for Version 1 now.
 
 In order to make life easier with command line interface, you may use [Amazon Q](https://aws.amazon.com/q/). This autocompletion tool has native support for the Enapter CLI for Mac OS X and Linux.
 
