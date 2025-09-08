@@ -10,6 +10,7 @@ COMMANDS:
    get                   Retrieve device information
    change-blueprint      Change blueprint to device
    logs                  Show device logs
+   update                Update a device
    delete                Delete a device
    command               Manage device commands
    telemetry             Show device telemetry
