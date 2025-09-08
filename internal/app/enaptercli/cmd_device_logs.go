@@ -13,8 +13,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevicesLogs struct {
-	cmdDevices
+type cmdDeviceLogs struct {
+	cmdDevice
 	deviceID   string
 	follow     bool
 	from       cli.Timestamp
@@ -26,8 +26,8 @@ type cmdDevicesLogs struct {
 	showFilter string
 }
 
-func buildCmdDevicesLogs() *cli.Command {
-	cmd := &cmdDevicesLogs{}
+func buildCmdDeviceLogs() *cli.Command {
+	cmd := &cmdDeviceLogs{}
 	return &cli.Command{
 		Name:               "logs",
 		Usage:              "Show device logs",
@@ -40,8 +40,8 @@ func buildCmdDevicesLogs() *cli.Command {
 	}
 }
 
-func (c *cmdDevicesLogs) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+func (c *cmdDeviceLogs) Flags() []cli.Flag {
+	flags := c.cmdDevice.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},
@@ -101,14 +101,14 @@ func (c *cmdDevicesLogs) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdDevicesLogs) do(ctx context.Context) error {
+func (c *cmdDeviceLogs) do(ctx context.Context) error {
 	if c.follow {
 		return c.doFollow(ctx)
 	}
 	return c.doList(ctx)
 }
 
-func (c *cmdDevicesLogs) doFollow(ctx context.Context) error {
+func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 	if c.from.Value() != nil {
 		return cli.Exit("Option received_at_from is unsupported in follow mode.", 1)
 	}
@@ -154,7 +154,7 @@ func (c *cmdDevicesLogs) doFollow(ctx context.Context) error {
 	})
 }
 
-func (c *cmdDevicesLogs) doList(ctx context.Context) error {
+func (c *cmdDeviceLogs) doList(ctx context.Context) error {
 	query := url.Values{}
 	if c.from.Value() != nil {
 		query.Add("received_at_from", c.from.Value().Format(time.RFC3339))

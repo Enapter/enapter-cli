@@ -11,7 +11,7 @@ import (
 )
 
 type cmdDeviceTelemetry struct {
-	cmdDevices
+	cmdDevice
 	deviceID string
 	follow   bool
 }
@@ -31,7 +31,7 @@ func buildCmdDeviceTelemetry() *cli.Command {
 }
 
 func (c *cmdDeviceTelemetry) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+	flags := c.cmdDevice.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},

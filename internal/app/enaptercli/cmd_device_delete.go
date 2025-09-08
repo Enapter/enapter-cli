@@ -7,13 +7,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevicesDelete struct {
-	cmdDevices
+type cmdDeviceDelete struct {
+	cmdDevice
 	deviceID string
 }
 
-func buildCmdDevicesDelete() *cli.Command {
-	cmd := &cmdDevicesDelete{}
+func buildCmdDeviceDelete() *cli.Command {
+	cmd := &cmdDeviceDelete{}
 	return &cli.Command{
 		Name:               "delete",
 		Usage:              "Delete a device",
@@ -26,8 +26,8 @@ func buildCmdDevicesDelete() *cli.Command {
 	}
 }
 
-func (c *cmdDevicesDelete) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+func (c *cmdDeviceDelete) Flags() []cli.Flag {
+	flags := c.cmdDevice.Flags()
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "device-id",
@@ -39,7 +39,7 @@ func (c *cmdDevicesDelete) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdDevicesDelete) do(ctx context.Context) error {
+func (c *cmdDeviceDelete) do(ctx context.Context) error {
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodDelete,
 		Path:   "/" + c.deviceID,

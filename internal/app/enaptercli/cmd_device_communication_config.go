@@ -9,7 +9,7 @@ import (
 )
 
 type cmdDeviceCommunicationConfig struct {
-	cmdDevices
+	cmdDevice
 	deviceID string
 }
 
@@ -26,7 +26,7 @@ func buildCmdDeviceCommunicationConfig() *cli.Command {
 }
 
 func (c *cmdDeviceCommunicationConfig) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+	flags := c.cmdDevice.Flags()
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "device-id",
@@ -44,5 +44,5 @@ func (c *cmdDeviceCommunicationConfig) doHTTPRequest(ctx context.Context, p doHT
 		return fmt.Errorf("join path: %w", err)
 	}
 	p.Path = path
-	return c.cmdDevices.doHTTPRequest(ctx, p)
+	return c.cmdDevice.doHTTPRequest(ctx, p)
 }

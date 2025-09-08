@@ -9,15 +9,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevicesList struct {
-	cmdDevices
+type cmdDeviceList struct {
+	cmdDevice
 	siteID string
 	expand []string
 	limit  int
 }
 
-func buildCmdDevicesList() *cli.Command {
-	cmd := &cmdDevicesList{}
+func buildCmdDeviceList() *cli.Command {
+	cmd := &cmdDeviceList{}
 	return &cli.Command{
 		Name:               "list",
 		Usage:              "List user devices ordered by device ID",
@@ -30,8 +30,8 @@ func buildCmdDevicesList() *cli.Command {
 	}
 }
 
-func (c *cmdDevicesList) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+func (c *cmdDeviceList) Flags() []cli.Flag {
+	flags := c.cmdDevice.Flags()
 	return append(flags, &cli.MultiStringFlag{
 		Target: &cli.StringSliceFlag{
 			Name: "expand",
@@ -51,14 +51,14 @@ func (c *cmdDevicesList) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdDevicesList) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDevices.Before(cliCtx); err != nil {
+func (c *cmdDeviceList) Before(cliCtx *cli.Context) error {
+	if err := c.cmdDevice.Before(cliCtx); err != nil {
 		return err
 	}
 	return c.validateExpandFlag(cliCtx)
 }
 
-func (c *cmdDevicesList) do(ctx context.Context) error {
+func (c *cmdDeviceList) do(ctx context.Context) error {
 	query := url.Values{}
 	if len(c.expand) != 0 {
 		query.Set("expand", strings.Join(c.expand, ","))

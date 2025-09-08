@@ -11,7 +11,7 @@ import (
 )
 
 type cmdDeviceUpdate struct {
-	cmdDevices
+	cmdDevice
 	deviceID string
 	name     string
 	slug     string
@@ -32,7 +32,7 @@ func buildCmdDeviceUpdate() *cli.Command {
 }
 
 func (c *cmdDeviceUpdate) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+	flags := c.cmdDevice.Flags()
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "device-id",

@@ -10,15 +10,15 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevicesChangeBlueprint struct {
-	cmdDevices
+type cmdDeviceChangeBlueprint struct {
+	cmdDevice
 	deviceID      string
 	blueprintID   string
 	blueprintPath string
 }
 
-func buildCmdDevicesChangeBlueprint() *cli.Command {
-	cmd := &cmdDevicesChangeBlueprint{}
+func buildCmdDeviceChangeBlueprint() *cli.Command {
+	cmd := &cmdDeviceChangeBlueprint{}
 	return &cli.Command{
 		Name:               "change-blueprint",
 		Usage:              "Change blueprint to device",
@@ -31,8 +31,8 @@ func buildCmdDevicesChangeBlueprint() *cli.Command {
 	}
 }
 
-func (c *cmdDevicesChangeBlueprint) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+func (c *cmdDeviceChangeBlueprint) Flags() []cli.Flag {
+	flags := c.cmdDevice.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},
@@ -51,8 +51,8 @@ func (c *cmdDevicesChangeBlueprint) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdDevicesChangeBlueprint) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDevices.Before(cliCtx); err != nil {
+func (c *cmdDeviceChangeBlueprint) Before(cliCtx *cli.Context) error {
+	if err := c.cmdDevice.Before(cliCtx); err != nil {
 		return err
 	}
 	if c.blueprintID != "" && c.blueprintPath != "" {
@@ -64,7 +64,7 @@ func (c *cmdDevicesChangeBlueprint) Before(cliCtx *cli.Context) error {
 	return c.validateExpandFlag(cliCtx)
 }
 
-func (c *cmdDevicesChangeBlueprint) do(ctx context.Context) error {
+func (c *cmdDeviceChangeBlueprint) do(ctx context.Context) error {
 	if c.blueprintPath != "" {
 		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.cmdBase.doHTTPRequest)
 		if err != nil {

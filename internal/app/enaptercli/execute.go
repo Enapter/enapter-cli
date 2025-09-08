@@ -23,7 +23,7 @@ func NewApp() *cli.App {
 
 	app.Commands = []*cli.Command{
 		buildCmdSites(),
-		buildCmdDevices(),
+		buildCmdDevice(),
 		buildCmdBlueprints(),
 		buildCmdRuleEngine(),
 	}

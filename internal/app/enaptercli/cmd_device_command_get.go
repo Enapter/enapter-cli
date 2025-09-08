@@ -48,7 +48,7 @@ func (c *cmdDeviceCommandGet) Flags() []cli.Flag {
 }
 
 func (c *cmdDeviceCommandGet) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDevices.Before(cliCtx); err != nil {
+	if err := c.cmdDevice.Before(cliCtx); err != nil {
 		return err
 	}
 	return validateExpandFlag(cliCtx, []string{"log"})

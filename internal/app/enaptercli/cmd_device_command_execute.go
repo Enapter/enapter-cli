@@ -11,7 +11,7 @@ import (
 )
 
 type cmdDeviceCommandExecute struct {
-	cmdDevices
+	cmdDevice
 	deviceID  string
 	cmdName   string
 	cmdArgs   string
@@ -33,7 +33,7 @@ func buildCmdDeviceCommandExecute() *cli.Command {
 }
 
 func (c *cmdDeviceCommandExecute) Flags() []cli.Flag {
-	flags := c.cmdDevices.Flags()
+	flags := c.cmdDevice.Flags()
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "device-id",

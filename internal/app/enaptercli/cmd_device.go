@@ -8,24 +8,24 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdDevices struct {
+type cmdDevice struct {
 	cmdBase
 }
 
-func buildCmdDevices() *cli.Command {
-	cmd := &cmdDevices{}
+func buildCmdDevice() *cli.Command {
+	cmd := &cmdDevice{}
 	return &cli.Command{
 		Name:               "device",
 		Usage:              "Manage devices",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
 			buildCmdDeviceCreate(),
-			buildCmdDevicesList(),
-			buildCmdDevicesGet(),
-			buildCmdDevicesChangeBlueprint(),
-			buildCmdDevicesLogs(),
+			buildCmdDeviceList(),
+			buildCmdDeviceGet(),
+			buildCmdDeviceChangeBlueprint(),
+			buildCmdDeviceLogs(),
 			buildCmdDeviceUpdate(),
-			buildCmdDevicesDelete(),
+			buildCmdDeviceDelete(),
 			buildCmdDeviceCommand(),
 			buildCmdDeviceTelemetry(),
 			buildCmdDeviceCommunicationConfig(),
@@ -33,7 +33,7 @@ func buildCmdDevices() *cli.Command {
 	}
 }
 
-func (c *cmdDevices) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
+func (c *cmdDevice) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
 	path, err := url.JoinPath("/devices", p.Path)
 	if err != nil {
 		return fmt.Errorf("join path: %w", err)
@@ -42,10 +42,10 @@ func (c *cmdDevices) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) e
 	return c.cmdBase.doHTTPRequest(ctx, p)
 }
 
-func (c *cmdDevices) validateExpandFlag(cliCtx *cli.Context) error {
+func (c *cmdDevice) validateExpandFlag(cliCtx *cli.Context) error {
 	return validateExpandFlag(cliCtx, c.supportedExpandFields())
 }
 
-func (c *cmdDevices) supportedExpandFields() []string {
+func (c *cmdDevice) supportedExpandFields() []string {
 	return []string{"connectivity", "manifest", "properties", "communication", "site"}
 }
