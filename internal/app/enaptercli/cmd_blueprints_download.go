@@ -90,6 +90,7 @@ func (c *cmdBlueprintsDownload) do(ctx context.Context) error {
 			if _, err := io.Copy(outFile, body); err != nil {
 				return fmt.Errorf("write output file %q: %w", c.outputFileName, err)
 			}
+			fmt.Fprintln(c.writer, c.outputFileName)
 			return nil
 		}),
 	})
