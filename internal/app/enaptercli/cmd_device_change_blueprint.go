@@ -21,7 +21,7 @@ func buildCmdDeviceChangeBlueprint() *cli.Command {
 	cmd := &cmdDeviceChangeBlueprint{}
 	return &cli.Command{
 		Name:               "change-blueprint",
-		Usage:              "Change blueprint to device",
+		Usage:              "Change device blueprint",
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
