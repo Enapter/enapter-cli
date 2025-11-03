@@ -1,24 +1,16 @@
-run:
-  timeout: 5m
-
+version: "2"
 linters:
-  disable-all: true
+  default: none
   enable:
     - asciicheck
     - bodyclose
     - copyloopvar
-    # - deadcode
-    # - depguard
     - dogsled
-    # - dupl # some commands are looks very similar in implementation
     - err113
     - errcheck
     - errorlint
     - exhaustive
-    # - exhaustivestruct
-    # - exportloopref
     - funlen
-    - gci
     - gochecknoglobals
     - gochecknoinits
     - gocognit
@@ -26,74 +18,72 @@ linters:
     - gocritic
     - gocyclo
     - godot
-    # - godox
-    - gofmt
-    - gofumpt
     - goheader
-    - goimports
-    # - golint
     - gomodguard
     - goprintffuncname
     - gosec
-    - gosimple
     - govet
     - ineffassign
-    # - interfacer # is prone to bad suggestions (officialy deprecated)
     - lll
-    # - maligned
     - misspell
     - mnd
     - nakedret
     - nestif
-    # - nlreturn
     - noctx
     - nolintlint
     - prealloc
     - revive
     - rowserrcheck
-    # - scopelint
     - sqlclosecheck
     - staticcheck
-    # - structcheck
-    - stylecheck
     - testpackage
     - tparallel
-    - typecheck
     - unconvert
     - unparam
     - unused
-    # - varcheck
     - whitespace
-    # - wrapcheck
-    # - wsl
-
-linters-settings:
-  lll:
-    line-length: 110
-  gci:
+  settings:
+    lll:
+      line-length: 110
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - gosec
+        path: _test\.go
+      - linters:
+          - lll
+        source: '^//go:generate '
+      - linters:
+          - lll
+        source: '^import '
+      - linters:
+          - lll
+        source: //.*(http|https)://
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    gci:
       sections:
-      - standard
-      - default
-      - prefix(github.com/enapter/enapter-cli/)
-
-issues:
-  exclude-rules:
-    # Exclude gosec from running on tests files because this makes no sense.
-    - path: _test\.go
-      linters:
-        - gosec
-
-    # Exclude lll issues for long lines with go:generate.
-    - linters:
-        - lll
-      source: "^//go:generate "
-
-    # Import paths can be long.
-    - linters:
-        - lll
-      source: "^import "
-
-    # Links to articles can be long.
-    - linters:
-        - lll
-      source: "//.*(http|https)://"
+        - standard
+        - default
+        - prefix(github.com/enapter/enapter-cli/)
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

@@ -78,7 +78,7 @@ func (c *cmdDeviceCreateLua) Before(cliCtx *cli.Context) error {
 
 func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 	if c.blueprintPath != "" {
-		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.cmdBase.doHTTPRequest)
+		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.doHTTPRequest)
 		if err != nil {
 			return fmt.Errorf("upload blueprint: %w", err)
 		}
