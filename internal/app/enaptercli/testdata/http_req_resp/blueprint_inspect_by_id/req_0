@@ -9,7 +9,7 @@
       ""
     ],
     "User-Agent": [
-      "Go-http-client/1.1"
+      "enapter-cli/"
     ],
     "X-Enapter-Auth-Token": [
       "enapter_api_test_token"

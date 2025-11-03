@@ -22,6 +22,7 @@ import (
 type cmdBase struct {
 	verbose          bool
 	token            string
+	userAgent        string
 	apiHost          string
 	apiAllowInsecure bool
 	writer           io.Writer
@@ -67,6 +68,7 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 	if cliCtx.String("token") == "" {
 		return errAPITokenMissed
 	}
+	c.userAgent = "enapter-cli/" + cliCtx.App.Version
 	c.writer = cliCtx.App.Writer
 	c.errWriter = cliCtx.App.ErrWriter
 	c.httpClient = &http.Client{
@@ -110,7 +112,8 @@ func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) erro
 		return fmt.Errorf("build http request: %w", err)
 	}
 
-	req.Header.Add("X-Enapter-Auth-Token", c.token)
+	req.Header.Set("X-Enapter-Auth-Token", c.token)
+	req.Header.Set("User-Agent", c.userAgent)
 	req.Header.Set("Content-Type", p.ContentType)
 	req.URL.RawQuery = p.Query.Encode()
 
@@ -211,7 +214,8 @@ func (c *cmdBase) dialWebSocket(
 	url.RawQuery = query.Encode()
 
 	headers := make(http.Header)
-	headers.Add("X-Enapter-Auth-Token", c.token)
+	headers.Set("X-Enapter-Auth-Token", c.token)
+	headers.Set("User-Agent", c.userAgent)
 
 	const timeout = 5 * time.Second
 	dialer := websocket.Dialer{
