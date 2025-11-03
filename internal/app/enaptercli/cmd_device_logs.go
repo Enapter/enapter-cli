@@ -140,8 +140,8 @@ func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 		Query: query,
 		RespProcessor: func(r io.Reader) error {
 			var msg struct {
+				Timestamp  int64  `json:"timestamp"`
 				ReceivedAt string `json:"received_at"`
-				Timestamp  string `json:"timestamp"`
 				Severity   string `json:"severity"`
 				Message    string `json:"message"`
 			}
@@ -186,8 +186,8 @@ func (c *cmdDeviceLogs) doList(ctx context.Context) error {
 		RespProcessor: okRespBodyProcessor(func(body io.Reader) error {
 			var resp struct {
 				Logs []struct {
+					Timestamp  int64  `json:"timestamp"`
 					ReceivedAt string `json:"received_at"`
-					Timestamp  string `json:"timestamp"`
 					Severity   string `json:"severity"`
 					Message    string `json:"message"`
 				} `json:"logs"`
