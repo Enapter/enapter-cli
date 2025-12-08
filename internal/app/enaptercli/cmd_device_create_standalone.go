@@ -14,6 +14,7 @@ type cmdDeviceCreateStandalone struct {
 	cmdDeviceCreate
 	siteID     string
 	deviceName string
+	deviceSlug string
 }
 
 func buildCmdDeviceCreateStandalone() *cli.Command {
@@ -43,6 +44,10 @@ func (c *cmdDeviceCreateStandalone) Flags() []cli.Flag {
 		Usage:       "name for the new device",
 		Destination: &c.deviceName,
 		Required:    true,
+	}, &cli.StringFlag{
+		Name:        "device-slug",
+		Usage:       "slug for the new standalone device",
+		Destination: &c.deviceSlug,
 	})
 }
 
@@ -50,6 +55,7 @@ func (c *cmdDeviceCreateStandalone) do(ctx context.Context) error {
 	body, err := json.Marshal(map[string]any{
 		"site_id": c.siteID,
 		"name":    c.deviceName,
+		"slug":    c.deviceSlug,
 	})
 	if err != nil {
 		return fmt.Errorf("build request: %w", err)
