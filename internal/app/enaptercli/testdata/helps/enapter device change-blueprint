@@ -1,5 +1,5 @@
 NAME:
-   enaptercli.test device change-blueprint - Change blueprint to device
+   enaptercli.test device change-blueprint - Change device blueprint
 
 USAGE:
    enaptercli.test device change-blueprint [command options]
