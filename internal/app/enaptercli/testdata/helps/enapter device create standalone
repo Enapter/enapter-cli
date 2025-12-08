@@ -10,6 +10,7 @@ OPTIONS:
    --verbose                      log extra details about the operation (default: false)
    --site-id value, -s value      site ID where the device will be created
    --device-name value, -n value  name for the new device
+   --device-slug value            slug for the new standalone device
    --help, -h                     show help
 
 ENVIRONMENT VARIABLES:
