@@ -5,9 +5,8 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -32,11 +31,12 @@ func NewApp() *cli.App {
 }
 
 func zipDir(path string) ([]byte, error) {
+	fsys := os.DirFS(path)
+
 	buf := &bytes.Buffer{}
 	zw := zip.NewWriter(buf)
 
-	path = filepath.Clean(path)
-	err := filepath.WalkDir(path, func(filePath string, entry os.DirEntry, err error) error {
+	err := fs.WalkDir(fsys, ".", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -44,22 +44,19 @@ func zipDir(path string) ([]byte, error) {
 			return nil
 		}
 
-		relPath := strings.TrimPrefix(filePath, path)
-		relPath = strings.TrimPrefix(relPath, "/")
-		zipFile, err := zw.Create(relPath)
+		f, err := fsys.Open(path)
 		if err != nil {
-			return err
+			return fmt.Errorf("open: %w", err)
+		}
+		defer f.Close()
+
+		zf, err := zw.Create(path)
+		if err != nil {
+			return fmt.Errorf("create: %w", err)
 		}
 
-		fsFile, err := os.Open(filePath)
-		if err != nil {
-			return err
-		}
-		defer fsFile.Close()
-
-		_, err = io.Copy(zipFile, fsFile)
-		if err != nil {
-			return err
+		if _, err = io.Copy(zf, f); err != nil {
+			return fmt.Errorf("copy: %w", err)
 		}
 		return nil
 	})
