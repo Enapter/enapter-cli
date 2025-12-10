@@ -12,14 +12,14 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdBlueprintsDownload struct {
-	cmdBlueprints
+type cmdBlueprintDownload struct {
+	cmdBlueprint
 	blueprintID    string
 	outputFileName string
 }
 
-func buildCmdBlueprintsDownload() *cli.Command {
-	cmd := &cmdBlueprintsDownload{}
+func buildCmdBlueprintDownload() *cli.Command {
+	cmd := &cmdBlueprintDownload{}
 	return &cli.Command{
 		Name:               "download",
 		Usage:              "Download the blueprint zip from the Platform",
@@ -32,8 +32,8 @@ func buildCmdBlueprintsDownload() *cli.Command {
 	}
 }
 
-func (c *cmdBlueprintsDownload) Flags() []cli.Flag {
-	flags := c.cmdBlueprints.Flags()
+func (c *cmdBlueprintDownload) Flags() []cli.Flag {
+	flags := c.cmdBlueprint.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
@@ -48,7 +48,7 @@ func (c *cmdBlueprintsDownload) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdBlueprintsDownload) do(ctx context.Context) error {
+func (c *cmdBlueprintDownload) do(ctx context.Context) error {
 	if c.outputFileName == "" {
 		c.outputFileName = strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(c.blueprintID,
 			":", "_"), ".", "_"), "/", "_") + ".enbp"

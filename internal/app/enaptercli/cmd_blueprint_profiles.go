@@ -4,19 +4,19 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdBlueprintsProfiles struct {
+type cmdBlueprintProfiles struct {
 	cmdBase
 }
 
-func buildCmdBlueprintsProfiles() *cli.Command {
-	cmd := &cmdBlueprintsProfiles{}
+func buildCmdBlueprintProfiles() *cli.Command {
+	cmd := &cmdBlueprintProfiles{}
 	return &cli.Command{
 		Name:               "profiles",
 		Usage:              "Manage blueprint profiles",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
-			buildCmdBlueprintsProfilesDownload(),
-			buildCmdBlueprintsProfilesUpload(),
+			buildCmdBlueprintProfilesDownload(),
+			buildCmdBlueprintProfilesUpload(),
 		},
 	}
 }

@@ -11,13 +11,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdBlueprintsUpload struct {
-	cmdBlueprints
+type cmdBlueprintUpload struct {
+	cmdBlueprint
 	blueprintPath string
 }
 
-func buildCmdBlueprintsUpload() *cli.Command {
-	cmd := &cmdBlueprintsUpload{}
+func buildCmdBlueprintUpload() *cli.Command {
+	cmd := &cmdBlueprintUpload{}
 	return &cli.Command{
 		Name:               "upload",
 		Usage:              "Upload the blueprint to the Platform",
@@ -30,8 +30,8 @@ func buildCmdBlueprintsUpload() *cli.Command {
 	}
 }
 
-func (c *cmdBlueprintsUpload) Flags() []cli.Flag {
-	flags := c.cmdBlueprints.Flags()
+func (c *cmdBlueprintUpload) Flags() []cli.Flag {
+	flags := c.cmdBlueprint.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "path",
 		Aliases:     []string{"p"},
@@ -41,7 +41,7 @@ func (c *cmdBlueprintsUpload) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdBlueprintsUpload) upload(ctx context.Context) error {
+func (c *cmdBlueprintUpload) upload(ctx context.Context) error {
 	return uploadBlueprint(ctx, c.blueprintPath, c.doHTTPRequest)
 }
 

@@ -10,13 +10,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdBlueprintsProfilesUpload struct {
-	cmdBlueprintsProfiles
+type cmdBlueprintProfilesUpload struct {
+	cmdBlueprintProfiles
 	profilesPath string
 }
 
-func buildCmdBlueprintsProfilesUpload() *cli.Command {
-	cmd := &cmdBlueprintsProfilesUpload{}
+func buildCmdBlueprintProfilesUpload() *cli.Command {
+	cmd := &cmdBlueprintProfilesUpload{}
 	return &cli.Command{
 		Name:               "upload",
 		Usage:              "Upload profiles to the Platform",
@@ -29,8 +29,8 @@ func buildCmdBlueprintsProfilesUpload() *cli.Command {
 	}
 }
 
-func (c *cmdBlueprintsProfilesUpload) Flags() []cli.Flag {
-	flags := c.cmdBlueprintsProfiles.Flags()
+func (c *cmdBlueprintProfilesUpload) Flags() []cli.Flag {
+	flags := c.cmdBlueprintProfiles.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "path",
 		Aliases:     []string{"p"},
@@ -40,7 +40,7 @@ func (c *cmdBlueprintsProfilesUpload) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdBlueprintsProfilesUpload) upload(ctx context.Context) error {
+func (c *cmdBlueprintProfilesUpload) upload(ctx context.Context) error {
 	data, err := os.ReadFile(c.profilesPath)
 	if err != nil {
 		return fmt.Errorf("read  zip file: %w", err)

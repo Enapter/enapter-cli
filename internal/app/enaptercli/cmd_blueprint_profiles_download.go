@@ -10,13 +10,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdBlueprintsProfilesDownload struct {
-	cmdBlueprintsProfiles
+type cmdBlueprintProfilesDownload struct {
+	cmdBlueprintProfiles
 	outputFileName string
 }
 
-func buildCmdBlueprintsProfilesDownload() *cli.Command {
-	cmd := &cmdBlueprintsProfilesDownload{}
+func buildCmdBlueprintProfilesDownload() *cli.Command {
+	cmd := &cmdBlueprintProfilesDownload{}
 	return &cli.Command{
 		Name:               "download",
 		Usage:              "Download profiles zip from the Platform",
@@ -29,8 +29,8 @@ func buildCmdBlueprintsProfilesDownload() *cli.Command {
 	}
 }
 
-func (c *cmdBlueprintsProfilesDownload) Flags() []cli.Flag {
-	flags := c.cmdBlueprintsProfiles.Flags()
+func (c *cmdBlueprintProfilesDownload) Flags() []cli.Flag {
+	flags := c.cmdBlueprintProfiles.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "output",
 		Aliases:     []string{"o"},
@@ -39,7 +39,7 @@ func (c *cmdBlueprintsProfilesDownload) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdBlueprintsProfilesDownload) do(ctx context.Context) error {
+func (c *cmdBlueprintProfilesDownload) do(ctx context.Context) error {
 	if c.outputFileName == "" {
 		c.outputFileName = "profiles.zip"
 	}

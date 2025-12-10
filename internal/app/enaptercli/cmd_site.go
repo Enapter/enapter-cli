@@ -12,14 +12,14 @@ type cmdSite struct {
 	cmdBase
 }
 
-func buildCmdSites() *cli.Command {
+func buildCmdSite() *cli.Command {
 	cmd := &cmdSite{}
 	return &cli.Command{
 		Name:               "site",
 		Usage:              "Manage sites",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
 		Subcommands: []*cli.Command{
-			buildCmdSitesList(),
+			buildCmdSiteList(),
 			buildCmdSiteGet(),
 		},
 	}

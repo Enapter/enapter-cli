@@ -7,14 +7,14 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdSitesList struct {
+type cmdSiteList struct {
 	cmdSite
 	mySites bool
 	limit   int
 }
 
-func buildCmdSitesList() *cli.Command {
-	cmd := &cmdSitesList{}
+func buildCmdSiteList() *cli.Command {
+	cmd := &cmdSiteList{}
 	return &cli.Command{
 		Name:               "list",
 		Usage:              "List user sites",
@@ -27,7 +27,7 @@ func buildCmdSitesList() *cli.Command {
 	}
 }
 
-func (c *cmdSitesList) Flags() []cli.Flag {
+func (c *cmdSiteList) Flags() []cli.Flag {
 	flags := c.cmdSite.Flags()
 	return append(flags, &cli.BoolFlag{
 		Name:        "my-sites",
@@ -41,7 +41,7 @@ func (c *cmdSitesList) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdSitesList) do(ctx context.Context) error {
+func (c *cmdSiteList) do(ctx context.Context) error {
 	doPaginateRequestParams := paginateHTTPRequestParams{
 		ObjectName: "sites",
 		Limit:      c.limit,

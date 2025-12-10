@@ -7,13 +7,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type cmdBlueprintsGet struct {
-	cmdBlueprints
+type cmdBlueprintGet struct {
+	cmdBlueprint
 	blueprintID string
 }
 
-func buildCmdBlueprintsGet() *cli.Command {
-	cmd := &cmdBlueprintsGet{}
+func buildCmdBlueprintGet() *cli.Command {
+	cmd := &cmdBlueprintGet{}
 	return &cli.Command{
 		Name:               "get",
 		Usage:              "Retrieve blueprint metadata",
@@ -26,8 +26,8 @@ func buildCmdBlueprintsGet() *cli.Command {
 	}
 }
 
-func (c *cmdBlueprintsGet) Flags() []cli.Flag {
-	flags := c.cmdBlueprints.Flags()
+func (c *cmdBlueprintGet) Flags() []cli.Flag {
+	flags := c.cmdBlueprint.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
@@ -37,7 +37,7 @@ func (c *cmdBlueprintsGet) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdBlueprintsGet) get(ctx context.Context) error {
+func (c *cmdBlueprintGet) get(ctx context.Context) error {
 	if isBlueprintID(c.blueprintID) {
 		return c.doHTTPRequest(ctx, doHTTPRequestParams{
 			Method: http.MethodGet,

@@ -22,9 +22,9 @@ func NewApp() *cli.App {
 	app.CustomAppHelpTemplate = cli.AppHelpTemplate + enapterAPIEnvVarsHelp
 
 	app.Commands = []*cli.Command{
-		buildCmdSites(),
+		buildCmdSite(),
 		buildCmdDevice(),
-		buildCmdBlueprints(),
+		buildCmdBlueprint(),
 		buildCmdRuleEngine(),
 	}
 
