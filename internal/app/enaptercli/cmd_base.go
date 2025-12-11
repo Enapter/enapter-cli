@@ -149,13 +149,23 @@ type runWebSocketParams struct {
 }
 
 func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error {
+	url, err := url.Parse(c.apiHost + "/v3" + p.Path)
+	if err != nil {
+		return fmt.Errorf("parse url: %w", err)
+	}
+	url.RawQuery = p.Query.Encode()
+
+	headers := make(http.Header)
+	headers.Set("X-Enapter-Auth-Token", c.token)
+	headers.Set("User-Agent", c.userAgent)
+
 	for retry := false; ; retry = true {
 		if retry {
 			fmt.Fprintln(c.errWriter, "Reconnecting...")
 			time.Sleep(time.Second)
 		}
 
-		conn, err := c.dialWebSocket(ctx, p.Path, p.Query)
+		conn, err := c.dialWebSocket(ctx, url, headers)
 		if err != nil {
 			if e := cli.ExitCoder(nil); errors.As(err, &e) {
 				return err
@@ -205,18 +215,8 @@ func (c *cmdBase) defaultRespProcessor(resp *http.Response) error {
 }
 
 func (c *cmdBase) dialWebSocket(
-	ctx context.Context, path string, query url.Values,
+	ctx context.Context, url *url.URL, headers http.Header,
 ) (*websocket.Conn, error) {
-	url, err := url.Parse(c.apiHost + "/v3" + path)
-	if err != nil {
-		return nil, fmt.Errorf("parse url: %w", err)
-	}
-	url.RawQuery = query.Encode()
-
-	headers := make(http.Header)
-	headers.Set("X-Enapter-Auth-Token", c.token)
-	headers.Set("User-Agent", c.userAgent)
-
 	const timeout = 5 * time.Second
 	dialer := websocket.Dialer{
 		HandshakeTimeout: timeout,
