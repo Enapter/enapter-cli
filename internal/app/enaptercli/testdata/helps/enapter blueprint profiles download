@@ -5,11 +5,11 @@ USAGE:
    enaptercli.test blueprint profiles download [command options]
 
 OPTIONS:
-   --api-url value           override API base URL (default: "https://api.enapter.com") [$ENAPTER3_API_URL]
-   --api-allow-insecure      allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                 log extra details about the operation (default: false)
-   --output value, -o value  file name to save the downloaded profiles
-   --help, -h                show help
+   --connection value, -c value  name of the connection to use
+   --api-allow-insecure          allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                     log extra details about the operation (default: false)
+   --output value, -o value      file name to save the downloaded profiles
+   --help, -h                    show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

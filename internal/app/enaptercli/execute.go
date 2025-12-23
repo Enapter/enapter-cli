@@ -25,6 +25,7 @@ func NewApp() *cli.App {
 		buildCmdDevice(),
 		buildCmdBlueprint(),
 		buildCmdRuleEngine(),
+		buildCmdConnection(),
 	}
 
 	return app

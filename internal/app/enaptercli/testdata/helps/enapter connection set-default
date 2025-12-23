@@ -1,0 +1,9 @@
+NAME:
+   enaptercli.test connection set-default - Set default connection
+
+USAGE:
+   enaptercli.test connection set-default [command options]
+
+OPTIONS:
+   --name value  connection name
+   --help, -h    show help

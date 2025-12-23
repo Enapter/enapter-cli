@@ -17,14 +17,20 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/urfave/cli/v2"
+
+	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
 
+const defaultURL = "https://api.enapter.com"
+
 type cmdBase struct {
-	verbose          bool
+	connName         string
 	token            string
-	userAgent        string
-	apiHost          string
+	apiURL           string
+	siteID           string
 	apiAllowInsecure bool
+	verbose          bool
+	userAgent        string
 	writer           io.Writer
 	errWriter        io.Writer
 	httpClient       *http.Client
@@ -32,6 +38,12 @@ type cmdBase struct {
 
 func (c *cmdBase) Flags() []cli.Flag {
 	return []cli.Flag{
+		&cli.StringFlag{
+			Name:        "connection",
+			Usage:       "name of the connection to use",
+			Aliases:     []string{"c"},
+			Destination: &c.connName,
+		},
 		&cli.StringFlag{
 			Name:        "token",
 			Usage:       "Enapter API token",
@@ -43,10 +55,11 @@ func (c *cmdBase) Flags() []cli.Flag {
 			Name:        "api-url",
 			Usage:       "override API base URL",
 			EnvVars:     []string{"ENAPTER3_API_URL"},
-			Value:       "https://api.enapter.com",
-			Destination: &c.apiHost,
+			Value:       defaultURL,
+			Hidden:      true,
+			Destination: &c.apiURL,
 			Action: func(_ *cli.Context, v string) error {
-				c.apiHost = strings.TrimSuffix(v, "/")
+				c.apiURL = strings.TrimSuffix(v, "/")
 				return nil
 			},
 		},
@@ -65,9 +78,10 @@ func (c *cmdBase) Flags() []cli.Flag {
 }
 
 func (c *cmdBase) Before(cliCtx *cli.Context) error {
-	if cliCtx.String("token") == "" {
-		return errAPITokenMissed
+	if err := c.setupCredentials(cliCtx); err != nil {
+		return err
 	}
+
 	c.userAgent = "enapter-cli/" + cliCtx.App.Version
 	c.writer = cliCtx.App.Writer
 	c.errWriter = cliCtx.App.ErrWriter
@@ -79,6 +93,50 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 	}
 
 	return nil
+}
+
+func (c *cmdBase) setupCredentials(cliCtx *cli.Context) error {
+	config, err := configfile.Load()
+	if err != nil {
+		return err
+	}
+
+	if c.connName != "" {
+		conn, ok := config.Connections[c.connName]
+		if !ok {
+			return cli.Exit("Unknown connection name.", 1)
+		}
+		if cliCtx.IsSet("token") || cliCtx.IsSet("api-url") || cliCtx.IsSet("api-allow-insecure") {
+			fmt.Fprintln(cliCtx.App.ErrWriter,
+				"WARNING: credentials set via environment variables or flags are ignored.")
+		}
+		c.token = conn.Token.Value
+		c.apiURL = conn.URL
+		c.siteID = conn.SiteID
+		c.apiAllowInsecure = conn.AllowInsecure
+		return nil
+	}
+
+	if c.token != "" {
+		return nil
+	}
+
+	if config.DefaultConn != "" {
+		conn, ok := config.Connections[config.DefaultConn]
+		if !ok {
+			return cli.Exit("Default connection is invalid.", 1)
+		}
+		c.token = conn.Token.Value
+		c.apiURL = conn.URL
+		c.siteID = conn.SiteID
+		c.apiAllowInsecure = conn.AllowInsecure
+		return nil
+	}
+
+	return cli.Exit("No connection configured.\n\n"+
+		"Please, specify connection using --connection flag.\n\n"+
+		"To list available connections:\n$ enapter3 connection list\n\n"+
+		"To add a new connection:\n$ enapter3 connection add\n", 1)
 }
 
 const enapterAPIEnvVarsHelp = `
@@ -107,7 +165,7 @@ type doHTTPRequestParams struct {
 }
 
 func (c *cmdBase) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
-	req, err := http.NewRequestWithContext(ctx, p.Method, c.apiHost+"/v3"+p.Path, p.Body)
+	req, err := http.NewRequestWithContext(ctx, p.Method, c.apiURL+"/v3"+p.Path, p.Body)
 	if err != nil {
 		return fmt.Errorf("build http request: %w", err)
 	}
@@ -149,7 +207,7 @@ type runWebSocketParams struct {
 }
 
 func (c *cmdBase) runWebSocket(ctx context.Context, p runWebSocketParams) error {
-	url, err := url.Parse(c.apiHost + "/v3" + p.Path)
+	url, err := url.Parse(c.apiURL + "/v3" + p.Path)
 	if err != nil {
 		return fmt.Errorf("parse url: %w", err)
 	}
