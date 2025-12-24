@@ -2,6 +2,8 @@ package enaptercli
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/urfave/cli/v2"
@@ -42,6 +44,30 @@ func (c *cmdSiteList) Flags() []cli.Flag {
 }
 
 func (c *cmdSiteList) do(ctx context.Context) error {
+	if c.siteID != "" {
+		fmt.Fprintln(c.errWriter, "WARNING: trying to get sites list when site ID "+
+			"is set for current connection, result will contain only one site.")
+
+		var site json.RawMessage
+		if err := c.doHTTPRequest(ctx, doHTTPRequestParams{
+			Method: http.MethodGet,
+			Path:   "/" + c.siteID,
+			RespProcessor: func(r *http.Response) error {
+				return json.NewDecoder(r.Body).Decode(&site)
+			},
+		}); err != nil {
+			return err
+		}
+
+		return json.NewEncoder(c.writer).Encode(struct {
+			Sites      []json.RawMessage `json:"sites"`
+			TotalCount int               `json:"total_count"`
+		}{
+			Sites:      []json.RawMessage{site},
+			TotalCount: 1,
+		})
+	}
+
 	doPaginateRequestParams := paginateHTTPRequestParams{
 		ObjectName: "sites",
 		Limit:      c.limit,

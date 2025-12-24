@@ -1,6 +1,7 @@
 package enaptercli
 
 import (
+	"cmp"
 	"context"
 	"net/http"
 
@@ -32,13 +33,21 @@ func (c *cmdSiteGet) Flags() []cli.Flag {
 		Name:        "site-id",
 		Usage:       "site ID",
 		Destination: &c.siteID,
-		Required:    true,
 	})
 }
 
 func (c *cmdSiteGet) do(ctx context.Context) error {
+	if c.cmdBase.siteID != "" && c.siteID != "" && c.cmdBase.siteID != c.siteID {
+		return errSiteIDMismatch
+	}
+
+	siteID := cmp.Or(c.siteID, c.cmdBase.siteID)
+	if siteID == "" {
+		return errSiteIDMissing
+	}
+
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method: http.MethodGet,
-		Path:   "/" + c.siteID,
+		Path:   "/" + siteID,
 	})
 }
