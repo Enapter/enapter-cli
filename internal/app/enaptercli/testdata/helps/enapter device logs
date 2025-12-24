@@ -8,6 +8,7 @@ OPTIONS:
    --connection value, -c value  name of the connection to use
    --api-allow-insecure          allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                     log extra details about the operation (default: false)
+   --site-id value               site ID
    --device-id value, -d value   device ID
    --follow, -f                  follow the log output (default: false)
    --from value                  from timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)

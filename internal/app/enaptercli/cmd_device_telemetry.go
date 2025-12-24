@@ -55,7 +55,7 @@ func (c *cmdDeviceTelemetry) do(ctx context.Context) error {
 
 func (c *cmdDeviceTelemetry) doFollow(ctx context.Context) error {
 	return c.runWebSocket(ctx, runWebSocketParams{
-		Path: "/devices/" + c.deviceID + "/telemetry",
+		Path: "/" + c.deviceID + "/telemetry",
 		RespProcessor: func(r io.Reader) error {
 			payload, err := io.ReadAll(r)
 			if err != nil {

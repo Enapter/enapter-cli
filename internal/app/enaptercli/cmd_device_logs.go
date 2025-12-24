@@ -133,10 +133,8 @@ func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 		query.Add("show", c.showFilter)
 	}
 
-	path := fmt.Sprintf("/devices/%s/logs", c.deviceID)
-
 	return c.runWebSocket(ctx, runWebSocketParams{
-		Path:  path,
+		Path:  "/" + c.deviceID + "/logs",
 		Query: query,
 		RespProcessor: func(r io.Reader) error {
 			var msg struct {

@@ -8,6 +8,7 @@ OPTIONS:
    --connection value, -c value       name of the connection to use
    --api-allow-insecure               allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                          log extra details about the operation (default: false)
+   --site-id value                    site ID
    --device-id value, -d value        device ID
    --execution-id value               execution ID
    --expand value [ --expand value ]  coma-separated list of expanded options (supported values: log)

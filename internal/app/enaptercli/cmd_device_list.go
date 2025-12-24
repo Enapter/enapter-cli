@@ -11,7 +11,6 @@ import (
 
 type cmdDeviceList struct {
 	cmdDevice
-	siteID string
 	expand []string
 	limit  int
 }
@@ -39,10 +38,6 @@ func (c *cmdDeviceList) Flags() []cli.Flag {
 				strings.Join(c.supportedExpandFields(), ", ") + ")",
 		},
 		Destination: &c.expand,
-	}, &cli.StringFlag{
-		Name:        "site-id",
-		Usage:       "list devices from this site",
-		Destination: &c.siteID,
 	}, &cli.IntFlag{
 		Name:        "limit",
 		Usage:       "maximum number of devices to retrieve",
@@ -73,12 +68,6 @@ func (c *cmdDeviceList) do(ctx context.Context) error {
 			Path:   "",
 			Query:  query,
 		},
-	}
-
-	if c.siteID != "" {
-		doPaginateRequestParams.BaseParams.Query.Set("site_id", c.siteID)
-		doPaginateRequestParams.BaseParams.Path = "/sites/" + c.siteID + "/devices"
-		doPaginateRequestParams.DoFn = c.cmdBase.doHTTPRequest
 	}
 
 	return c.doPaginateRequest(ctx, doPaginateRequestParams)
