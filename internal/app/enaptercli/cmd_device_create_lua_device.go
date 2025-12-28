@@ -2,6 +2,7 @@ package enaptercli
 
 import (
 	"bytes"
+	"cmp"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -12,6 +13,7 @@ import (
 
 type cmdDeviceCreateLua struct {
 	cmdDeviceCreate
+	siteID        string
 	deviceName    string
 	deviceSlug    string
 	runtimeID     string
@@ -36,6 +38,10 @@ func buildCmdDeviceCreateLua() *cli.Command {
 func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
 	flags := c.cmdDeviceCreate.Flags()
 	return append(flags, &cli.StringFlag{
+		Name:        "site-id",
+		Usage:       "site ID",
+		Destination: &c.siteID,
+	}, &cli.StringFlag{
 		Name:        "runtime-id",
 		Aliases:     []string{"r"},
 		Usage:       "UCM device ID where the new Lua device will run",
@@ -85,8 +91,14 @@ func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 		c.blueprintID = blueprintID
 	}
 
+	// Cloud API does not allow slugs as runtime ID for now
+	runtimeID, err := c.resolveRuntimeID(ctx)
+	if err != nil {
+		return fmt.Errorf("resolve runtime ID: %w", err)
+	}
+
 	body, err := json.Marshal(map[string]interface{}{
-		"runtime_id":   c.runtimeID,
+		"runtime_id":   runtimeID,
 		"name":         c.deviceName,
 		"slug":         c.deviceSlug,
 		"blueprint_id": c.blueprintID,
@@ -100,4 +112,36 @@ func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 		Body:        bytes.NewReader(body),
 		ContentType: contentTypeJSON,
 	})
+}
+
+func (c *cmdDeviceCreateLua) resolveRuntimeID(ctx context.Context) (string, error) {
+	if c.siteID != "" && c.cmdBase.siteID != "" && c.cmdBase.siteID != c.siteID {
+		return "", errSiteIDMismatch
+	}
+
+	siteID := cmp.Or(c.siteID, c.cmdBase.siteID)
+	if siteID == "" {
+		return c.runtimeID, nil
+	}
+
+	var resp struct {
+		Device struct {
+			ID string `json:"id"`
+		} `json:"device"`
+	}
+
+	if err := c.doHTTPRequest(ctx, doHTTPRequestParams{
+		Method: http.MethodGet,
+		Path:   "/sites/" + siteID + "/devices/" + c.runtimeID,
+		RespProcessor: func(r *http.Response) error {
+			if r.StatusCode != http.StatusOK {
+				return cli.Exit(parseRespErrorMessage(r), 1)
+			}
+			return json.NewDecoder(r.Body).Decode(&resp)
+		},
+	}); err != nil {
+		return "", err
+	}
+
+	return resp.Device.ID, nil
 }

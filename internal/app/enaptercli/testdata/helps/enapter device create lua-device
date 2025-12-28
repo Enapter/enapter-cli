@@ -8,6 +8,7 @@ OPTIONS:
    --connection value, -c value    name of the connection to use
    --api-allow-insecure            allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                       log extra details about the operation (default: false)
+   --site-id value                 site ID
    --runtime-id value, -r value    UCM device ID where the new Lua device will run
    --device-name value, -n value   name for the new Lua device
    --device-slug value             slug for the new Lua device
