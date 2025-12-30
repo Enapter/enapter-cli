@@ -29,7 +29,7 @@ func TestHelpMessages(t *testing.T) {
 			app := startTestApp(args...)
 			appErr := app.Wait()
 
-			actual, err := io.ReadAll(app.Stdout())
+			actual, err := io.ReadAll(app.Output())
 			require.NoError(t, err)
 
 			if appErr != nil {
@@ -54,59 +54,95 @@ func TestHTTPReqResp(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.Name(), func(t *testing.T) {
-			reqCount := 0
-			srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				reqObj := struct {
-					Method string
-					URL    string
-					Header http.Header
-					Body   string
-				}{
-					r.Method,
-					r.URL.String(),
-					r.Header,
-					readBodyAsString(t, r.Body),
-				}
-				expReqFileName := filepath.Join(testdataPath, tc.Name(), "req_"+strconv.Itoa(reqCount))
-				if update {
-					err := os.WriteFile(expReqFileName, shouldMarshalIndent(t, reqObj), 0o600)
-					require.NoError(t, err)
-				} else {
-					require.Equal(t, readFileToString(t, expReqFileName), string(shouldMarshalIndent(t, reqObj)))
-				}
-
-				resp := shouldReadFile(t, filepath.Join(testdataPath, tc.Name(), "resp_"+strconv.Itoa(reqCount)))
-				_, _ = w.Write(resp)
-
-				reqCount++
-			}))
-			defer srv.Close()
-
-			tmplParams := struct{ BaseFlags string }{
-				BaseFlags: strings.Join([]string{"--token", testToken, "--api-url", srv.URL}, " "),
-			}
-
-			cmd := executeTmpl(t, filepath.Join(testdataPath, tc.Name(), "cmd.tmpl"), tmplParams)
-			args := strings.Split(cmd, " ")
-			app := startTestApp(args...)
-			appErr := app.Wait()
-
-			actual, err := io.ReadAll(app.Stdout())
-			require.NoError(t, err)
-
-			if appErr != nil {
-				actual = append(actual, []byte("app exit with error: "+appErr.Error()+"\n")...)
-			}
-
-			exepctedOutFileName := filepath.Join(testdataPath, tc.Name(), "out")
-			if update {
-				err := os.WriteFile(exepctedOutFileName, actual, 0o600)
-				require.NoError(t, err)
-			} else {
-				require.Equal(t, readFileToString(t, exepctedOutFileName), string(actual))
-			}
+			path := filepath.Join(testdataPath, tc.Name())
+			testExecute(t, path)
 		})
 	}
+}
+
+func testExecute(t *testing.T, path string) {
+	srv := newTestServer(t, path)
+
+	cmd := executeTmpl(t, filepath.Join(path, "cmd.tmpl"), struct {
+		Token string
+		URL   string
+	}{
+		Token: testToken,
+		URL:   srv.URL,
+	})
+
+	t.Setenv("ENAPTER3_CONFIG", t.TempDir())
+	output := executeCommands(t, cmd)
+
+	exepctedOutFileName := filepath.Join(path, "out")
+	if update {
+		err := os.WriteFile(exepctedOutFileName, output, 0o600)
+		require.NoError(t, err)
+	} else {
+		expected := readFileToString(t, exepctedOutFileName)
+		require.Equal(t, expected, string(output))
+	}
+}
+
+func newTestServer(t *testing.T, path string) *httptest.Server {
+	t.Helper()
+
+	reqCount := 0
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		reqPath := filepath.Join(path, "req_"+strconv.Itoa(reqCount))
+		respPath := filepath.Join(path, "resp_"+strconv.Itoa(reqCount))
+
+		info := struct {
+			Method string
+			URL    string
+			Header http.Header
+			Body   string
+		}{
+			Method: r.Method,
+			URL:    r.URL.String(),
+			Header: r.Header,
+			Body:   readBodyAsString(t, r.Body),
+		}
+		if update {
+			err := os.WriteFile(reqPath, shouldMarshalIndent(t, info), 0o600)
+			require.NoError(t, err)
+		} else {
+			expected := readFileToString(t, reqPath)
+			actual := string(shouldMarshalIndent(t, info))
+			require.Equal(t, expected, actual)
+		}
+
+		resp := shouldReadFile(t, respPath)
+		_, _ = w.Write(resp)
+
+		reqCount++
+	}))
+	t.Cleanup(func() { srv.Close() })
+
+	return srv
+}
+
+func executeCommands(t *testing.T, cmd string) []byte {
+	t.Helper()
+
+	var output []byte
+	for cmd := range strings.Lines(cmd) {
+		cmd := strings.Trim(cmd, "\n")
+		args := strings.Split(cmd, " ")
+
+		app := startTestApp(args...)
+		appErr := app.Wait()
+
+		out, err := io.ReadAll(app.Output())
+		require.NoError(t, err)
+
+		output = append(output, out...)
+		if appErr != nil {
+			output = append(output, []byte("app exit with error: "+appErr.Error()+"\n")...)
+			break
+		}
+	}
+	return output
 }
 
 func executeTmpl(t *testing.T, tmplFilePath string, tmplParams interface{}) string {

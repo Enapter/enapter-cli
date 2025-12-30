@@ -1,0 +1,10 @@
+app exit with error: No connection configured.
+
+Please, specify connection using --connection flag.
+
+To list available connections:
+$ enapter3 connection list
+
+To add a new connection:
+$ enapter3 connection add
+

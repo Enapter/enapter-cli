@@ -44,16 +44,18 @@ func (c *cmdSiteList) Flags() []cli.Flag {
 }
 
 func (c *cmdSiteList) do(ctx context.Context) error {
-	if c.siteID != "" {
+	if siteID, _ := c.chooseSiteID(""); siteID != "" {
 		fmt.Fprintln(c.errWriter, "WARNING: trying to get sites list when site ID "+
 			"is set for current connection, result will contain only one site.")
 
-		var site json.RawMessage
+		var resp struct {
+			Site json.RawMessage `json:"site"`
+		}
 		if err := c.doHTTPRequest(ctx, doHTTPRequestParams{
 			Method: http.MethodGet,
 			Path:   "/" + c.siteID,
 			RespProcessor: func(r *http.Response) error {
-				return json.NewDecoder(r.Body).Decode(&site)
+				return json.NewDecoder(r.Body).Decode(&resp)
 			},
 		}); err != nil {
 			return err
@@ -63,7 +65,7 @@ func (c *cmdSiteList) do(ctx context.Context) error {
 			Sites      []json.RawMessage `json:"sites"`
 			TotalCount int               `json:"total_count"`
 		}{
-			Sites:      []json.RawMessage{site},
+			Sites:      []json.RawMessage{resp.Site},
 			TotalCount: 1,
 		})
 	}

@@ -1,7 +1,6 @@
 package enaptercli
 
 import (
-	"cmp"
 	"context"
 	"fmt"
 	"net/url"
@@ -39,13 +38,9 @@ func (c *cmdRuleEngine) Flags() []cli.Flag {
 }
 
 func (c *cmdRuleEngine) doHTTPRequest(ctx context.Context, p doHTTPRequestParams) error {
-	if c.siteID != "" && c.cmdBase.siteID != "" && c.cmdBase.siteID != c.siteID {
-		return errSiteIDMismatch
-	}
-
-	siteID := cmp.Or(c.siteID, c.cmdBase.siteID)
-	if siteID == "" {
-		return errSiteIDMissing
+	siteID, err := c.chooseSiteID(c.siteID)
+	if err != nil {
+		return err
 	}
 
 	path, err := url.JoinPath("/sites/", siteID, "/rule_engine", p.Path)

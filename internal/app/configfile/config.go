@@ -32,12 +32,12 @@ const (
 )
 
 func Load() (Config, error) {
-	home, err := os.UserHomeDir()
+	dir, err := configDir()
 	if err != nil {
-		return Config{}, fmt.Errorf("get home dir: %w", err)
+		return Config{}, err
 	}
 
-	path := filepath.Join(home, dirName, fileName)
+	path := filepath.Join(dir, fileName)
 	f, err := os.Open(path)
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
@@ -56,18 +56,17 @@ func Load() (Config, error) {
 }
 
 func Save(c Config) error {
-	home, err := os.UserHomeDir()
+	dir, err := configDir()
 	if err != nil {
-		return fmt.Errorf("get home dir: %w", err)
+		return err
 	}
 
 	const perm = 0o755
-	dir := filepath.Join(home, dirName)
 	if err := os.MkdirAll(dir, perm); err != nil {
 		return fmt.Errorf("create config dir: %w", err)
 	}
 
-	path := filepath.Join(home, dirName, fileName)
+	path := filepath.Join(dir, fileName)
 	f, err := os.Create(path)
 	if err != nil {
 		return fmt.Errorf("create config file: %w", err)
@@ -81,4 +80,15 @@ func Save(c Config) error {
 	}
 
 	return f.Sync()
+}
+
+func configDir() (string, error) {
+	if p := os.Getenv("ENAPTER3_CONFIG"); p != "" {
+		return p, nil
+	}
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return "", fmt.Errorf("get home dir: %w", err)
+	}
+	return filepath.Join(home, dirName), nil
 }

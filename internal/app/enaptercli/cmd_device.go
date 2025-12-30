@@ -1,8 +1,8 @@
 package enaptercli
 
 import (
-	"cmp"
 	"context"
+	"errors"
 	"fmt"
 	"net/url"
 
@@ -72,20 +72,22 @@ func (c *cmdDevice) supportedExpandFields() []string {
 }
 
 func (c *cmdDevice) buildPath(p string) (string, error) {
-	if c.siteID != "" && c.cmdBase.siteID != "" && c.cmdBase.siteID != c.siteID {
-		return "", errSiteIDMismatch
-	}
-
 	path, err := url.JoinPath("/devices", p)
 	if err != nil {
 		return "", fmt.Errorf("join path: %w", err)
 	}
 
-	if siteID := cmp.Or(c.siteID, c.cmdBase.siteID); siteID != "" {
-		path, err = url.JoinPath("/sites", siteID, path)
-		if err != nil {
-			return "", fmt.Errorf("join path: %w", err)
+	siteID, err := c.chooseSiteID(c.siteID)
+	if err != nil {
+		if errors.Is(err, errSiteIDMissing) {
+			return path, nil
 		}
+		return "", err
+	}
+
+	path, err = url.JoinPath("/sites", siteID, path)
+	if err != nil {
+		return "", fmt.Errorf("join path: %w", err)
 	}
 
 	return path, nil

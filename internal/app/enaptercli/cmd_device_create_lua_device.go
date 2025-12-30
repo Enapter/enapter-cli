@@ -2,9 +2,9 @@ package enaptercli
 
 import (
 	"bytes"
-	"cmp"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -115,13 +115,12 @@ func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 }
 
 func (c *cmdDeviceCreateLua) resolveRuntimeID(ctx context.Context) (string, error) {
-	if c.siteID != "" && c.cmdBase.siteID != "" && c.cmdBase.siteID != c.siteID {
-		return "", errSiteIDMismatch
-	}
-
-	siteID := cmp.Or(c.siteID, c.cmdBase.siteID)
-	if siteID == "" {
-		return c.runtimeID, nil
+	siteID, err := c.chooseSiteID(c.siteID)
+	if err != nil {
+		if errors.Is(err, errSiteIDMissing) {
+			return c.runtimeID, nil
+		}
+		return "", err
 	}
 
 	var resp struct {

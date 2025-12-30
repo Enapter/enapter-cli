@@ -2,6 +2,7 @@ package enaptercli
 
 import (
 	"bytes"
+	"cmp"
 	"context"
 	"crypto/tls"
 	"encoding/base64"
@@ -153,6 +154,17 @@ func (c *cmdBase) CommandHelpTemplate() string {
 
 func (c *cmdBase) SubcommandHelpTemplate() string {
 	return cli.SubcommandHelpTemplate + enapterAPIEnvVarsHelp
+}
+
+func (c *cmdBase) chooseSiteID(cmdSiteID string) (string, error) {
+	if cmdSiteID != "" && c.siteID != "" && c.siteID != cmdSiteID {
+		return "", errSiteIDMismatch
+	}
+	siteID := cmp.Or(cmdSiteID, c.siteID)
+	if siteID == "" {
+		return "", errSiteIDMissing
+	}
+	return siteID, nil
 }
 
 type doHTTPRequestParams struct {

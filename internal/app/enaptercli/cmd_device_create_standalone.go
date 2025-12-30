@@ -2,7 +2,6 @@ package enaptercli
 
 import (
 	"bytes"
-	"cmp"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -53,13 +52,9 @@ func (c *cmdDeviceCreateStandalone) Flags() []cli.Flag {
 }
 
 func (c *cmdDeviceCreateStandalone) do(ctx context.Context) error {
-	if c.siteID != "" && c.cmdBase.siteID != "" && c.cmdBase.siteID != c.siteID {
-		return errSiteIDMismatch
-	}
-
-	siteID := cmp.Or(c.siteID, c.cmdBase.siteID)
-	if siteID == "" {
-		return errSiteIDMissing
+	siteID, err := c.chooseSiteID(c.siteID)
+	if err != nil {
+		return err
 	}
 
 	body, err := json.Marshal(map[string]any{
