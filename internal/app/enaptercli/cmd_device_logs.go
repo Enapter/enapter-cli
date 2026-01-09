@@ -140,13 +140,15 @@ func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 			var msg struct {
 				Timestamp  int64  `json:"timestamp"`
 				ReceivedAt string `json:"received_at"`
-				Severity   string `json:"severity"`
-				Message    string `json:"message"`
+				Log        struct {
+					Severity string `json:"severity"`
+					Message  string `json:"message"`
+				} `json:"log"`
 			}
 			if err := json.NewDecoder(r).Decode(&msg); err != nil {
 				return fmt.Errorf("parse payload: %w", err)
 			}
-			fmt.Fprintf(c.writer, "%s [%s] %s\n", msg.ReceivedAt, msg.Severity, msg.Message)
+			fmt.Fprintf(c.writer, "%s [%s] %s\n", msg.ReceivedAt, msg.Log.Severity, msg.Log.Message)
 			return nil
 		},
 	})
