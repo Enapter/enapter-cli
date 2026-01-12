@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -99,7 +100,7 @@ func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 
 	body, err := json.Marshal(map[string]interface{}{
 		"runtime_id":   runtimeID,
-		"name":         c.deviceName,
+		"name":         strings.TrimSpace(c.deviceName),
 		"slug":         c.deviceSlug,
 		"blueprint_id": c.blueprintID,
 	})

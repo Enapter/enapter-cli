@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -59,7 +60,7 @@ func (c *cmdDeviceCreateStandalone) do(ctx context.Context) error {
 
 	body, err := json.Marshal(map[string]any{
 		"site_id": siteID,
-		"name":    c.deviceName,
+		"name":    strings.TrimSpace(c.deviceName),
 		"slug":    c.deviceSlug,
 	})
 	if err != nil {

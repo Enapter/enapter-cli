@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -56,7 +57,7 @@ func (c *cmdDeviceUpdate) Flags() []cli.Flag {
 
 func (c *cmdDeviceUpdate) do(ctx context.Context) error {
 	payload := map[string]string{
-		"name": c.name,
+		"name": strings.TrimSpace(c.name),
 		"slug": c.slug,
 	}
 	body, err := json.Marshal(payload)
