@@ -31,9 +31,10 @@ type cmdBase struct {
 	siteID           string
 	apiAllowInsecure bool
 	verbose          bool
-	userAgent        string
+	colorize         bool
 	writer           io.Writer
 	errWriter        io.Writer
+	userAgent        string
 	httpClient       *http.Client
 }
 
@@ -83,9 +84,11 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 		return err
 	}
 
-	c.userAgent = "enapter-cli/" + cliCtx.App.Version
 	c.writer = cliCtx.App.Writer
 	c.errWriter = cliCtx.App.ErrWriter
+	c.colorize = colorsSupported(c.writer)
+
+	c.userAgent = "enapter-cli/" + cliCtx.App.Version
 	c.httpClient = &http.Client{
 		Transport: &http.Transport{
 			//nolint:gosec // This is needed to allow self-signed certificates on Gateway.

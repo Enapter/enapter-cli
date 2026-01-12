@@ -132,6 +132,11 @@ func (c *cmdDeviceMonitor) process(r io.Reader, deviceID, runtimeID string) erro
 		return fmt.Errorf("parse payload: %w", err)
 	}
 
+	color := c.messageColor(m)
+	if color != "" {
+		fmt.Fprint(c.writer, color)
+	}
+
 	fmt.Fprint(c.writer, c.messageTimestamp(m))
 	fmt.Fprint(c.writer, " ")
 
@@ -154,9 +159,27 @@ func (c *cmdDeviceMonitor) process(r io.Reader, deviceID, runtimeID string) erro
 		fmt.Fprintf(c.writer, "[%s] %s", m.Log.Severity, m.Log.Message)
 	}
 
+	if color != "" {
+		fmt.Fprint(c.writer, colorReset)
+	}
 	fmt.Fprintln(c.writer)
 
 	return nil
+}
+
+func (c *cmdDeviceMonitor) messageColor(m streamMessage) string {
+	if !c.colorize {
+		return ""
+	}
+	if m.Log != nil {
+		switch m.Log.Severity {
+		case "warning":
+			return colorYellow
+		case "error":
+			return colorRed
+		}
+	}
+	return ""
 }
 
 func (c *cmdDeviceMonitor) messageTimestamp(m streamMessage) string {

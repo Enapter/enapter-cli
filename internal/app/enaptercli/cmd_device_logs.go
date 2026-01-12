@@ -148,7 +148,15 @@ func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 			if err := json.NewDecoder(r).Decode(&msg); err != nil {
 				return fmt.Errorf("parse payload: %w", err)
 			}
+
+			color := c.logColor(msg.Log.Severity)
+			if color != "" {
+				fmt.Fprint(c.writer, color)
+			}
 			fmt.Fprintf(c.writer, "%s [%s] %s\n", msg.ReceivedAt, msg.Log.Severity, msg.Log.Message)
+			if color != "" {
+				fmt.Fprint(c.writer, colorReset)
+			}
 			return nil
 		},
 	})
@@ -196,9 +204,30 @@ func (c *cmdDeviceLogs) doList(ctx context.Context) error {
 				return fmt.Errorf("parse response body: %w", err)
 			}
 			for _, l := range resp.Logs {
+				color := c.logColor(l.Severity)
+				if color != "" {
+					fmt.Fprint(c.writer, color)
+				}
 				fmt.Fprintf(c.writer, "%s [%s] %s\n", l.ReceivedAt, l.Severity, l.Message)
+				if color != "" {
+					fmt.Fprint(c.writer, colorReset)
+				}
 			}
 			return nil
 		}),
 	})
+}
+
+func (c *cmdDeviceLogs) logColor(severity string) string {
+	if !c.colorize {
+		return ""
+	}
+	switch severity {
+	case "warning":
+		return colorYellow
+	case "error":
+		return colorRed
+	default:
+		return ""
+	}
 }
