@@ -35,13 +35,13 @@ func (c *cmdDeviceTelemetry) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},
-		Usage:       "device ID",
+		Usage:       "Device ID",
 		Destination: &c.deviceID,
 		Required:    true,
 	}, &cli.BoolFlag{
 		Name:        "follow",
 		Aliases:     []string{"f"},
-		Usage:       "follow the telemetry output",
+		Usage:       "Follow the telemetry output",
 		Destination: &c.follow,
 	})
 }

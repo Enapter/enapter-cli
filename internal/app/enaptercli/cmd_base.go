@@ -41,7 +41,7 @@ func (c *cmdBase) Flags() []cli.Flag {
 	return []cli.Flag{
 		&cli.StringFlag{
 			Name:        "connection",
-			Usage:       "name of the connection to use",
+			Usage:       "Name of the connection to use",
 			Aliases:     []string{"c"},
 			Destination: &c.connName,
 		},
@@ -54,7 +54,7 @@ func (c *cmdBase) Flags() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "api-url",
-			Usage:       "override API base URL",
+			Usage:       "Override API base URL",
 			EnvVars:     []string{"ENAPTER3_API_URL"},
 			Value:       defaultURL,
 			Hidden:      true,
@@ -66,13 +66,13 @@ func (c *cmdBase) Flags() []cli.Flag {
 		},
 		&cli.BoolFlag{
 			Name:        "api-allow-insecure",
-			Usage:       "allow insecure connections to the Enapter API",
+			Usage:       "Allow insecure connections to the Enapter API",
 			EnvVars:     []string{"ENAPTER3_API_ALLOW_INSECURE"},
 			Destination: &c.apiAllowInsecure,
 		},
 		&cli.BoolFlag{
 			Name:        "verbose",
-			Usage:       "log extra details about the operation",
+			Usage:       "Log extra details about the operation",
 			Destination: &c.verbose,
 		},
 	}

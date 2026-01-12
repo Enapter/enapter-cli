@@ -29,13 +29,13 @@ func buildCmdConnectionAdd() *cli.Command {
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "name",
-				Usage:       "connection name",
+				Usage:       "Connection name",
 				Destination: &cmd.name,
 				Required:    true,
 			},
 			&cli.BoolFlag{
 				Name:        "gateway",
-				Usage:       "indicates that the connection is to a Gateway",
+				Usage:       "Indicates that the connection is to a Gateway",
 				Destination: &cmd.gateway,
 			},
 			&cli.StringFlag{
@@ -52,13 +52,13 @@ func buildCmdConnectionAdd() *cli.Command {
 			},
 			&cli.StringFlag{
 				Name: "site-id",
-				Usage: "if specified, the connection will be limited to this site " +
+				Usage: "If specified, the connection will be limited to this site " +
 					"(available only for Cloud connections)",
 				Destination: &cmd.siteID,
 			},
 			&cli.BoolFlag{
 				Name:        "allow-insecure",
-				Usage:       "allow insecure connections to the Enapter API",
+				Usage:       "Allow insecure connections to the Enapter API",
 				Destination: &cmd.allowInsecure,
 			},
 		},

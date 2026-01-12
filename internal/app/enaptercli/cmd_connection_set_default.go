@@ -18,7 +18,7 @@ func buildCmdConnectionSetDefault() *cli.Command {
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "name",
-				Usage:       "connection name",
+				Usage:       "Connection name",
 				Destination: &cmd.name,
 				Required:    true,
 			},

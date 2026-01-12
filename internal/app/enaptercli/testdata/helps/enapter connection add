@@ -5,10 +5,10 @@ USAGE:
    enaptercli.test connection add [command options]
 
 OPTIONS:
-   --name value      connection name
-   --gateway         indicates that the connection is to a Gateway (default: false)
+   --name value      Connection name
+   --gateway         Indicates that the connection is to a Gateway (default: false)
    --url value       Enapter API base URL (default: "https://api.enapter.com")
    --token value     Enapter API access token
-   --site-id value   if specified, the connection will be limited to this site (available only for Cloud connections)
-   --allow-insecure  allow insecure connections to the Enapter API (default: false)
+   --site-id value   If specified, the connection will be limited to this site (available only for Cloud connections)
+   --allow-insecure  Allow insecure connections to the Enapter API (default: false)
    --help, -h        show help

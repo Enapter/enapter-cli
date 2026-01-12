@@ -5,10 +5,10 @@ USAGE:
    enaptercli.test rule-engine rule get [command options]
 
 OPTIONS:
-   --connection value, -c value  name of the connection to use
-   --api-allow-insecure          allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                     log extra details about the operation (default: false)
-   --site-id value               site ID
+   --connection value, -c value  Name of the connection to use
+   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                     Log extra details about the operation (default: false)
+   --site-id value               Site ID
    --rule-id value               Rule ID or slug
    --help, -h                    show help
 

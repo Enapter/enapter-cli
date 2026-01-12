@@ -39,7 +39,7 @@ func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
 	flags := c.cmdDeviceCreate.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
-		Usage:       "site ID",
+		Usage:       "Site ID",
 		Destination: &c.siteID,
 	}, &cli.StringFlag{
 		Name:        "runtime-id",
@@ -64,7 +64,7 @@ func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
 		Destination: &c.blueprintID,
 	}, &cli.StringFlag{
 		Name:        "blueprint-path",
-		Usage:       "blueprint path (zip file or directory) to use for the new Lua device",
+		Usage:       "Blueprint path (zip file or directory) to use for the new Lua device",
 		Destination: &c.blueprintPath,
 	})
 }

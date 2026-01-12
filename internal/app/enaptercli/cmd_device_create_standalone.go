@@ -36,17 +36,17 @@ func (c *cmdDeviceCreateStandalone) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
 		Aliases:     []string{"s"},
-		Usage:       "site ID where the device will be created",
+		Usage:       "Site ID where the device will be created",
 		Destination: &c.siteID,
 	}, &cli.StringFlag{
 		Name:        "device-name",
 		Aliases:     []string{"n"},
-		Usage:       "name for the new device",
+		Usage:       "Name for the new device",
 		Destination: &c.deviceName,
 		Required:    true,
 	}, &cli.StringFlag{
 		Name:        "device-slug",
-		Usage:       "slug for the new standalone device",
+		Usage:       "Slug for the new standalone device",
 		Destination: &c.deviceSlug,
 	})
 }

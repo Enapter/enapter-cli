@@ -33,11 +33,11 @@ func (c *cmdSiteList) Flags() []cli.Flag {
 	flags := c.cmdSite.Flags()
 	return append(flags, &cli.BoolFlag{
 		Name:        "my-sites",
-		Usage:       "returns only sites where user is owner or installer",
+		Usage:       "Returns only sites where user is owner or installer",
 		Destination: &c.mySites,
 	}, &cli.IntFlag{
 		Name:        "limit",
-		Usage:       "maximum number of sites to retrieve",
+		Usage:       "Maximum number of sites to retrieve",
 		Destination: &c.limit,
 		DefaultText: "retrieves all",
 	})

@@ -45,42 +45,42 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},
-		Usage:       "device ID",
+		Usage:       "Device ID",
 		Destination: &c.deviceID,
 		Required:    true,
 	}, &cli.BoolFlag{
 		Name:        "follow",
 		Aliases:     []string{"f"},
-		Usage:       "follow the log output",
+		Usage:       "Follow the log output",
 		Destination: &c.follow,
 	}, &cli.TimestampFlag{
 		Name:        "from",
-		Usage:       "from timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
+		Usage:       "From timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
 		Destination: &c.from,
 		Layout:      time.RFC3339,
 	}, &cli.TimestampFlag{
 		Name:        "to",
-		Usage:       "to timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
+		Usage:       "To timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
 		Destination: &c.to,
 		Layout:      time.RFC3339,
 	}, &cli.IntFlag{
 		Name:        "limit",
 		Aliases:     []string{"l"},
-		Usage:       "maximum number of logs to retrieve",
+		Usage:       "Maximum number of logs to retrieve",
 		Destination: &c.limit,
 	}, &cli.IntFlag{
 		Name:        "offset",
 		Aliases:     []string{"o"},
-		Usage:       "number of logs to skip when retrieving",
+		Usage:       "Number of logs to skip when retrieving",
 		Destination: &c.offset,
 	}, &cli.StringFlag{
 		Name:        "severity",
 		Aliases:     []string{"s"},
-		Usage:       "filter logs by severity",
+		Usage:       "Filter logs by severity",
 		Destination: &c.severity,
 	}, &cli.StringFlag{
 		Name:        "order",
-		Usage:       "order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)",
+		Usage:       "Order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)",
 		Destination: &c.order,
 		Action: func(_ *cli.Context, v string) error {
 			if v != "RECEIVED_AT_ASC" && v != "RECEIVED_AT_DESC" {
@@ -90,7 +90,7 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 		},
 	}, &cli.StringFlag{
 		Name:        "show",
-		Usage:       "filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)",
+		Usage:       "Filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)",
 		Destination: &c.showFilter,
 		Action: func(_ *cli.Context, v string) error {
 			if v != "ALL" && v != "PERSISTED_ONLY" && v != "TEMPORARY_ONLY" {

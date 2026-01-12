@@ -34,7 +34,7 @@ func (c *cmdBlueprintProfilesDownload) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "output",
 		Aliases:     []string{"o"},
-		Usage:       "file name to save the downloaded profiles",
+		Usage:       "File name to save the downloaded profiles",
 		Destination: &c.outputFileName,
 	})
 }

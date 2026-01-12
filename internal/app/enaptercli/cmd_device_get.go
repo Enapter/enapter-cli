@@ -34,13 +34,13 @@ func (c *cmdDeviceGet) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},
-		Usage:       "device ID",
+		Usage:       "Device ID",
 		Destination: &c.deviceID,
 		Required:    true,
 	}, &cli.MultiStringFlag{
 		Target: &cli.StringSliceFlag{
 			Name: "expand",
-			Usage: "coma-separated list of expanded device information (supported values: " +
+			Usage: "Comma-separated list of expanded device information (supported values: " +
 				strings.Join(c.supportedExpandFields(), ", ") + ")",
 		},
 		Destination: &c.expand,

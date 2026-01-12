@@ -38,24 +38,24 @@ func (c *cmdDeviceCommandExecute) Flags() []cli.Flag {
 		&cli.StringFlag{
 			Name:        "device-id",
 			Aliases:     []string{"d"},
-			Usage:       "device ID",
+			Usage:       "Device ID",
 			Destination: &c.deviceID,
 			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "name",
-			Usage:       "command name",
+			Usage:       "Command name",
 			Destination: &c.cmdName,
 			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "arguments",
-			Usage:       "command arguments (should be a JSON string)",
+			Usage:       "Command arguments (should be a JSON string)",
 			Destination: &c.cmdArgs,
 		},
 		&cli.BoolFlag{
 			Name:        "ephemeral",
-			Usage:       "run command in ephemeral mode",
+			Usage:       "Run command in ephemeral mode",
 			Destination: &c.ephemeral,
 			Hidden:      true,
 		},

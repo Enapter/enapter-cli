@@ -34,7 +34,7 @@ func (c *cmdDeviceList) Flags() []cli.Flag {
 	return append(flags, &cli.MultiStringFlag{
 		Target: &cli.StringSliceFlag{
 			Name: "expand",
-			Usage: "coma-separated list of expanded device information (supported values: " +
+			Usage: "Comma-separated list of expanded device information (supported values: " +
 				strings.Join(c.supportedExpandFields(), ", ") + ")",
 		},
 		Destination: &c.expand,

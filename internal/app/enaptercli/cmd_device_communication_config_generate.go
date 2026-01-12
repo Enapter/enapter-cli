@@ -34,7 +34,7 @@ func (c *cmdDeviceCommunicationConfigGenerate) Flags() []cli.Flag {
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "protocol",
-			Usage:       "connection protocol (supported values: MQTT, MQTTS)",
+			Usage:       "Connection protocol (supported values: MQTT, MQTTS)",
 			Destination: &c.protocol,
 			Required:    true,
 		},

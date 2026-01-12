@@ -40,7 +40,7 @@ func (c *cmdDevice) Flags() []cli.Flag {
 	flags := c.cmdBase.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
-		Usage:       "site ID",
+		Usage:       "Site ID",
 		Destination: &c.siteID,
 	})
 }

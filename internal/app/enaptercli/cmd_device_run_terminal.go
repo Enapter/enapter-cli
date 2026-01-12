@@ -42,7 +42,7 @@ func (c *cmdDeviceRunTerminal) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "device-id",
 		Aliases:     []string{"d"},
-		Usage:       "gateway device ID",
+		Usage:       "Gateway device ID",
 		Destination: &c.deviceID,
 		Required:    true,
 	})

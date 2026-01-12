@@ -34,7 +34,7 @@ func (c *cmdBlueprintProfilesUpload) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "path",
 		Aliases:     []string{"p"},
-		Usage:       "profiles zip file path",
+		Usage:       "Profiles zip file path",
 		Destination: &c.profilesPath,
 		Required:    true,
 	})

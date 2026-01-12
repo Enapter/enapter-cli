@@ -37,13 +37,13 @@ func (c *cmdBlueprintDownload) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
-		Usage:       "blueprint name or ID to download",
+		Usage:       "Blueprint name or ID to download",
 		Destination: &c.blueprintID,
 		Required:    true,
 	}, &cli.StringFlag{
 		Name:        "output",
 		Aliases:     []string{"o"},
-		Usage:       "blueprint file name to save the blueprint",
+		Usage:       "Blueprint file name to save the blueprint",
 		Destination: &c.outputFileName,
 	})
 }

@@ -5,10 +5,10 @@ USAGE:
    enaptercli.test blueprint upload [command options]
 
 OPTIONS:
-   --connection value, -c value  name of the connection to use
-   --api-allow-insecure          allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                     log extra details about the operation (default: false)
-   --path value, -p value        blueprint path (zip file or directory)
+   --connection value, -c value  Name of the connection to use
+   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                     Log extra details about the operation (default: false)
+   --path value, -p value        Blueprint path (zip file or directory)
    --help, -h                    show help
 
 ENVIRONMENT VARIABLES:

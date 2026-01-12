@@ -34,13 +34,13 @@ func (c *cmdDeviceCommandGet) Flags() []cli.Flag {
 	return append(flags,
 		&cli.StringFlag{
 			Name:        "execution-id",
-			Usage:       "execution ID",
+			Usage:       "Execution ID",
 			Destination: &c.executionID,
 			Required:    true,
 		}, &cli.MultiStringFlag{
 			Target: &cli.StringSliceFlag{
 				Name:  "expand",
-				Usage: "coma-separated list of expanded options (supported values: log)",
+				Usage: "Comma-separated list of expanded options (supported values: log)",
 			},
 			Destination: &c.expand,
 		},

@@ -5,5 +5,5 @@ USAGE:
    enaptercli.test connection remove [command options]
 
 OPTIONS:
-   --name value  connection name
+   --name value  Connection name
    --help, -h    show help

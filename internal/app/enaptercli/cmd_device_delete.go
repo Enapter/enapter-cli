@@ -32,7 +32,7 @@ func (c *cmdDeviceDelete) Flags() []cli.Flag {
 		&cli.StringFlag{
 			Name:        "device-id",
 			Aliases:     []string{"d"},
-			Usage:       "device ID",
+			Usage:       "Device ID",
 			Destination: &c.deviceID,
 			Required:    true,
 		},

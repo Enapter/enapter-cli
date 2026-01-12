@@ -30,7 +30,7 @@ func (c *cmdSiteGet) Flags() []cli.Flag {
 	flags := c.cmdSite.Flags()
 	return append(flags, &cli.StringFlag{
 		Name:        "site-id",
-		Usage:       "site ID",
+		Usage:       "Site ID",
 		Destination: &c.siteID,
 	})
 }

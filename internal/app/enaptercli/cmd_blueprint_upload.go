@@ -35,7 +35,7 @@ func (c *cmdBlueprintUpload) Flags() []cli.Flag {
 	return append(flags, &cli.StringFlag{
 		Name:        "path",
 		Aliases:     []string{"p"},
-		Usage:       "blueprint path (zip file or directory)",
+		Usage:       "Blueprint path (zip file or directory)",
 		Destination: &c.blueprintPath,
 		Required:    true,
 	})

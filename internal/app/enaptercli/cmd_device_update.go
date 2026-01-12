@@ -37,18 +37,18 @@ func (c *cmdDeviceUpdate) Flags() []cli.Flag {
 		&cli.StringFlag{
 			Name:        "device-id",
 			Aliases:     []string{"d"},
-			Usage:       "device ID",
+			Usage:       "Device ID",
 			Destination: &c.deviceID,
 			Required:    true,
 		},
 		&cli.StringFlag{
 			Name:        "name",
-			Usage:       "device name",
+			Usage:       "Device name",
 			Destination: &c.name,
 		},
 		&cli.StringFlag{
 			Name:        "slug",
-			Usage:       "device slug",
+			Usage:       "Device slug",
 			Destination: &c.slug,
 		},
 	)
