@@ -30,6 +30,7 @@ func buildCmdDevice() *cli.Command {
 			buildCmdDeviceDelete(),
 			buildCmdDeviceCommand(),
 			buildCmdDeviceTelemetry(),
+			buildCmdDeviceStream(),
 			buildCmdDeviceCommunicationConfig(),
 			buildCmdDeviceRunTerminal(),
 		},

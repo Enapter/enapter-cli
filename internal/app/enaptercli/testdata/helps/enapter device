@@ -14,6 +14,7 @@ COMMANDS:
    delete                Delete a device
    command               Manage device commands
    telemetry             Show device telemetry
+   monitor               Monitor device traffic
    communication-config  Manage device communication config
    run-terminal          Run new remote terminal session
    help, h               Shows a list of commands or help for one command
