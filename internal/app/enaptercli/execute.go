@@ -3,10 +3,10 @@ package enaptercli
 import (
 	"archive/zip"
 	"bytes"
+	"fmt"
 	"io"
+	"io/fs"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/urfave/cli/v2"
 )
@@ -15,55 +15,59 @@ import (
 func NewApp() *cli.App {
 	app := cli.NewApp()
 
-	app.Usage = "Command line interface for Enapter services."
-	app.Description = "Enapter CLI requires access token for authentication. " +
-		"The token can be obtained in your Enapter Cloud account settings.\n\n" +
-		"Configure API token using ENAPTER_API_TOKEN environment variable or using --token global option."
+	app.Usage = "Command Line Interface (CLI) for Enapter services."
+	app.Description = "The Enapter CLI requires an access token for authentication. " +
+		"You can obtain the token in your Enapter Cloud account settings."
+	app.CustomAppHelpTemplate = cli.AppHelpTemplate + enapterAPIEnvVarsHelp
 
 	app.Commands = []*cli.Command{
-		buildCmdDevices(),
-		buildCmdRules(),
+		buildCmdSite(),
+		buildCmdDevice(),
+		buildCmdBlueprint(),
+		buildCmdRuleEngine(),
+		buildCmdConnection(),
 	}
 
 	return app
 }
 
 func zipDir(path string) ([]byte, error) {
+	fsys := os.DirFS(path)
+
 	buf := &bytes.Buffer{}
-	myZip := zip.NewWriter(buf)
+	zw := zip.NewWriter(buf)
 
-	path = strings.TrimPrefix(path, "./")
-
-	err := filepath.Walk(path, func(filePath string, info os.FileInfo, err error) error {
+	err := fs.WalkDir(fsys, ".", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if info.IsDir() {
+		if entry.IsDir() {
 			return nil
 		}
-		relPath := strings.TrimPrefix(filePath, path)
-		relPath = strings.TrimPrefix(relPath, "/")
-		zipFile, err := myZip.Create(relPath)
+
+		f, err := fsys.Open(path)
 		if err != nil {
-			return err
+			return fmt.Errorf("open: %w", err)
 		}
-		fsFile, err := os.Open(filePath)
+		defer f.Close()
+
+		zf, err := zw.Create(path)
 		if err != nil {
-			return err
+			return fmt.Errorf("create: %w", err)
 		}
-		_, err = io.Copy(zipFile, fsFile)
-		if err != nil {
-			return err
+
+		if _, err = io.Copy(zf, f); err != nil {
+			return fmt.Errorf("copy: %w", err)
 		}
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("walk dir: %w", err)
 	}
 
-	if err := myZip.Close(); err != nil {
-		return nil, err
+	if err := zw.Close(); err != nil {
+		return nil, fmt.Errorf("close zip: %w", err)
 	}
 
-	return buf.Bytes(), err
+	return buf.Bytes(), nil
 }

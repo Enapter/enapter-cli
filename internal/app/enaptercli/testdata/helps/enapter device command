@@ -1,0 +1,20 @@
+NAME:
+   enaptercli.test device command - Manage device commands
+
+USAGE:
+   enaptercli.test device command command [command options]
+
+COMMANDS:
+   execute  Execute a device command
+   list     List device command executions
+   get      Retrieve a device command execution
+   help, h  Shows a list of commands or help for one command
+
+OPTIONS:
+   --help, -h  show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

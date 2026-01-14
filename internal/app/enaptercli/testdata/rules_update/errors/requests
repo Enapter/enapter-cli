@@ -1,1 +1,0 @@
-{"query":"mutation($input:UpdateInput!){rule{update(input: $input){data{code,message,title},errors{code,message,path,title}}}}","variables":{"input":{"ruleId":"SIM-RULE","luaCode":"-- Rule\n"}}}

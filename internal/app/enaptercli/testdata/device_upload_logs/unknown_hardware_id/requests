@@ -1,1 +1,0 @@
-{"query":"query($after_cursor:String!$hardware_id:ID!$operation_id:ID!){device(hardwareId: $hardware_id){blueprintUpdateOperation(id: $operation_id){status,logs(after: $after_cursor){edges{cursor,node{payload,createdAt,severity}}}}}}","variables":{"after_cursor":"","hardware_id":"SIM-WTM","operation_id":"54"}}

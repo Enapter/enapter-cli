@@ -1,0 +1,19 @@
+{
+  "Method": "GET",
+  "URL": "/v3/devices/my-device",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "Content-Type": [
+      ""
+    ],
+    "User-Agent": [
+      "enapter-cli/"
+    ],
+    "X-Enapter-Auth-Token": [
+      "123"
+    ]
+  },
+  "Body": ""
+}

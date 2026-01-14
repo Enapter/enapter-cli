@@ -1,0 +1,22 @@
+{
+  "Method": "POST",
+  "URL": "/v3/provisioning/lua_device",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "Content-Length": [
+      "110"
+    ],
+    "Content-Type": [
+      "application/json"
+    ],
+    "User-Agent": [
+      "enapter-cli/"
+    ],
+    "X-Enapter-Auth-Token": [
+      "enapter_api_test_token"
+    ]
+  },
+  "Body": "{\"blueprint_id\":\"cdd82438-dda8-4f69-aad1-0be9adeab964\",\"name\":\"my-device\",\"runtime_id\":\"my-runtime\",\"slug\":\"\"}"
+}

@@ -1,0 +1,147 @@
+package enaptercli
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/http"
+	"strings"
+
+	"github.com/urfave/cli/v2"
+)
+
+type cmdDeviceCreateLua struct {
+	cmdDeviceCreate
+	siteID        string
+	deviceName    string
+	deviceSlug    string
+	runtimeID     string
+	blueprintID   string
+	blueprintPath string
+}
+
+func buildCmdDeviceCreateLua() *cli.Command {
+	cmd := &cmdDeviceCreateLua{}
+	return &cli.Command{
+		Name:               "lua-device",
+		Usage:              "Create a new Lua device",
+		CustomHelpTemplate: cmd.CommandHelpTemplate(),
+		Flags:              cmd.Flags(),
+		Before:             cmd.Before,
+		Action: func(cliCtx *cli.Context) error {
+			return cmd.do(cliCtx.Context)
+		},
+	}
+}
+
+func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
+	flags := c.cmdDeviceCreate.Flags()
+	return append(flags, &cli.StringFlag{
+		Name:        "site-id",
+		Usage:       "Site ID",
+		Destination: &c.siteID,
+	}, &cli.StringFlag{
+		Name:        "runtime-id",
+		Aliases:     []string{"r"},
+		Usage:       "UCM device ID where the new Lua device will run",
+		Destination: &c.runtimeID,
+		Required:    true,
+	}, &cli.StringFlag{
+		Name:        "device-name",
+		Aliases:     []string{"n"},
+		Usage:       "name for the new Lua device",
+		Destination: &c.deviceName,
+		Required:    true,
+	}, &cli.StringFlag{
+		Name:        "device-slug",
+		Usage:       "slug for the new Lua device",
+		Destination: &c.deviceSlug,
+	}, &cli.StringFlag{
+		Name:        "blueprint-id",
+		Aliases:     []string{"b"},
+		Usage:       "blueprint ID to use for the new Lua device",
+		Destination: &c.blueprintID,
+	}, &cli.StringFlag{
+		Name:        "blueprint-path",
+		Usage:       "Blueprint path (zip file or directory) to use for the new Lua device",
+		Destination: &c.blueprintPath,
+	})
+}
+
+func (c *cmdDeviceCreateLua) Before(cliCtx *cli.Context) error {
+	if err := c.cmdDeviceCreate.Before(cliCtx); err != nil {
+		return err
+	}
+	if c.blueprintID != "" && c.blueprintPath != "" {
+		return errOnlyOneBlueprinFlag
+	}
+	if c.blueprintID == "" && c.blueprintPath == "" {
+		return errMissedBlueprintFlag
+	}
+	return nil
+}
+
+func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
+	if c.blueprintPath != "" {
+		blueprintID, err := uploadBlueprintAndReturnBlueprintID(ctx, c.blueprintPath, c.doHTTPRequest)
+		if err != nil {
+			return fmt.Errorf("upload blueprint: %w", err)
+		}
+		c.blueprintID = blueprintID
+	}
+
+	// Cloud API does not allow slugs as runtime ID for now
+	runtimeID, err := c.resolveRuntimeID(ctx)
+	if err != nil {
+		return fmt.Errorf("resolve runtime ID: %w", err)
+	}
+
+	body, err := json.Marshal(map[string]interface{}{
+		"runtime_id":   runtimeID,
+		"name":         strings.TrimSpace(c.deviceName),
+		"slug":         c.deviceSlug,
+		"blueprint_id": c.blueprintID,
+	})
+	if err != nil {
+		return fmt.Errorf("build request: %w", err)
+	}
+	return c.doHTTPRequest(ctx, doHTTPRequestParams{
+		Method:      http.MethodPost,
+		Path:        "/provisioning/lua_device",
+		Body:        bytes.NewReader(body),
+		ContentType: contentTypeJSON,
+	})
+}
+
+func (c *cmdDeviceCreateLua) resolveRuntimeID(ctx context.Context) (string, error) {
+	siteID, err := c.chooseSiteID(c.siteID)
+	if err != nil {
+		if errors.Is(err, errSiteIDMissing) {
+			return c.runtimeID, nil
+		}
+		return "", err
+	}
+
+	var resp struct {
+		Device struct {
+			ID string `json:"id"`
+		} `json:"device"`
+	}
+
+	if err := c.doHTTPRequest(ctx, doHTTPRequestParams{
+		Method: http.MethodGet,
+		Path:   "/sites/" + siteID + "/devices/" + c.runtimeID,
+		RespProcessor: func(r *http.Response) error {
+			if r.StatusCode != http.StatusOK {
+				return cli.Exit(parseRespErrorMessage(r), 1)
+			}
+			return json.NewDecoder(r.Body).Decode(&resp)
+		},
+	}); err != nil {
+		return "", err
+	}
+
+	return resp.Device.ID, nil
+}

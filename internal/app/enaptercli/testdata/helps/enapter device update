@@ -1,0 +1,21 @@
+NAME:
+   enaptercli.test device update - Update a device
+
+USAGE:
+   enaptercli.test device update [command options]
+
+OPTIONS:
+   --connection value, -c value  Name of the connection to use
+   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                     Log extra details about the operation (default: false)
+   --site-id value               Site ID
+   --device-id value, -d value   Device ID
+   --name value                  Device name
+   --slug value                  Device slug
+   --help, -h                    show help
+
+ENVIRONMENT VARIABLES:
+   ENAPTER3_API_TOKEN          Enapter API access token
+   ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
+   ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+

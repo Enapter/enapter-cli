@@ -1,5 +1,0 @@
-[connection] welcome
-[connection] confirm_subscription
-[read_error] skip message with unknown identifier map[channel:RuleChannel rule_id:SIM-OTHER]
-[read_error] skip message with unknown identifier map[channel:OtherChannel rule_id:SIM-RULE]
-[info] {"timestamp":1606486092,"status":"ok"}

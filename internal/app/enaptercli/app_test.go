@@ -19,19 +19,17 @@ var errExitTimeout = errors.New("exit timed out")
 type testApp struct {
 	app    *cli.App
 	outBuf *lineBuffer
-	errBuf *bytes.Buffer
 	errCh  chan error
 	cancel func()
 }
 
 func startTestApp(args ...string) *testApp {
 	outBuf := newLineBuffer()
-	errBuf := &bytes.Buffer{}
 
 	app := enaptercli.NewApp()
 	app.HideVersion = true
 	app.Writer = outBuf
-	app.ErrWriter = errBuf
+	app.ErrWriter = outBuf
 	app.ExitErrHandler = func(*cli.Context, error) {}
 
 	errCh := make(chan error, 1)
@@ -43,7 +41,6 @@ func startTestApp(args ...string) *testApp {
 	return &testApp{
 		app:    app,
 		outBuf: outBuf,
-		errBuf: errBuf,
 		errCh:  errCh,
 		cancel: cancel,
 	}
@@ -63,7 +60,7 @@ func (a *testApp) Wait() error {
 	}
 }
 
-func (a *testApp) Stdout() *lineBuffer {
+func (a *testApp) Output() *lineBuffer {
 	return a.outBuf
 }
 

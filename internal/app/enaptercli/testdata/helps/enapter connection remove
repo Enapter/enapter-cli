@@ -1,0 +1,9 @@
+NAME:
+   enaptercli.test connection remove - Remove a connection
+
+USAGE:
+   enaptercli.test connection remove [command options]
+
+OPTIONS:
+   --name value  Connection name
+   --help, -h    show help
