@@ -3,8 +3,12 @@
 [![License](https://img.shields.io/github/license/enapter/enapter-cli)](/LICENSE)
 [![Release](https://img.shields.io/github/release/enapter/enapter-cli.svg)](https://github.com/enapter/enapter-cli/releases/latest)
 
+## Overview
 
-This tool helps Enapter customers to work with devices it is alternative for [Enapter IDE for EMS Toolkit 3.0](https://marketplace.visualstudio.com/items?itemName=Enapter.enapter-ems-toolkit-ide). 
+The Enapter CLI is a command-line interface tool for managing Enapter services, including sites, devices, blueprints, and the rule engine. It provides a comprehensive set of commands for interacting with the Enapter Cloud platform and Gateway devices.
+
+This tool helps Enapter customers to work with devices it is alternative for [Enapter IDE for EMS Toolkit 3.0](https://marketplace.visualstudio.com/items?itemName=Enapter.enapter-ems-toolkit-ide).
+
 It helpful in the following cases:
 
 1. Managing all your EMS setup as a code with Git and Ansible / Puppet
@@ -26,6 +30,22 @@ Version 3:
 
 ```bash
 brew tap enapter/tap && brew install enapter@3
+```
+
+## How to upgrade
+
+###  macOS - recommended
+
+Version 1:
+
+```bash
+brew upgrade enapter
+```
+
+Version 3:
+
+```bash
+brew upgrade enapter@3
 ```
 
 ### Get prebuilt binaries
@@ -59,43 +79,87 @@ Enapter CLI requires access token for authentication. Obtaining of the token is 
 4. Follow the instructions on the screen
 <img src="./.assets/token.png">
 
-5. Set environment variable `ENAPTER3_API_TOKEN` with new token. To make it permanent don't forget to add it to configuration files of your shell.
+5. Set environment variable `ENAPTER_API_TOKEN` with new token. To make it permanent don't forget to add it to configuration files of your shell.
 
   ```bash
-  export ENAPTER3_API_TOKEN="your token"
+  export ENAPTER_API_TOKEN="your token"
   ```
 
 Please note that if you don't save your token, it is not possible to reveal it anymore. You need generate new token.
 
 ## How to use Version 3:
 
-### API token
+### Authentication
 
-Enapter CLI requires access token for authentication. Obtaining of the token is easy and can be done by following few steps.
+The Enapter CLI requires an access token for authentication. You can obtain your access token from your Enapter Cloud account settings at [Enapter Cloud](https://cloud.enapter.com).
 
-1. Navigate to your Enapter Gateway 3.0 Web Interface `Settings` page by using IP address or mDNS name [http://enapter-gateway.local/settings](https://enapter-gateway.local/settings)
-2. Enapter your Enapter Gateway password
-3. Click `API Token` and copy token to clipboard
-4. Set environment variables `ENAPTER3_API_TOKEN`, `ENAPTER3_API_URL` and `ENAPTER3_API_ALLOW_INSECURE`. To make it permanent don't forget to add it to configuration files of your shell.
+### Setting Up Your First Enapter Cloud Connection
 
-  ```bash
-  export ENAPTER3_API_TOKEN="your token"
-  export ENAPTER3_API_URL="http://ip_address/api"
-  export ENAPTER3_API_ALLOW_INSECURE=true
-  ```
+The recommended way to use the Enapter CLI is by setting up named connections. This approach allows you to:
+- Manage multiple environments (production, staging, development)
+- Switch between Enapter Cloud and Gateway connections easily
+- Associate connections with specific sites
+- Store configuration securely
 
-5. Check connection works by running
+**Step 1: Add a connection**
 
-  ```bash
-  enapter3 device list
-  ```
+```bash
+enapter connection add --name my-cloud --token YOUR_ACCESS_TOKEN
+```
+
+**Step 2: Set it as default (optional)**
+
+```bash
+enapter connection set-default --name my-cloud
+```
+
+**Step 3: Verify the connection**
+
+```bash
+enapter connection list
+```
+
+### Quick Start Examples
+
+Once your connection is set up, you can start managing your Enapter resources:
+
+**For Enapter Cloud connections:**
+
+```bash
+# List all sites
+enapter site list
+
+# List all devices for a specific site
+enapter device list --site-id SITE_ID
+
+# Get device information
+enapter device get --site-id SITE_ID --device-id DEVICE_ID
+
+# Upload a blueprint (from file or directory)
+enapter blueprint upload --path ./my-blueprint.enbp
+# or
+enapter blueprint upload --path ./my-blueprint/
+
+# Create a new Lua device
+enapter device create lua-device \
+  --site-id SITE_ID \
+  --runtime-id UCM_DEVICE_ID \
+  --device-name "My Device" \
+  --device-slug my-device \
+  --blueprint-path ./blueprint/  # or ./blueprint.enbp
+```
 
 ### Autocompletion in your favourite terminal app
 
 > [!NOTE]
 > Available for Version 1 now.
+>
+> For Version 3. Please follow enapble `Dev mode` and use [https://github.com/nkrasko/autocomplete](https://github.com/nkrasko/autocomplete) repository until merge request is accepted.
 
-In order to make life easier with command line interface, you may use [Amazon Q](https://aws.amazon.com/q/). This autocompletion tool has native support for the Enapter CLI for Mac OS X and Linux.
+In order to make life easier with command line interface, you may use [Kiro CLI](https://kiro.dev/cli/). This autocompletion tool has native support for the Enapter CLI for Mac OS X and Linux.
 
 <img src="./.assets/enapter-cli-fig-integration.gif">
 
+### Documentation
+
+You can find extended documentation in [Enapter CLI 3 Referecnce](./enapter-cli-3-reference.md)
