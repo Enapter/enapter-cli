@@ -162,4 +162,4 @@ In order to make life easier with command line interface, you may use [Kiro CLI]
 
 ### Documentation
 
-You can find extended documentation in [Enapter CLI 3 Referecnce](./enapter-cli-3-reference.md)
+You can find extended documentation in [Enapter CLI 3 Reference](./enapter-cli-3-reference.md)
