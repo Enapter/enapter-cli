@@ -154,7 +154,7 @@ enapter device create lua-device \
 > [!NOTE]
 > Available for Version 1 now.
 >
-> For Version 3. Please follow enapble `Dev mode` and use [https://github.com/nkrasko/autocomplete](https://github.com/nkrasko/autocomplete) repository until merge request is accepted.
+> For Version 3. Please follow enable `Dev mode` and use [https://github.com/nkrasko/autocomplete](https://github.com/nkrasko/autocomplete) repository until merge request is accepted.
 
 In order to make life easier with command line interface, you may use [Kiro CLI](https://kiro.dev/cli/). This autocompletion tool has native support for the Enapter CLI for Mac OS X and Linux.
 
