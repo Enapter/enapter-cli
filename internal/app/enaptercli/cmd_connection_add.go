@@ -3,6 +3,7 @@ package enaptercli
 import (
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -129,6 +130,9 @@ func (c *cmdConnectionAdd) resolveGatewaySiteID(cliCtx *cli.Context) (string, er
 
 	resp, err := client.Do(req)
 	if err != nil {
+		if e := (&tls.CertificateVerificationError{}); errors.As(err, &e) {
+			return "", fmt.Errorf("resolve site: %w (try to use --allow-insecure)", err)
+		}
 		return "", fmt.Errorf("send http request: %w", err)
 	}
 	defer resp.Body.Close()
