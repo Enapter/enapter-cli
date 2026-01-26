@@ -11,13 +11,13 @@ OPTIONS:
    --site-id value               Site ID
    --device-id value, -d value   Device ID
    --follow, -f                  Follow the log output (default: false)
-   --from value                  From timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)
-   --to value                    To timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)
+   --received-at-gte value       From timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)
+   --received-at-lt value        To timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)
    --limit value, -l value       Maximum number of logs to retrieve (default: 0)
    --offset value, -o value      Number of logs to skip when retrieving (default: 0)
    --severity value, -s value    Filter logs by severity
    --order value                 Order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)
-   --show value                  Filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)
+   --retention value             Filter logs by retention (ALL[default], PERSISTENT, EPHEMERAL)
    --help, -h                    show help
 
 ENVIRONMENT VARIABLES:

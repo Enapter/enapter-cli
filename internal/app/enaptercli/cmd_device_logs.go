@@ -15,15 +15,15 @@ import (
 
 type cmdDeviceLogs struct {
 	cmdDevice
-	deviceID   string
-	follow     bool
-	from       cli.Timestamp
-	to         cli.Timestamp
-	offset     int
-	limit      int
-	severity   string
-	order      string
-	showFilter string
+	deviceID      string
+	follow        bool
+	receivedAtGte cli.Timestamp
+	receivedAtLt  cli.Timestamp
+	offset        int
+	limit         int
+	severity      string
+	order         string
+	retention     string
 }
 
 func buildCmdDeviceLogs() *cli.Command {
@@ -54,14 +54,14 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 		Usage:       "Follow the log output",
 		Destination: &c.follow,
 	}, &cli.TimestampFlag{
-		Name:        "from",
+		Name:        "received-at-gte",
 		Usage:       "From timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
-		Destination: &c.from,
+		Destination: &c.receivedAtGte,
 		Layout:      time.RFC3339,
 	}, &cli.TimestampFlag{
-		Name:        "to",
+		Name:        "received-at-lt",
 		Usage:       "To timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
-		Destination: &c.to,
+		Destination: &c.receivedAtLt,
 		Layout:      time.RFC3339,
 	}, &cli.IntFlag{
 		Name:        "limit",
@@ -89,12 +89,12 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 			return nil
 		},
 	}, &cli.StringFlag{
-		Name:        "show",
-		Usage:       "Filter logs by criteria (ALL[default], PERSISTED_ONLY, TEMPORARY_ONLY)",
-		Destination: &c.showFilter,
+		Name:        "retention",
+		Usage:       "Filter logs by retention (ALL[default], PERSISTENT, EPHEMERAL)",
+		Destination: &c.retention,
 		Action: func(_ *cli.Context, v string) error {
-			if v != "ALL" && v != "PERSISTED_ONLY" && v != "TEMPORARY_ONLY" {
-				return fmt.Errorf("%w: should be one of [ALL, PERSISTED_ONLY, TEMPORARY_ONLY]", errUnsupportedFlagValue)
+			if v != "ALL" && v != "PERSISTENT" && v != "EPHEMERAL" {
+				return fmt.Errorf("%w: should be one of [ALL, PERSISTENT, EPHEMERAL]", errUnsupportedFlagValue)
 			}
 			return nil
 		},
@@ -109,28 +109,28 @@ func (c *cmdDeviceLogs) do(ctx context.Context) error {
 }
 
 func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
-	if c.from.Value() != nil {
-		return cli.Exit("Option received_at_from is unsupported in follow mode.", 1)
+	if c.receivedAtGte.Value() != nil {
+		return cli.Exit("Option --received-at-gte is unsupported in follow mode.", 1)
 	}
-	if c.to.Value() != nil {
-		return cli.Exit("Option received_at_to is unsupported in follow mode.", 1)
+	if c.receivedAtLt.Value() != nil {
+		return cli.Exit("Option --received-at-lt is unsupported in follow mode.", 1)
 	}
 	if c.offset > 0 {
-		return cli.Exit("Option offset is unsupported in follow mode.", 1)
+		return cli.Exit("Option --offset is unsupported in follow mode.", 1)
 	}
 	if c.limit > 0 {
-		return cli.Exit("Option limit is unsupported in follow mode.", 1)
+		return cli.Exit("Option --limit is unsupported in follow mode.", 1)
 	}
 	if c.order != "" {
-		return cli.Exit("Option order is unsupported in follow mode.", 1)
+		return cli.Exit("Option --order is unsupported in follow mode.", 1)
 	}
 
 	query := url.Values{}
 	if c.severity != "" {
 		query.Add("severity", c.severity)
 	}
-	if c.showFilter != "" {
-		query.Add("show", c.showFilter)
+	if c.retention != "" {
+		query.Add("retention", c.retention)
 	}
 
 	return c.runWebSocket(ctx, runWebSocketParams{
@@ -164,11 +164,11 @@ func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 
 func (c *cmdDeviceLogs) doList(ctx context.Context) error {
 	query := url.Values{}
-	if c.from.Value() != nil {
-		query.Add("received_at_from", c.from.Value().Format(time.RFC3339))
+	if c.receivedAtGte.Value() != nil {
+		query.Add("received_at.gte", c.receivedAtGte.Value().Format(time.RFC3339))
 	}
-	if c.to.Value() != nil {
-		query.Add("received_at_to", c.to.Value().Format(time.RFC3339))
+	if c.receivedAtLt.Value() != nil {
+		query.Add("received_at.lt", c.receivedAtLt.Value().Format(time.RFC3339))
 	}
 	if c.offset > 0 {
 		query.Add("offset", strconv.Itoa(c.offset))
@@ -182,8 +182,8 @@ func (c *cmdDeviceLogs) doList(ctx context.Context) error {
 	if c.order != "" {
 		query.Add("order", c.order)
 	}
-	if c.showFilter != "" {
-		query.Add("show", c.showFilter)
+	if c.retention != "" {
+		query.Add("retention", c.retention)
 	}
 
 	return c.doHTTPRequest(ctx, doHTTPRequestParams{
