@@ -44,6 +44,7 @@ func (c *cmdBase) Flags() []cli.Flag {
 			Name:        "connection",
 			Usage:       "Name of the connection to use",
 			Aliases:     []string{"c"},
+			EnvVars:     []string{"ENAPTER3_CONNECTION"},
 			Destination: &c.connName,
 		},
 		&cli.StringFlag{
@@ -148,6 +149,7 @@ ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
    ENAPTER3_API_URL            Enapter API base URL (default: https://api.enapter.com)
    ENAPTER3_API_ALLOW_INSECURE Allow insecure connections to the Enapter API (default: false)
+   ENAPTER3_CONNECTION         Name of the connection to use
 
 `
 
