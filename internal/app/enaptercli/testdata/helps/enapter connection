@@ -1,15 +1,14 @@
 NAME:
-   enaptercli.test connection - Manage connections to Enapter Cloud and Gateways
+   enapter3 connection - Manage connections to Enapter Cloud and Gateways
 
 USAGE:
-   enaptercli.test connection command [command options]
+   enapter3 connection [command [command options]]
 
 COMMANDS:
    add          Add a new connection
    remove       Remove a connection
    list         List all connections
    set-default  Set default connection
-   help, h      Shows a list of commands or help for one command
 
 OPTIONS:
    --help, -h  show help

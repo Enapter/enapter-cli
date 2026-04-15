@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/cliflags"
 )
@@ -32,8 +32,8 @@ func buildCmdRuleEngineRuleCreate() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
@@ -57,7 +57,7 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 			Usage:       "Version of the runtime to use for the script execution",
 			Destination: &c.runtimeVersion,
 			Value:       ruleRuntimeV3,
-			Action: func(_ *cli.Context, v string) error {
+			Action: func(_ context.Context, _ *cli.Command, v string) error {
 				return c.validateRuntimeVersion(v)
 			},
 		},

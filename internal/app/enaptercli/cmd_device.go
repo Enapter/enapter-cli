@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDevice struct {
@@ -20,7 +20,7 @@ func buildCmdDevice() *cli.Command {
 		Name:               "device",
 		Usage:              "Manage devices",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdDeviceCreate(),
 			buildCmdDeviceList(),
 			buildCmdDeviceGet(),
@@ -64,8 +64,8 @@ func (c *cmdDevice) runWebSocket(ctx context.Context, p runWebSocketParams) erro
 	return c.cmdBase.runWebSocket(ctx, p)
 }
 
-func (c *cmdDevice) validateExpandFlag(cliCtx *cli.Context) error {
-	return validateExpandFlag(cliCtx, c.supportedExpandFields())
+func (c *cmdDevice) validateExpandFlag(cmd *cli.Command) error {
+	return validateExpandFlag(cmd, c.supportedExpandFields())
 }
 
 func (c *cmdDevice) supportedExpandFields() []string {

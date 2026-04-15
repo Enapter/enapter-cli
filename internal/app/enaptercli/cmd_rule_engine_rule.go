@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 const (
@@ -23,7 +23,7 @@ func buildCmdRuleEngineRule() *cli.Command {
 		Name:               "rule",
 		Usage:              "Manage rules",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdRuleEngineRuleCreate(),
 			buildCmdRuleEngineRuleDelete(),
 			buildCmdRuleEngineRuleDisable(),

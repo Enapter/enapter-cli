@@ -1,12 +1,13 @@
 package enaptercli
 
 import (
+	"context"
 	"fmt"
 	"maps"
 	"slices"
 	"text/tabwriter"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
@@ -16,20 +17,22 @@ type cmdConnectionList struct{}
 func buildCmdConnectionList() *cli.Command {
 	cmd := &cmdConnectionList{}
 	return &cli.Command{
-		Name:   "list",
-		Usage:  "List all connections",
-		Action: cmd.do,
+		Name:  "list",
+		Usage: "List all connections",
+		Action: func(_ context.Context, cliCmd *cli.Command) error {
+			return cmd.do(cliCmd)
+		},
 	}
 }
 
-func (c *cmdConnectionList) do(cliCtx *cli.Context) error {
+func (c *cmdConnectionList) do(cliCmd *cli.Command) error {
 	config, err := configfile.Load()
 	if err != nil {
 		return err
 	}
 
 	const padding = 3
-	w := tabwriter.NewWriter(cliCtx.App.Writer, 0, 0, padding, ' ', 0)
+	w := tabwriter.NewWriter(cliCmd.Root().Writer, 0, 0, padding, ' ', 0)
 
 	fmt.Fprintln(w, "NAME\tTYPE\tURL\tALLOW INSECURE\tSITE ID")
 

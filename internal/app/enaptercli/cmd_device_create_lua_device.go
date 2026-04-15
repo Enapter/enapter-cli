@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceCreateLua struct {
@@ -30,8 +30,8 @@ func buildCmdDeviceCreateLua() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
@@ -70,17 +70,18 @@ func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdDeviceCreateLua) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDeviceCreate.Before(cliCtx); err != nil {
-		return err
+func (c *cmdDeviceCreateLua) Before(ctx context.Context, cmd *cli.Command) (context.Context, error) {
+	ctx, err := c.cmdDeviceCreate.Before(ctx, cmd)
+	if err != nil {
+		return ctx, err
 	}
 	if c.blueprintID != "" && c.blueprintPath != "" {
-		return errOnlyOneBlueprinFlag
+		return ctx, errOnlyOneBlueprinFlag
 	}
 	if c.blueprintID == "" && c.blueprintPath == "" {
-		return errMissedBlueprintFlag
+		return ctx, errMissedBlueprintFlag
 	}
-	return nil
+	return ctx, nil
 }
 
 func (c *cmdDeviceCreateLua) do(ctx context.Context) error {

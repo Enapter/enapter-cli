@@ -2,11 +2,12 @@ package enaptercli
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngineRuleUpdate struct {
@@ -23,8 +24,8 @@ func buildCmdRuleEngineRuleUpdate() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx)
+		Action: func(ctx context.Context, cliCmd *cli.Command) error {
+			return cmd.do(ctx, cliCmd)
 		},
 	}
 }
@@ -45,10 +46,10 @@ func (c *cmdRuleEngineRuleUpdate) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context) error {
+func (c *cmdRuleEngineRuleUpdate) do(ctx context.Context, cliCmd *cli.Command) error {
 	payload := make(map[string]any)
 
-	if cliCtx.IsSet("slug") {
+	if cliCmd.IsSet("slug") {
 		payload["slug"] = c.slug
 	}
 
@@ -57,7 +58,7 @@ func (c *cmdRuleEngineRuleUpdate) do(cliCtx *cli.Context) error {
 		return fmt.Errorf("build request: %w", err)
 	}
 
-	return c.doHTTPRequest(cliCtx.Context, doHTTPRequestParams{
+	return c.doHTTPRequest(ctx, doHTTPRequestParams{
 		Method:      http.MethodPatch,
 		Path:        "/" + c.ruleID,
 		Body:        bytes.NewReader(body),

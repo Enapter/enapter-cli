@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceCommand struct {
@@ -19,7 +19,7 @@ func buildCmdDeviceCommand() *cli.Command {
 		Name:               "command",
 		Usage:              "Manage device commands",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdDeviceCommandExecute(),
 			buildCmdDeviceCommandList(),
 			buildCmdDeviceCommandGet(),

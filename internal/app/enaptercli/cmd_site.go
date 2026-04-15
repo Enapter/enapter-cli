@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdSite struct {
@@ -18,7 +18,7 @@ func buildCmdSite() *cli.Command {
 		Name:               "site",
 		Usage:              "Manage sites",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdSiteList(),
 			buildCmdSiteGet(),
 		},

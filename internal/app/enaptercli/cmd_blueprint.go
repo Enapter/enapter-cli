@@ -3,7 +3,7 @@ package enaptercli
 import (
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdBlueprint struct {
@@ -16,7 +16,7 @@ func buildCmdBlueprint() *cli.Command {
 		Name:               "blueprint",
 		Usage:              "Manage blueprints",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdBlueprintProfiles(),
 			buildCmdBlueprintUpload(),
 			buildCmdBlueprintDownload(),

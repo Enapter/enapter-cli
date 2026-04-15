@@ -1,17 +1,17 @@
 NAME:
-   enaptercli.test device monitor - Monitor device traffic
+   enapter3 device monitor - Monitor device traffic
 
 USAGE:
-   enaptercli.test device monitor [command options]
+   enapter3 device monitor [options]
 
 OPTIONS:
-   --connection value, -c value  Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                     Log extra details about the operation (default: false)
-   --site-id value               Site ID
-   --device-id value, -d value   Device ID
-   --include-runtime             Monitor device's runtime traffic too (default: false)
-   --help, -h                    show help
+   --connection string, -c string  Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure            Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                       Log extra details about the operation
+   --site-id string                Site ID
+   --device-id string, -d string   Device ID
+   --include-runtime               Monitor device's runtime traffic too
+   --help, -h                      show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

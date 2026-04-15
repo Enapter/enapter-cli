@@ -1,14 +1,14 @@
 NAME:
-   enaptercli.test connection add - Add a new connection
+   enapter3 connection add - Add a new connection
 
 USAGE:
-   enaptercli.test connection add [command options]
+   enapter3 connection add [options]
 
 OPTIONS:
-   --name value      Connection name
-   --gateway         Indicates that the connection is to a Gateway (default: false)
-   --url value       Enapter API base URL (default: "https://api.enapter.com")
-   --token value     Enapter API access token
-   --site-id value   If specified, the connection will be limited to this site (available only for Cloud connections)
-   --allow-insecure  Allow insecure connections to the Enapter API (default: false)
+   --name string     Connection name
+   --gateway         Indicates that the connection is to a Gateway
+   --url string      Enapter API base URL (default: "https://api.enapter.com")
+   --token string    Enapter API access token
+   --site-id string  If specified, the connection will be limited to this site (available only for Cloud connections)
+   --allow-insecure  Allow insecure connections to the Enapter API
    --help, -h        show help

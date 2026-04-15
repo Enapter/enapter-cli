@@ -1,16 +1,16 @@
 NAME:
-   enaptercli.test rule-engine rule disable - Disable one or more rules
+   enapter3 rule-engine rule disable - Disable one or more rules
 
 USAGE:
-   enaptercli.test rule-engine rule disable [command options]
+   enapter3 rule-engine rule disable [options]
 
 OPTIONS:
-   --connection value, -c value         Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure                 Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                            Log extra details about the operation (default: false)
-   --site-id value                      Site ID
-   --rule-id value [ --rule-id value ]  Rule IDs or slugs
-   --help, -h                           show help
+   --connection string, -c string         Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure                   Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                              Log extra details about the operation
+   --site-id string                       Site ID
+   --rule-id string [ --rule-id string ]  Rule IDs or slugs
+   --help, -h                             show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

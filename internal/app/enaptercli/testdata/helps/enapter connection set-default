@@ -1,9 +1,9 @@
 NAME:
-   enaptercli.test connection set-default - Set default connection
+   enapter3 connection set-default - Set default connection
 
 USAGE:
-   enaptercli.test connection set-default [command options]
+   enapter3 connection set-default [options]
 
 OPTIONS:
-   --name value  Connection name
-   --help, -h    show help
+   --name string  Connection name
+   --help, -h     show help

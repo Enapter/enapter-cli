@@ -1,9 +1,10 @@
 package enaptercli
 
 import (
+	"context"
 	"fmt"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
@@ -25,24 +26,26 @@ func buildCmdConnectionRemove() *cli.Command {
 				Required:    true,
 			},
 		},
-		Action: cmd.do,
+		Action: func(_ context.Context, cliCmd *cli.Command) error {
+			return cmd.do(cliCmd)
+		},
 	}
 }
 
-func (c *cmdConnectionRemove) do(cliCtx *cli.Context) error {
+func (c *cmdConnectionRemove) do(cliCmd *cli.Command) error {
 	config, err := configfile.Load()
 	if err != nil {
 		return err
 	}
 
 	if _, ok := config.Connections[c.name]; !ok {
-		fmt.Fprintln(cliCtx.App.ErrWriter, "WARNING: unknown connection.")
+		fmt.Fprintln(cliCmd.Root().ErrWriter, "WARNING: unknown connection.")
 		return nil
 	}
 
 	delete(config.Connections, c.name)
 	if config.DefaultConn == c.name {
-		fmt.Fprintln(cliCtx.App.ErrWriter, "WARNING: removed connection was set as default.")
+		fmt.Fprintln(cliCmd.Root().ErrWriter, "WARNING: removed connection was set as default.")
 		config.DefaultConn = ""
 	}
 

@@ -1,7 +1,7 @@
 package enaptercli
 
 import (
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceCreate struct {
@@ -14,7 +14,7 @@ func buildCmdDeviceCreate() *cli.Command {
 		Name:               "create",
 		Usage:              "Create devices of different types",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdDeviceCreateStandalone(),
 			buildCmdDeviceCreateLua(),
 		},

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceChangeBlueprint struct {
@@ -25,8 +25,8 @@ func buildCmdDeviceChangeBlueprint() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
@@ -51,17 +51,18 @@ func (c *cmdDeviceChangeBlueprint) Flags() []cli.Flag {
 	})
 }
 
-func (c *cmdDeviceChangeBlueprint) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDevice.Before(cliCtx); err != nil {
-		return err
+func (c *cmdDeviceChangeBlueprint) Before(ctx context.Context, cmd *cli.Command) (context.Context, error) {
+	ctx, err := c.cmdDevice.Before(ctx, cmd)
+	if err != nil {
+		return ctx, err
 	}
 	if c.blueprintID != "" && c.blueprintPath != "" {
-		return errOnlyOneBlueprinFlag
+		return ctx, errOnlyOneBlueprinFlag
 	}
 	if c.blueprintID == "" && c.blueprintPath == "" {
-		return errMissedBlueprintFlag
+		return ctx, errMissedBlueprintFlag
 	}
-	return c.validateExpandFlag(cliCtx)
+	return ctx, c.validateExpandFlag(cmd)
 }
 
 func (c *cmdDeviceChangeBlueprint) do(ctx context.Context) error {

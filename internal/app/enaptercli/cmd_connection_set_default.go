@@ -1,7 +1,9 @@
 package enaptercli
 
 import (
-	"github.com/urfave/cli/v2"
+	"context"
+
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
@@ -27,7 +29,7 @@ func buildCmdConnectionSetDefault() *cli.Command {
 	}
 }
 
-func (c *cmdConnectionSetDefault) do(*cli.Context) error {
+func (c *cmdConnectionSetDefault) do(context.Context, *cli.Command) error {
 	config, err := configfile.Load()
 	if err != nil {
 		return err
