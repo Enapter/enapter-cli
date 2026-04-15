@@ -1,17 +1,17 @@
 NAME:
-   enaptercli.test device list - List user devices ordered by device ID
+   enapter3 device list - List user devices ordered by device ID
 
 USAGE:
-   enaptercli.test device list [command options]
+   enapter3 device list [options]
 
 OPTIONS:
-   --connection value, -c value       Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure               Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                          Log extra details about the operation (default: false)
-   --site-id value                    Site ID
-   --expand value [ --expand value ]  Comma-separated list of expanded device information (supported values: connectivity, manifest, properties, communication, site)
-   --limit value                      maximum number of devices to retrieve (default: retrieves all)
-   --help, -h                         show help
+   --connection string, -c string       Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure                 Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                            Log extra details about the operation
+   --site-id string                     Site ID
+   --expand string [ --expand string ]  Comma-separated list of expanded device information (supported values: connectivity, manifest, properties, communication, site)
+   --limit int                          maximum number of devices to retrieve (default: retrieves all)
+   --help, -h                           show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

@@ -1,12 +1,11 @@
 NAME:
-   enaptercli.test device communication-config - Manage device communication config
+   enapter3 device communication-config - Manage device communication config
 
 USAGE:
-   enaptercli.test device communication-config command [command options]
+   enapter3 device communication-config [command [command options]]
 
 COMMANDS:
    generate  Generate a new communication config for device
-   help, h   Shows a list of commands or help for one command
 
 OPTIONS:
    --help, -h  show help

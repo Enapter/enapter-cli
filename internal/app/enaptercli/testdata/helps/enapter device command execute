@@ -1,18 +1,18 @@
 NAME:
-   enaptercli.test device command execute - Execute a device command
+   enapter3 device command execute - Execute a device command
 
 USAGE:
-   enaptercli.test device command execute [command options]
+   enapter3 device command execute [options]
 
 OPTIONS:
-   --connection value, -c value  Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                     Log extra details about the operation (default: false)
-   --site-id value               Site ID
-   --device-id value, -d value   Device ID
-   --name value                  Command name
-   --arguments value             Command arguments (should be a JSON string)
-   --help, -h                    show help
+   --connection string, -c string  Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure            Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                       Log extra details about the operation
+   --site-id string                Site ID
+   --device-id string, -d string   Device ID
+   --name string                   Command name
+   --arguments string              Command arguments (should be a JSON string)
+   --help, -h                      show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

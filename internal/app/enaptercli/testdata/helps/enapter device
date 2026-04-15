@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test device - Manage devices
+   enapter3 device - Manage devices
 
 USAGE:
-   enaptercli.test device command [command options]
+   enapter3 device [command [command options]]
 
 COMMANDS:
    create                Create devices of different types
@@ -17,7 +17,6 @@ COMMANDS:
    monitor               Monitor device traffic
    communication-config  Manage device communication config
    run-terminal          Run new remote terminal session
-   help, h               Shows a list of commands or help for one command
 
 OPTIONS:
    --help, -h  show help

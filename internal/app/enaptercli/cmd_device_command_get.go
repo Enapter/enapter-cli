@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceCommandGet struct {
@@ -23,8 +23,8 @@ func buildCmdDeviceCommandGet() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
@@ -37,21 +37,20 @@ func (c *cmdDeviceCommandGet) Flags() []cli.Flag {
 			Usage:       "Execution ID",
 			Destination: &c.executionID,
 			Required:    true,
-		}, &cli.MultiStringFlag{
-			Target: &cli.StringSliceFlag{
-				Name:  "expand",
-				Usage: "Comma-separated list of expanded options (supported values: log)",
-			},
+		}, &cli.StringSliceFlag{
+			Name:        "expand",
+			Usage:       "Comma-separated list of expanded options (supported values: log)",
 			Destination: &c.expand,
 		},
 	)
 }
 
-func (c *cmdDeviceCommandGet) Before(cliCtx *cli.Context) error {
-	if err := c.cmdDevice.Before(cliCtx); err != nil {
-		return err
+func (c *cmdDeviceCommandGet) Before(ctx context.Context, cmd *cli.Command) (context.Context, error) {
+	ctx, err := c.cmdDevice.Before(ctx, cmd)
+	if err != nil {
+		return ctx, err
 	}
-	return validateExpandFlag(cliCtx, []string{"log"})
+	return ctx, validateExpandFlag(cmd, []string{"log"})
 }
 
 func (c *cmdDeviceCommandGet) do(ctx context.Context) error {

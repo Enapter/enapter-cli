@@ -1,19 +1,19 @@
 NAME:
-   enaptercli.test rule-engine rule update-script - Update the script of a rule
+   enapter3 rule-engine rule update-script - Update the script of a rule
 
 USAGE:
-   enaptercli.test rule-engine rule update-script [command options]
+   enapter3 rule-engine rule update-script [options]
 
 OPTIONS:
-   --connection value, -c value  Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                     Log extra details about the operation (default: false)
-   --site-id value               Site ID
-   --rule-id value               Rule ID or slug to update
-   --script value                Path to a file containing the script code
-   --runtime-version value       Version of the runtime to use for the script execution (default: "V3")
-   --exec-interval value         How frequently to execute the script (compatible only with runtime version 1) in duration format (e.g., 5s, 2m)
-   --help, -h                    show help
+   --connection string, -c string  Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure            Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                       Log extra details about the operation
+   --site-id string                Site ID
+   --rule-id string                Rule ID or slug to update
+   --script string                 Path to a file containing the script code
+   --runtime-version string        Version of the runtime to use for the script execution (default: "V3")
+   --exec-interval duration        How frequently to execute the script (compatible only with runtime version 1) in duration format (e.g., 5s, 2m) (default: 0s)
+   --help, -h                      show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

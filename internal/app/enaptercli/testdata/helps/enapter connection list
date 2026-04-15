@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test connection list - List all connections
+   enapter3 connection list - List all connections
 
 USAGE:
-   enaptercli.test connection list [command options]
+   enapter3 connection list [options]
 
 OPTIONS:
    --help, -h  show help

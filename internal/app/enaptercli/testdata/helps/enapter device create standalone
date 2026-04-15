@@ -1,17 +1,17 @@
 NAME:
-   enaptercli.test device create standalone - Create a new standalone device
+   enapter3 device create standalone - Create a new standalone device
 
 USAGE:
-   enaptercli.test device create standalone [command options]
+   enapter3 device create standalone [options]
 
 OPTIONS:
-   --connection value, -c value   Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure           Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                      Log extra details about the operation (default: false)
-   --site-id value, -s value      Site ID where the device will be created
-   --device-name value, -n value  Name for the new device
-   --device-slug value            Slug for the new standalone device
-   --help, -h                     show help
+   --connection string, -c string   Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure             Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                        Log extra details about the operation
+   --site-id string, -s string      Site ID where the device will be created
+   --device-name string, -n string  Name for the new device
+   --device-slug string             Slug for the new standalone device
+   --help, -h                       show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token

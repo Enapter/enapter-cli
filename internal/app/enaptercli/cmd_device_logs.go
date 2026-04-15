@@ -10,15 +10,15 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceLogs struct {
 	cmdDevice
 	deviceID      string
 	follow        bool
-	receivedAtGte cli.Timestamp
-	receivedAtLt  cli.Timestamp
+	receivedAtGte time.Time
+	receivedAtLt  time.Time
 	offset        int
 	limit         int
 	severity      string
@@ -34,8 +34,8 @@ func buildCmdDeviceLogs() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx.Context)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
@@ -57,12 +57,12 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 		Name:        "received-at-gte",
 		Usage:       "From timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
 		Destination: &c.receivedAtGte,
-		Layout:      time.RFC3339,
+		Config:      cli.TimestampConfig{Layouts: []string{time.RFC3339}},
 	}, &cli.TimestampFlag{
 		Name:        "received-at-lt",
 		Usage:       "To timestamp in RFC 3339 format (e.g. 2006-01-02T15:04:05Z)",
 		Destination: &c.receivedAtLt,
-		Layout:      time.RFC3339,
+		Config:      cli.TimestampConfig{Layouts: []string{time.RFC3339}},
 	}, &cli.IntFlag{
 		Name:        "limit",
 		Aliases:     []string{"l"},
@@ -82,7 +82,7 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 		Name:        "order",
 		Usage:       "Order logs by criteria (RECEIVED_AT_ASC[default], RECEIVED_AT_DESC)",
 		Destination: &c.order,
-		Action: func(_ *cli.Context, v string) error {
+		Action: func(_ context.Context, _ *cli.Command, v string) error {
 			if v != "RECEIVED_AT_ASC" && v != "RECEIVED_AT_DESC" {
 				return fmt.Errorf("%w: should be one of [RECEIVED_AT_ASC, RECEIVED_AT_DESC]", errUnsupportedFlagValue)
 			}
@@ -92,7 +92,7 @@ func (c *cmdDeviceLogs) Flags() []cli.Flag {
 		Name:        "retention",
 		Usage:       "Filter logs by retention (ALL[default], PERSISTENT, EPHEMERAL)",
 		Destination: &c.retention,
-		Action: func(_ *cli.Context, v string) error {
+		Action: func(_ context.Context, _ *cli.Command, v string) error {
 			if v != "ALL" && v != "PERSISTENT" && v != "EPHEMERAL" {
 				return fmt.Errorf("%w: should be one of [ALL, PERSISTENT, EPHEMERAL]", errUnsupportedFlagValue)
 			}
@@ -109,10 +109,10 @@ func (c *cmdDeviceLogs) do(ctx context.Context) error {
 }
 
 func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
-	if c.receivedAtGte.Value() != nil {
+	if !c.receivedAtGte.IsZero() {
 		return cli.Exit("Option --received-at-gte is unsupported in follow mode.", 1)
 	}
-	if c.receivedAtLt.Value() != nil {
+	if !c.receivedAtLt.IsZero() {
 		return cli.Exit("Option --received-at-lt is unsupported in follow mode.", 1)
 	}
 	if c.offset > 0 {
@@ -164,11 +164,11 @@ func (c *cmdDeviceLogs) doFollow(ctx context.Context) error {
 
 func (c *cmdDeviceLogs) doList(ctx context.Context) error {
 	query := url.Values{}
-	if c.receivedAtGte.Value() != nil {
-		query.Add("received_at.gte", c.receivedAtGte.Value().Format(time.RFC3339))
+	if !c.receivedAtGte.IsZero() {
+		query.Add("received_at.gte", c.receivedAtGte.Format(time.RFC3339))
 	}
-	if c.receivedAtLt.Value() != nil {
-		query.Add("received_at.lt", c.receivedAtLt.Value().Format(time.RFC3339))
+	if !c.receivedAtLt.IsZero() {
+		query.Add("received_at.lt", c.receivedAtLt.Format(time.RFC3339))
 	}
 	if c.offset > 0 {
 		query.Add("offset", strconv.Itoa(c.offset))

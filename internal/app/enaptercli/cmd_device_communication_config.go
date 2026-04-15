@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdDeviceCommunicationConfig struct {
@@ -19,7 +19,7 @@ func buildCmdDeviceCommunicationConfig() *cli.Command {
 		Name:               "communication-config",
 		Usage:              "Manage device communication config",
 		CustomHelpTemplate: cmd.SubcommandHelpTemplate(),
-		Subcommands: []*cli.Command{
+		Commands: []*cli.Command{
 			buildCmdDeviceCommunicationConfigGenerate(),
 		},
 	}

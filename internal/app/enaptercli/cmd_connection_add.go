@@ -1,6 +1,7 @@
 package enaptercli
 
 import (
+	"context"
 	"crypto/tls"
 	"encoding/json"
 	"errors"
@@ -8,7 +9,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
@@ -67,7 +68,7 @@ func buildCmdConnectionAdd() *cli.Command {
 	}
 }
 
-func (c *cmdConnectionAdd) do(cliCtx *cli.Context) error {
+func (c *cmdConnectionAdd) do(ctx context.Context, cliCmd *cli.Command) error {
 	config, err := configfile.Load()
 	if err != nil {
 		return err
@@ -90,7 +91,7 @@ func (c *cmdConnectionAdd) do(cliCtx *cli.Context) error {
 		if c.siteID != "" {
 			return cli.Exit("The site-id option cannot be used with gateway connections.", 1)
 		}
-		siteID, err := c.resolveGatewaySiteID(cliCtx)
+		siteID, err := c.resolveGatewaySiteID(ctx, cliCmd)
 		if err != nil {
 			return err
 		}
@@ -111,7 +112,7 @@ func (c *cmdConnectionAdd) do(cliCtx *cli.Context) error {
 	return configfile.Save(config)
 }
 
-func (c *cmdConnectionAdd) resolveGatewaySiteID(cliCtx *cli.Context) (string, error) {
+func (c *cmdConnectionAdd) resolveGatewaySiteID(ctx context.Context, cliCmd *cli.Command) (string, error) {
 	client := &http.Client{
 		Transport: &http.Transport{
 			//nolint:gosec // This is needed to allow self-signed certificates on Gateway.
@@ -120,13 +121,13 @@ func (c *cmdConnectionAdd) resolveGatewaySiteID(cliCtx *cli.Context) (string, er
 	}
 
 	req, err := http.NewRequestWithContext(
-		cliCtx.Context, http.MethodGet, c.url+"/v3/site", nil)
+		ctx, http.MethodGet, c.url+"/v3/site", nil)
 	if err != nil {
 		return "", fmt.Errorf("new http request: %w", err)
 	}
 
 	req.Header.Set("X-Enapter-Auth-Token", c.token)
-	req.Header.Set("User-Agent", "enapter-cli/"+cliCtx.App.Version)
+	req.Header.Set("User-Agent", "enapter-cli/"+cliCmd.Root().Version)
 
 	resp, err := client.Do(req)
 	if err != nil {

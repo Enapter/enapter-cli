@@ -1,12 +1,13 @@
 package enaptercli
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"time"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 type cmdRuleEngineRuleLogs struct {
@@ -23,8 +24,8 @@ func buildCmdRuleEngineRuleLogs() *cli.Command {
 		CustomHelpTemplate: cmd.CommandHelpTemplate(),
 		Flags:              cmd.Flags(),
 		Before:             cmd.Before,
-		Action: func(cliCtx *cli.Context) error {
-			return cmd.do(cliCtx)
+		Action: func(ctx context.Context, _ *cli.Command) error {
+			return cmd.do(ctx)
 		},
 	}
 }
@@ -46,14 +47,14 @@ func (c *cmdRuleEngineRuleLogs) Flags() []cli.Flag {
 	)
 }
 
-func (c *cmdRuleEngineRuleLogs) do(cliCtx *cli.Context) error {
+func (c *cmdRuleEngineRuleLogs) do(ctx context.Context) error {
 	if !c.follow {
 		return cli.Exit("Currently, only follow mode (--follow) is supported.", 1)
 	}
 
 	path := fmt.Sprintf("/site/rule_engine/rules/%s/logs", c.ruleID)
 
-	return c.runWebSocket(cliCtx.Context, runWebSocketParams{
+	return c.runWebSocket(ctx, runWebSocketParams{
 		Path: path,
 		RespProcessor: func(r io.Reader) error {
 			var msg struct {

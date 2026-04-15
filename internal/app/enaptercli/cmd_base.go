@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
@@ -44,24 +44,24 @@ func (c *cmdBase) Flags() []cli.Flag {
 			Name:        "connection",
 			Usage:       "Name of the connection to use",
 			Aliases:     []string{"c"},
-			EnvVars:     []string{"ENAPTER3_CONNECTION"},
+			Sources:     cli.EnvVars("ENAPTER3_CONNECTION"),
 			Destination: &c.connName,
 		},
 		&cli.StringFlag{
 			Name:        "token",
 			Usage:       "Enapter API token",
-			EnvVars:     []string{"ENAPTER3_API_TOKEN"},
+			Sources:     cli.EnvVars("ENAPTER3_API_TOKEN"),
 			Hidden:      true,
 			Destination: &c.token,
 		},
 		&cli.StringFlag{
 			Name:        "api-url",
 			Usage:       "Override API base URL",
-			EnvVars:     []string{"ENAPTER3_API_URL"},
+			Sources:     cli.EnvVars("ENAPTER3_API_URL"),
 			Value:       defaultURL,
 			Hidden:      true,
 			Destination: &c.apiURL,
-			Action: func(_ *cli.Context, v string) error {
+			Action: func(_ context.Context, _ *cli.Command, v string) error {
 				c.apiURL = strings.TrimSuffix(v, "/")
 				return nil
 			},
@@ -69,7 +69,7 @@ func (c *cmdBase) Flags() []cli.Flag {
 		&cli.BoolFlag{
 			Name:        "api-allow-insecure",
 			Usage:       "Allow insecure connections to the Enapter API",
-			EnvVars:     []string{"ENAPTER3_API_ALLOW_INSECURE"},
+			Sources:     cli.EnvVars("ENAPTER3_API_ALLOW_INSECURE"),
 			Destination: &c.apiAllowInsecure,
 		},
 		&cli.BoolFlag{
@@ -80,16 +80,16 @@ func (c *cmdBase) Flags() []cli.Flag {
 	}
 }
 
-func (c *cmdBase) Before(cliCtx *cli.Context) error {
-	if err := c.setupCredentials(cliCtx); err != nil {
-		return err
+func (c *cmdBase) Before(ctx context.Context, cmd *cli.Command) (context.Context, error) {
+	if err := c.setupCredentials(cmd); err != nil {
+		return ctx, err
 	}
 
-	c.writer = cliCtx.App.Writer
-	c.errWriter = cliCtx.App.ErrWriter
+	c.writer = cmd.Root().Writer
+	c.errWriter = cmd.Root().ErrWriter
 	c.colorize = colorsSupported(c.writer)
 
-	c.userAgent = "enapter-cli/" + cliCtx.App.Version
+	c.userAgent = "enapter-cli/" + cmd.Root().Version
 	c.httpClient = &http.Client{
 		Transport: &http.Transport{
 			//nolint:gosec // This is needed to allow self-signed certificates on Gateway.
@@ -97,10 +97,10 @@ func (c *cmdBase) Before(cliCtx *cli.Context) error {
 		},
 	}
 
-	return nil
+	return ctx, nil
 }
 
-func (c *cmdBase) setupCredentials(cliCtx *cli.Context) error {
+func (c *cmdBase) setupCredentials(cmd *cli.Command) error {
 	config, err := configfile.Load()
 	if err != nil {
 		return err
@@ -111,8 +111,8 @@ func (c *cmdBase) setupCredentials(cliCtx *cli.Context) error {
 		if !ok {
 			return cli.Exit("Unknown connection name.", 1)
 		}
-		if cliCtx.IsSet("token") || cliCtx.IsSet("api-url") || cliCtx.IsSet("api-allow-insecure") {
-			fmt.Fprintln(cliCtx.App.ErrWriter,
+		if cmd.IsSet("token") || cmd.IsSet("api-url") || cmd.IsSet("api-allow-insecure") {
+			fmt.Fprintln(cmd.Root().ErrWriter,
 				"WARNING: credentials set via environment variables or flags are ignored.")
 		}
 		c.token = conn.Token.Value
@@ -400,8 +400,8 @@ func parseRespErrorMessage(resp *http.Response) string {
 	return fmt.Sprintf("Request finished with HTTP status %q, but without error message", resp.Status)
 }
 
-func validateExpandFlag(cliCtx *cli.Context, supportedFields []string) error {
-	for _, field := range cliCtx.StringSlice("expand") {
+func validateExpandFlag(cmd *cli.Command, supportedFields []string) error {
+	for _, field := range cmd.StringSlice("expand") {
 		if err := validateFlag("expand", field, supportedFields); err != nil {
 			return err
 		}

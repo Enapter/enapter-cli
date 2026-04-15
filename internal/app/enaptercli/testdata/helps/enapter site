@@ -1,13 +1,12 @@
 NAME:
-   enaptercli.test site - Manage sites
+   enapter3 site - Manage sites
 
 USAGE:
-   enaptercli.test site command [command options]
+   enapter3 site [command [command options]]
 
 COMMANDS:
-   list     List user sites
-   get      Get a site
-   help, h  Shows a list of commands or help for one command
+   list  List user sites
+   get   Get a site
 
 OPTIONS:
    --help, -h  show help

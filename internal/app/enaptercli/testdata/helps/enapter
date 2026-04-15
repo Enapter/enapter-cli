@@ -1,8 +1,8 @@
 NAME:
-   enaptercli.test - Command Line Interface (CLI) for Enapter services.
+   enapter3 - Command Line Interface (CLI) for Enapter services.
 
 USAGE:
-   enaptercli.test [global options] command [command options]
+   enapter3 [global options] [command [command options]]
 
 DESCRIPTION:
    The Enapter CLI requires an access token for authentication. You can obtain the token in your Enapter Cloud account settings.

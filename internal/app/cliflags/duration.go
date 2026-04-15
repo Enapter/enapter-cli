@@ -1,7 +1,7 @@
 package cliflags
 
 import (
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 )
 
 // Duration is a wrapper around cli.DurationFlag to implement cli.Flag interface.

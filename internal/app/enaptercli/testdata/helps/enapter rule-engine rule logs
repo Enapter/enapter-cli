@@ -1,17 +1,17 @@
 NAME:
-   enaptercli.test rule-engine rule logs - Show rule logs
+   enapter3 rule-engine rule logs - Show rule logs
 
 USAGE:
-   enaptercli.test rule-engine rule logs [command options]
+   enapter3 rule-engine rule logs [options]
 
 OPTIONS:
-   --connection value, -c value  Name of the connection to use [$ENAPTER3_CONNECTION]
-   --api-allow-insecure          Allow insecure connections to the Enapter API (default: false) [$ENAPTER3_API_ALLOW_INSECURE]
-   --verbose                     Log extra details about the operation (default: false)
-   --site-id value               Site ID
-   --rule-id value               rule ID
-   --follow, -f                  follow the log output (default: false)
-   --help, -h                    show help
+   --connection string, -c string  Name of the connection to use [$ENAPTER3_CONNECTION]
+   --api-allow-insecure            Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
+   --verbose                       Log extra details about the operation
+   --site-id string                Site ID
+   --rule-id string                rule ID
+   --follow, -f                    follow the log output
+   --help, -h                      show help
 
 ENVIRONMENT VARIABLES:
    ENAPTER3_API_TOKEN          Enapter API access token
