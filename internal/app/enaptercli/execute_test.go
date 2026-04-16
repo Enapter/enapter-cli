@@ -2,6 +2,7 @@ package enaptercli_test
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 	"strings"
 	"testing"
 	"text/template"
+	"unicode/utf8"
 
 	"github.com/stretchr/testify/require"
 )
@@ -176,6 +178,9 @@ func readBodyAsString(t *testing.T, r io.Reader) string {
 	t.Helper()
 	d, err := io.ReadAll(r)
 	require.NoError(t, err)
+	if !utf8.Valid(d) {
+		return "base64:" + base64.StdEncoding.EncodeToString(d)
+	}
 	return string(d)
 }
 
