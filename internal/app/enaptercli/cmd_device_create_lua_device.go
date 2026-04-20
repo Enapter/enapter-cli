@@ -7,9 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/urfave/cli/v3"
+
+	"github.com/enapter/enapter-cli/internal/app/cliflags"
 )
 
 type cmdDeviceCreateLua struct {
@@ -54,10 +55,12 @@ func (c *cmdDeviceCreateLua) Flags() []cli.Flag {
 		Usage:       "name for the new Lua device",
 		Destination: &c.deviceName,
 		Required:    true,
+		Action:      cliflags.TrimSpaceAction(&c.deviceName),
 	}, &cli.StringFlag{
 		Name:        "device-slug",
 		Usage:       "slug for the new Lua device",
 		Destination: &c.deviceSlug,
+		Action:      cliflags.TrimSpaceAction(&c.deviceSlug),
 	}, &cli.StringFlag{
 		Name:        "blueprint-id",
 		Aliases:     []string{"b"},
@@ -101,7 +104,7 @@ func (c *cmdDeviceCreateLua) do(ctx context.Context) error {
 
 	body, err := json.Marshal(map[string]interface{}{
 		"runtime_id":   runtimeID,
-		"name":         strings.TrimSpace(c.deviceName),
+		"name":         c.deviceName,
 		"slug":         c.deviceSlug,
 		"blueprint_id": c.blueprintID,
 	})

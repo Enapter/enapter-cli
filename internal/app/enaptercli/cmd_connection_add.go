@@ -11,6 +11,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 
+	"github.com/enapter/enapter-cli/internal/app/cliflags"
 	"github.com/enapter/enapter-cli/internal/app/configfile"
 )
 
@@ -34,6 +35,7 @@ func buildCmdConnectionAdd() *cli.Command {
 				Usage:       "Connection name",
 				Destination: &cmd.name,
 				Required:    true,
+				Action:      cliflags.TrimSpaceAction(&cmd.name),
 			},
 			&cli.BoolFlag{
 				Name:        "gateway",

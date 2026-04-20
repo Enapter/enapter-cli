@@ -45,6 +45,7 @@ func (c *cmdRuleEngineRuleCreate) Flags() []cli.Flag {
 			Usage:       "Slug for the new rule",
 			Destination: &c.slug,
 			Required:    true,
+			Action:      cliflags.TrimSpaceAction(&c.slug),
 		},
 		&cli.StringFlag{
 			Name:        "script",

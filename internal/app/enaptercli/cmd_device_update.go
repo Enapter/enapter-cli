@@ -6,9 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/urfave/cli/v3"
+
+	"github.com/enapter/enapter-cli/internal/app/cliflags"
 )
 
 type cmdDeviceUpdate struct {
@@ -46,18 +47,20 @@ func (c *cmdDeviceUpdate) Flags() []cli.Flag {
 			Name:        "name",
 			Usage:       "Device name",
 			Destination: &c.name,
+			Action:      cliflags.TrimSpaceAction(&c.name),
 		},
 		&cli.StringFlag{
 			Name:        "slug",
 			Usage:       "Device slug",
 			Destination: &c.slug,
+			Action:      cliflags.TrimSpaceAction(&c.slug),
 		},
 	)
 }
 
 func (c *cmdDeviceUpdate) do(ctx context.Context) error {
 	payload := map[string]string{
-		"name": strings.TrimSpace(c.name),
+		"name": c.name,
 		"slug": c.slug,
 	}
 	body, err := json.Marshal(payload)
