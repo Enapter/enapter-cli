@@ -9,6 +9,8 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v3"
+
+	"github.com/enapter/enapter-cli/blueprint"
 )
 
 type cmdBlueprintUpload struct {
@@ -82,7 +84,7 @@ func uploadBlueprint(
 
 	var data []byte
 	if fi.IsDir() {
-		data, err = zipDir(blueprintPath)
+		data, err = blueprint.Zip(os.DirFS(blueprintPath))
 		if err != nil {
 			return fmt.Errorf("zip blueprint directory: %w", err)
 		}
