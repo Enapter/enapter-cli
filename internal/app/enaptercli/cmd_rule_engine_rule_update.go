@@ -8,6 +8,8 @@ import (
 	"net/http"
 
 	"github.com/urfave/cli/v3"
+
+	"github.com/enapter/enapter-cli/internal/app/cliflags"
 )
 
 type cmdRuleEngineRuleUpdate struct {
@@ -42,6 +44,7 @@ func (c *cmdRuleEngineRuleUpdate) Flags() []cli.Flag {
 			Name:        "slug",
 			Usage:       "A new rule slug",
 			Destination: &c.slug,
+			Action:      cliflags.TrimSpaceAction(&c.slug),
 		},
 	)
 }

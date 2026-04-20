@@ -6,9 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/urfave/cli/v3"
+
+	"github.com/enapter/enapter-cli/internal/app/cliflags"
 )
 
 type cmdDeviceCreateStandalone struct {
@@ -45,10 +46,12 @@ func (c *cmdDeviceCreateStandalone) Flags() []cli.Flag {
 		Usage:       "Name for the new device",
 		Destination: &c.deviceName,
 		Required:    true,
+		Action:      cliflags.TrimSpaceAction(&c.deviceName),
 	}, &cli.StringFlag{
 		Name:        "device-slug",
 		Usage:       "Slug for the new standalone device",
 		Destination: &c.deviceSlug,
+		Action:      cliflags.TrimSpaceAction(&c.deviceSlug),
 	})
 }
 
@@ -60,7 +63,7 @@ func (c *cmdDeviceCreateStandalone) do(ctx context.Context) error {
 
 	body, err := json.Marshal(map[string]any{
 		"site_id": siteID,
-		"name":    strings.TrimSpace(c.deviceName),
+		"name":    c.deviceName,
 		"slug":    c.deviceSlug,
 	})
 	if err != nil {
