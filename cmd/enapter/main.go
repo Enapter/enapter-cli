@@ -9,7 +9,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 
-	"github.com/enapter/enapter-cli/internal/app/enaptercli"
+	"github.com/enapter/enapter-cli/v3/internal/app/enaptercli"
 )
 
 //nolint:gochecknoglobals // because sets up via ldflags

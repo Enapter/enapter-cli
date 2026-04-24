@@ -11,7 +11,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 
-	"github.com/enapter/enapter-cli/internal/app/enaptercli"
+	"github.com/enapter/enapter-cli/v3/internal/app/enaptercli"
 )
 
 var errExitTimeout = errors.New("exit timed out")

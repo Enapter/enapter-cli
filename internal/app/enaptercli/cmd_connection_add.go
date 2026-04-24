@@ -11,8 +11,8 @@ import (
 
 	"github.com/urfave/cli/v3"
 
-	"github.com/enapter/enapter-cli/internal/app/cliflags"
-	"github.com/enapter/enapter-cli/internal/app/configfile"
+	"github.com/enapter/enapter-cli/v3/internal/app/cliflags"
+	"github.com/enapter/enapter-cli/v3/internal/app/configfile"
 )
 
 type cmdConnectionAdd struct {

@@ -10,7 +10,7 @@ import (
 
 	"github.com/urfave/cli/v3"
 
-	"github.com/enapter/enapter-cli/blueprint"
+	"github.com/enapter/enapter-cli/v3/blueprint"
 )
 
 type cmdBlueprintUpload struct {
