@@ -1,0 +1,19 @@
+{
+  "Method": "GET",
+  "URL": "/v3/sites/my-site/rule_engine/rules?limit=50\u0026offset=1",
+  "Header": {
+    "Accept-Encoding": [
+      "gzip"
+    ],
+    "Content-Type": [
+      ""
+    ],
+    "User-Agent": [
+      "enapter-cli/"
+    ],
+    "X-Enapter-Auth-Token": [
+      "enapter_api_test_token"
+    ]
+  },
+  "Body": ""
+}

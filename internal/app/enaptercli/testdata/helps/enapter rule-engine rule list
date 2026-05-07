@@ -9,6 +9,7 @@ OPTIONS:
    --api-allow-insecure            Allow insecure connections to the Enapter API [$ENAPTER3_API_ALLOW_INSECURE]
    --verbose                       Log extra details about the operation
    --site-id string                Site ID
+   --limit int                     maximum number of rules to retrieve (default: retrieves all)
    --help, -h                      show help
 
 ENVIRONMENT VARIABLES:

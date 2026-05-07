@@ -9,6 +9,7 @@ import (
 
 type cmdRuleEngineRuleList struct {
 	cmdRuleEngineRule
+	limit int
 }
 
 func buildCmdRuleEngineRuleList() *cli.Command {
@@ -25,9 +26,26 @@ func buildCmdRuleEngineRuleList() *cli.Command {
 	}
 }
 
-func (c *cmdRuleEngineRuleList) do(ctx context.Context) error {
-	return c.doHTTPRequest(ctx, doHTTPRequestParams{
-		Method: http.MethodGet,
-		Path:   "",
+func (c *cmdRuleEngineRuleList) Flags() []cli.Flag {
+	flags := c.cmdRuleEngineRule.Flags()
+	return append(flags, &cli.IntFlag{
+		Name:        "limit",
+		Usage:       "maximum number of rules to retrieve",
+		Destination: &c.limit,
+		DefaultText: "retrieves all",
 	})
+}
+
+func (c *cmdRuleEngineRuleList) do(ctx context.Context) error {
+	doPaginateRequestParams := paginateHTTPRequestParams{
+		ObjectName: "rules",
+		Limit:      c.limit,
+		DoFn:       c.doHTTPRequest,
+		BaseParams: doHTTPRequestParams{
+			Method: http.MethodGet,
+			Path:   "",
+		},
+	}
+
+	return c.doPaginateRequest(ctx, doPaginateRequestParams)
 }
