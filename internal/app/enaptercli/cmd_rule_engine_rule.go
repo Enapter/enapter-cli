@@ -46,6 +46,15 @@ func (c *cmdRuleEngineRule) doHTTPRequest(ctx context.Context, p doHTTPRequestPa
 	return c.cmdRuleEngine.doHTTPRequest(ctx, p)
 }
 
+func (c *cmdRuleEngineRule) runWebSocket(ctx context.Context, p runWebSocketParams) error {
+	path, err := url.JoinPath("/rules", p.Path)
+	if err != nil {
+		return fmt.Errorf("join path: %w", err)
+	}
+	p.Path = path
+	return c.cmdRuleEngine.runWebSocket(ctx, p)
+}
+
 func (c *cmdRuleEngineRule) validateRuntimeVersion(value string) error {
 	supportedVersions := []string{ruleRuntimeV1, ruleRuntimeV3}
 	return validateFlag("runtime-version", value, supportedVersions)

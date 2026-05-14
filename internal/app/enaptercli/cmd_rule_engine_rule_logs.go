@@ -52,10 +52,8 @@ func (c *cmdRuleEngineRuleLogs) do(ctx context.Context) error {
 		return cli.Exit("Currently, only follow mode (--follow) is supported.", 1)
 	}
 
-	path := fmt.Sprintf("/site/rule_engine/rules/%s/logs", c.ruleID)
-
 	return c.runWebSocket(ctx, runWebSocketParams{
-		Path: path,
+		Path: "/" + c.ruleID + "/logs",
 		RespProcessor: func(r io.Reader) error {
 			var msg struct {
 				Timestamp int64  `json:"timestamp"`
