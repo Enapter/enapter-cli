@@ -82,7 +82,7 @@ type paginateRespProcesor struct {
 
 func (p *paginateRespProcesor) Process(resp *http.Response) error {
 	if resp.StatusCode != http.StatusOK {
-		return cli.Exit("Unexpected response status: "+resp.Status, 1)
+		return cli.Exit(parseRespErrorMessage(resp), 1)
 	}
 
 	var pageBody map[string]json.RawMessage
