@@ -1,6 +1,6 @@
 {
   "Method": "GET",
-  "URL": "/v3/sites/my-site/rule_engine/rules?limit=50\u0026offset=1",
+  "URL": "/v3/sites/my-site/rule_engine/rules?limit=50\u0026offset=0",
   "Header": {
     "Accept-Encoding": [
       "gzip"
